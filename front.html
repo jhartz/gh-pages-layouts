@@ -9,15 +9,20 @@
     <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <link rel="stylesheet" type="text/css" media="screen,tv,projection" href="/style.css">{% if page.shadowbox %}
-    <link rel="stylesheet" type="text/css" href="http://mp4downloader.mozdev.org/images/shadowbox/shadowbox.css">
-    <script type="text/javascript" src="http://mp4downloader.mozdev.org/images/shadowbox/shadowbox.js"></script>{% endif %}
+    <link rel="stylesheet" type="text/css" media="screen,tv,projection" href="/style.css">{% if page.textcentered %}
+    <style type="text/css">
+    p {
+        text-align: center;
+    }
+    </style>{% endif %}{% if page.shadowbox %}
+    <link rel="stylesheet" type="text/css" href="/shadowbox/shadowbox.css">
+    <script type="text/javascript" src="/shadowbox/shadowbox.js"></script>{% endif %}
 </head>
 
 <body>{% if page.centered %}
 <table style="border: none;">
 <tbody><tr><td>{% endif %}
-    <div id="content">{% if page.homebtn %}
+    <div id="content"{% if page.textcentered %} class="centered"{% endif %}>{% if page.homebtn %}
         <nav class="left"><ul><li><a href="/">jhartz.github.com</a>{% if page.index %} &raquo; <a href="{{ page.indexurl | escape }}">{{ page.index | escape }}</a>{% endif %}</li></ul></nav>{% endif %}
 
 {{ content }}
