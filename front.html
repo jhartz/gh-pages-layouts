@@ -23,7 +23,7 @@
 <table style="border: none;">
 <tbody><tr><td>{% endif %}
     <div id="content"{% if page.textcentered %} class="centered"{% endif %}>{% if page.homebtn %}
-        <nav class="left"><ul><li><a href="/">jhartz.github.com</a>{% if page.index %} &raquo; <a href="{% if page.indexurl %}{{ page.indexurl | escape }}{% else %}{{ page.index | downcase | replace:' ','' | escape }}{% endif %}">{{ page.index | escape }}</a>{% endif %}</li></ul></nav>{% endif %}
+        <nav class="left"><ul><li><a href="/">jhartz.github.com</a>{% if page.index %} &raquo; <a href="{% if page.indexurl %}{{ page.indexurl | escape }}{% else %}/{{ page.index | downcase | replace:' ','' | escape }}/{% endif %}">{{ page.index | escape }}</a>{% endif %}</li></ul></nav>{% endif %}
 
 {{ content }}
     </div>
