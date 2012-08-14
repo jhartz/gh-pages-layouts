@@ -7,10 +7,10 @@ title: MP4 Downloader
         <h1><a href="/mp4downloader/">MP4 Downloader</a></h1>
         <nav>
             <ul>
-                <li><a href="screenshots.html">Screenshots</a></li>
-                <li><a href="development.html">Development</a></li>
-                <li><a href="https://github.com/jhartz/mp4downloader/wiki">Docs</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li><a href="{% if dir %}{{ dir }}/{% endif %}screenshots.html">Screenshots</a></li>
+                <li><a href="{% if dir %}{{ dir }}/{% endif %}development.html">Development</a></li>
+                <li><a href="{% if dir %}{{ dir }}/{% endif %}docs.html">Docs</a></li>
+                <li><a href="{% if dir %}{{ dir }}/{% endif %}contact.html">Contact</a></li>
             </ul>
         </nav>
         
