@@ -20,7 +20,7 @@
     <div id="content"{% if page.textcentered %} class="centered"{% endif %}>
         <nav class="left"><ul><li><a href="/">jhartz.github.com</a></li>{% if page.index %}<li><a href="{% if page.indexurl %}{{ page.indexurl | escape }}{% else %}/{{ page.index | downcase | replace:' ','' | escape }}/{% endif %}">{{ page.index | escape }}</a></li>{% endif %}</ul></nav>{% if page.index %}
         
-        {% unless page.centered %}<header{% if page.indexicon %} class="imaged"{% endif %}>{% if page.indexicon %}
+        {% unless page.centered %}<header>{% if page.indexicon %}
             <img src="{{ page.indexicon | escape }}">{% endif %}
             {% endunless %}<h1><a href="{% if page.indexurl %}{{ page.indexurl | escape }}{% else %}/{{ page.index | downcase | replace:' ','' | escape }}/{% endif %}">{{ page.index | escape }}{% if page.indexstub %}: {{ page.indexstub | escape }}{% endif %}</a></h1>{% unless page.centered %}
         </header>{% endunless %}{% endif %}
