@@ -5,10 +5,10 @@ indexicon: http://mp4downloader.mozdev.org/button_real.png
 ---
         <nav>
             <ul>
-                <li><a href="{% if dir %}{{ dir }}/{% endif %}screenshots.html">Screenshots</a></li>
-                <li><a href="{% if dir %}{{ dir }}/{% endif %}development.html">Development</a></li>
-                <li><a href="{% if dir %}{{ dir }}/{% endif %}docs.html">Docs</a></li>
-                <li><a href="{% if dir %}{{ dir }}/{% endif %}contact.html">Contact</a></li>
+                <li><a href="{% if page.dir %}{{ page.dir }}/{% endif %}screenshots.html">Screenshots</a></li>
+                <li><a href="{% if page.dir %}{{ page.dir }}/{% endif %}development.html">Development</a></li>
+                <li><a href="{% if page.dir %}{{ page.dir }}/{% endif %}docs.html">Docs</a></li>
+                <li><a href="{% if page.dir %}{{ page.dir }}/{% endif %}contact.html">Contact</a></li>
             </ul>
         </nav>
         
