@@ -4,17 +4,12 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>{% if page.titlestub %}{{ page.titlestub | escape }} - {% endif %}{{ page.title | escape }}</title>{% if page.atomfeed %}
+    <title>{% if page.title %}{{ page.title | escape }}{% if page.index %} - {% endif %}{% endif %}{% if page.index %}{{ page.index | escape }}{% if page.indexstub %}: {{ page.indexstub | escape }}{% endif %}{% endif %}</title>{% if page.atomfeed %}
     <link rel="alternate" type="application/atom+xml" title="Ramblings by Jake &raquo; Feed" href="/blog/atom.xml">{% endif %}
     <!--[if lt IE 9]>
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <link rel="stylesheet" type="text/css" media="screen,tv,projection" href="/style.css">{% if page.textcentered %}
-    <style type="text/css">
-    p {
-        text-align: center;
-    }
-    </style>{% endif %}{% if page.shadowbox %}
+    <link rel="stylesheet" type="text/css" media="screen,tv,projection" href="/style.css">{% if page.shadowbox %}
     <link rel="stylesheet" type="text/css" href="/shadowbox/shadowbox.css">
     <script type="text/javascript" src="/shadowbox/shadowbox.js"></script>{% endif %}
 </head>
@@ -22,8 +17,13 @@
 <body>{% if page.centered %}
 <table style="border: none;">
 <tbody><tr><td>{% endif %}
-    <div id="content"{% if page.textcentered %} class="centered"{% endif %}>{% if page.homebtn %}
-        <nav class="left"><ul><li><a href="/">jhartz.github.com</a></li>{% if page.index %}<li><a href="{% if page.indexurl %}{{ page.indexurl | escape }}{% else %}/{{ page.index | downcase | replace:' ','' | escape }}/{% endif %}">{{ page.index | escape }}</a></li>{% endif %}</ul></nav>{% endif %}
+    <div id="content"{% if page.textcentered %} class="centered"{% endif %}>
+        <nav class="left"><ul><li><a href="/">jhartz.github.com</a></li>{% if page.index %}<li><a href="{% if page.indexurl %}{{ page.indexurl | escape }}{% else %}/{{ page.index | downcase | replace:' ','' | escape }}/{% endif %}">{{ page.index | escape }}</a></li>{% endif %}</ul></nav>{% if page.index %}
+        
+        {% unless page.centered %}<header{% if page.indexicon %} class="imaged"{% endif %}>{% if page.indexicon %}
+            <img src="{{ page.indexicon | escape }}">{% endif %}
+            {% endunless %}<h1><a href="{% if page.indexurl %}{{ page.indexurl | escape }}{% else %}/{{ page.index | downcase | replace:' ','' | escape }}/{% endif %}">{{ page.index | escape }}{% if page.indexstub %}: {{ page.indexstub | escape }}{% endif %}</a></h1>{% unless page.centered %}
+        </header>{% endunless %}{% endif %}
 
 {{ content }}
     </div>
