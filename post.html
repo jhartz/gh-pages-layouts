@@ -14,7 +14,7 @@ indexstub: Ramblings by Jake
         <aside>
             <h3>Recent Posts</h3>
             <ul>{% for post in site.posts limit:3 %}{% capture shorttitle %}{{ post.title | truncatewords:6,'' }}{% endcapture %}{% capture title_length %}{{ post.title | size }}{% endcapture %}{% capture shorttitle_length %}{{ shorttitle | size }}{% endcapture %}{% capture shorttitle_split %}{{ shorttitle | split:':' }}{% endcapture %}
-                <li><a href="{{ post.url }}">{{ shorttitle_split | first }}{% for bit in shorttitle_split offset:1 %}{% if forloop.last == false or bit %}:{{ bit }}{% endif %}{% endfor %}</a>{% if shorttitle_length < title_length %}&hellip;{% endif %} <small>({{ post.date | date: '%m/%d/%Y' }})</small></li>{% endfor %}
+                <li><a href="{{ post.url }}">{{ shorttitle_split | first }}{% for bit in shorttitle_split offset:1 %}{% unless forloop.last and bit == '' %}:{{ bit }}{% endunless %}{% endfor %}</a>{% if shorttitle_length < title_length %}&hellip;{% endif %} <small>({{ post.date | date: '%m/%d/%Y' }})</small></li>{% endfor %}
             </ul>
         </aside>
 
