@@ -13,8 +13,8 @@ indexstub: Ramblings by Jake
 
         <aside>
             <h3>Recent Posts</h3>
-            <ul>{% for post in site.posts limit:3 %}{% capture shorttitle %}{{ post.title | truncatewords:6,'' }}{% endcapture %}{% capture title_length %}{{ post.title | size }}{% endcapture %}{% capture shorttitle_length %}{{ shorttitle | size }}{% endcapture %}{% capture shorttitle_split %}{{ shorttitle | split:':' }}{% endcapture %}
-                <li><a href="{{ post.url }}">{{ shorttitle_split | first }}{% for bit in shorttitle_split offset:1 %}{% capture bit_size %}{{ bit | size }}{% endcapture %}{% unless forloop.last and bit_size == 0 %}:<span title="{{ forloop.last }} -- {{ bit_size }}">{{ bit }}</span>{% endunless %}{% endfor %}</a>{% if shorttitle_length < title_length %}&hellip;{% endif %} <small>({{ post.date | date: '%m/%d/%Y' }})</small></li>{% endfor %}
+            <ul>{% for post in site.posts limit:3 %}{% capture shorttitle %}{{ post.title | truncatewords:6,'' }}{% endcapture %}{% capture title_length %}{{ post.title | size }}{% endcapture %}{% capture shorttitle_length %}{{ shorttitle | size }}{% endcapture %}{% assign shorttitle_split = shorttitle | split:':' %}
+                <li><a href="{{ post.url }}"><span class="first">{{ shorttitle_split | first }}</span>{% for bit in shorttitle_split offset:1 %}{% capture bit_size %}{{ bit | size }}{% endcapture %}{% unless forloop.last and bit_size == 0 %}:<span title="{{ forloop.last }} -- {{ bit_size }}">{{ bit }}</span>{% endunless %}{% endfor %}</a>{% if shorttitle_length < title_length %}&hellip;{% endif %} <small>({{ post.date | date: '%m/%d/%Y' }})</small></li>{% endfor %}
             </ul>
         </aside>
 
