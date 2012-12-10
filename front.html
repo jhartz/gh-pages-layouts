@@ -49,11 +49,12 @@ Shadowbox.init({
 <script type="text/javascript">
 var christmas = {
     cookie: function (name, value) {
+        name = "christmas_" + name;
         if (value) {
             var max_age = (60*60*24*365) / 2; // 1/2 year (in seconds)
             var expires = (new Date()).getTime() + max_age * 1000; // 1/2 year (in milliseconds)
             expires = new Date(expires);
-            document.cookie = "christmas_" + name + "=" + value + ";path=/;max-age=" + max_age + ";expires=" + (expires.toGMTString ? expires.toGMTString() : expires.toUTCString());
+            document.cookie = name + "=" + value + ";path=/;max-age=" + max_age + ";expires=" + (expires.toGMTString ? expires.toGMTString() : expires.toUTCString());
         } else {
             var cookies = document.cookie.split(";");
             for (var i = 0; i < cookies.length; i++) {
