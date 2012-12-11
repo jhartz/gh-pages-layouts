@@ -11,60 +11,7 @@ christmas: 1
     <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <link rel="stylesheet" type="text/css" media="screen,tv,projection" href="/style.css">{% if page.christmas %}
-    <style type="text/css">
-    #lights {
-        position:absolute;
-        left:0px;
-        top:0px;
-        width:100%;
-        min-width: 780px;
-        height:2.3em;
-        overflow:hidden;
-    }
-    .xlsf-light {
-        position:absolute;
-    }
-    body.fast .xlsf-light {
-        opacity:0.9;
-    }
-    .xlsf-fragment {
-        position:absolute;
-        background:transparent url(http://mp4downloader.mozdev.org/images/christmas/image/bulbs-50x50-fragments.png) no-repeat 0px 0px;
-        width:50px;
-        height:50px;
-    }
-    .xlsf-fragment-box {
-        position:absolute;
-        left:0px;
-        top:0px;
-        width:50px;
-        height:50px;
-        *width:100%;
-        *height:100%;
-        display:none;
-    }
-    .xlsf-cover {
-        position:fixed;
-        left:0px;
-        top:0px;
-        width:100%;
-        height:100%;
-        background:#fff;
-        opacity:1;
-        z-index:999;
-        display:none;
-    }
-    /*
-    .xlsf-light.bottom {
-        height:49px;
-        border-bottom:1px solid #006600;
-    }
-    .xlsf-light.top {
-        height:49px;
-        border-top:1px solid #009900;
-    }
-    */
-    </style>{% endif %}{% if page.shadowbox %}
+    <link rel="stylesheet" type="text/css" href="/christmas/christmas.css">{% endif %}{% if page.shadowbox %}
     <link rel="stylesheet" type="text/css" href="/shadowbox/shadowbox.css">
     <script type="text/javascript" src="/shadowbox/shadowbox.js"></script>{% endif %}
 </head>
@@ -84,7 +31,7 @@ christmas: 1
 {{ content }}
     </div>
     {% if page.christmas %}<footer>
-        <!--[if gte IE 8]><!--><ul class="inline" style="text-align: center;">
+        <!--[if gte IE 8]><!--><ul class="inline noprint" style="text-align: center; display: none;">
             <li id="christmas_snow_stop" style="display: none;"><span class="fakelink" onclick="christmas.snow.stop(); return false;">Stop Snowstorm</span></li>
             <li id="christmas_snow_start" style="display: none;"><span class="fakelink" onclick="christmas.snow.start(); return false;">Start Snowstorm</span></li>
             <li id="christmas_lights_stop" style="display: none;"><span class="fakelink" onclick="christmas.lights.stop(); return false;">Hide Christmas Lights</span></li>
