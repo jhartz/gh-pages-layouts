@@ -11,8 +11,8 @@ indexurl: /blog/
             </ul>
         </aside>
 
-        <h2>{{ page.title | escape }}</h2>
         <p class="timestamp">Posted on {{ page.date | date: '%m/%d/%Y' }}</p>
+        <h2>{{ page.title | escape }}</h2>
         <article>
 {% endunless %}
 {{ content }}
