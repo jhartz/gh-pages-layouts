@@ -18,7 +18,7 @@ indexurl: /blog/
 {{ content }}
 {% unless page.noextra %}
         </article>
-        <div class="bottombar" style="clear: both;">{% if page.previous.url %}
-            <span>«&nbsp;<a href="{{ page.previous.url | escape }}" title="{{ page.previous.title | escape }}">{{ page.previous.title | truncatewords: 15 | escape }}</a></span>{% endif %}{% if page.next.url %}
-            <span style="float: right;"><a href="{{ page.next.url | escape }}" title="{{ page.next.title | escape }}">{{ page.next.title | truncatewords: 15 | escape }}</a>&nbsp;»</span>{% endif %}
+        <div class="bottombar" style="clear: both;">
+            <span>{% if page.previous.url %}«&nbsp;<a href="{{ page.previous.url | escape }}" title="{{ page.previous.title | escape }}">{{ page.previous.title | truncatewords: 15 | escape }}</a>{% else %}&nbsp;{% endif %}</span>{% if page.next.url %}
+            <span><a href="{{ page.next.url | escape }}" title="{{ page.next.title | escape }}">{{ page.next.title | truncatewords: 15 | escape }}</a>&nbsp;»</span>{% endif %}
         </div>{% endunless %}
