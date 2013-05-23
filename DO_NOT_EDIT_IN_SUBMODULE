@@ -1,3 +1,3 @@
-This repo is mainly used as a submodule (the "_layouts" folder) in the GitHub Pages repos for jhartz.github.com.
+This repo is mainly used as a submodule (the "_layouts" folder) in the GitHub Pages repos for jhartz.github.io.
 Make sure to only edit files in a clone of the actual repo, since the submodules are read-only.
 Also, make sure to update the submodules in each repo containing them after each update to this repo.

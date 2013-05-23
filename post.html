@@ -1,17 +1,10 @@
 ---
-layout: front
+layout: top
 atomfeed: 1
-index: Blog
-indexstub: Ramblings by Jake
+index: "Blog: Ramblings by Jake"
+indexurl: /blog/
 ---
-        <nav>
-            <ul>
-                <!-- <li><a href="">Archives</a></li> -->
-                <li><a href="/blog/atom.xml">Feed</a></li>
-            </ul>
-        </nav>{% unless page.noextra %}
-
-        <aside>
+{% unless page.noextra %}        <aside>
             <h3>Recent Posts</h3>
             <ul>{% for post in site.posts limit:3 %}
                 <li><a href="{{ post.url }}" title="{{ post.title | escape }}">{{ post.title | escape | truncatewords:6,' &hellip;' }}</a> <small>({{ post.date | date: '%m/%d/%Y' }})</small></li>{% endfor %}
@@ -20,8 +13,8 @@ indexstub: Ramblings by Jake
 
         <h2>{{ page.title | escape }}</h2>
         <p class="timestamp">Posted on {{ page.date | date: '%m/%d/%Y' }}</p>
-        <article>{% endunless %}
-
+        <article>
+{% endunless %}
 {{ content }}
 {% unless page.noextra %}
         </article>

@@ -1,15 +1,14 @@
 ---
-layout: front
+layout: top
 index: MP4 Downloader
-indexicon: http://mp4downloader.mozdev.org/button_real.png
+#indexicon: http://mp4downloader.mozdev.org/button_real.png
+nav:
+  - name: About
+    page: index.html
+  - name: Download
+  - name: Screenshots
+  - name: Development
+  - name: Docs
+  - name: Contact
 ---
-        <nav>
-            <ul>
-                <li><a href="{% if page.dir %}{{ page.dir }}/{% endif %}screenshots.html">Screenshots</a></li>
-                <li><a href="{% if page.dir %}{{ page.dir }}/{% endif %}development.html">Development</a></li>
-                <li><a href="{% if page.dir %}{{ page.dir }}/{% endif %}docs.html">Docs</a></li>
-                <li><a href="{% if page.dir %}{{ page.dir }}/{% endif %}contact.html">Contact</a></li>
-            </ul>
-        </nav>
-        
 {{ content }}
