@@ -31,7 +31,7 @@
             <p class="view"><a href="/">jhartz.github.io</a></p>
             <h1>{% if page.index %}<a href="{% if page.indexurl %}{{ page.indexurl | escape }}{% else %}/{{ page.index | downcase | replace:' ','' | escape }}/{% endif %}">{{ page.index | escape }}</a>{% else %}{% if page.title %}{{ page.title | escape }}{% else %}jhartz.github.io{% endif %}{% endif %}</h1>{% if page.nav %}
             <ul>{% for nav in page.nav %}
-                <li><a href="{% if page.dir %}{{ page.dir | escape }}/{% endif %}{% if nav.page %}{{ nav.page | escape }}{% else %}{{ nav.name | downcase | replace:' ','' | escape }}.html{% endif %}">{{ nav.name | escape }}</a></li>{% endfor %}
+                <li><a href="{% if page.navbase %}{{ page.navbase | escape }}{% endif %}{% if nav.page %}{{ nav.page | escape }}{% else %}{{ nav.name | downcase | replace:' ','' | escape }}.html{% endif %}">{{ nav.name | escape }}</a></li>{% endfor %}
             </ul>{% endif %}
             <p class="noview"><a href="/">jhartz.github.io</a></p>
         </header>
