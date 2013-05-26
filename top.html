@@ -1,7 +1,25 @@
 ---
 #christmas: 1
 ---
-<!DOCTYPE html>
+{% comment %}
+
+NOTE: In this explanation...
+  s"varname" means a string variable with name varname
+  a"varname" means an array with name varname
+  o"varname" means an object (or associative array) with name varname
+
+Explanation of Indexes and Navigation:
+
+Each page using this layout can define s"index" (and optional s"indexurl") that defines the name of that section of the site and the URL of its home. Also, a"indexlangs" can be used to specify different languages of the index.html file for that section of the site (used depending on value of s"lang" for that page).
+
+Navigation is specified in a"nav", where each child is an object with...
+  s"name"  (required; the display name)
+  s"url"   (the URL of the item; overrides s"page" and o"pages")
+  s"page"  (the page, relative to the index; if not specified, defaults to lowercase s"name" with spaces removed and ".html" appended)
+  o"langs" (the languages that the page is in, with each language pointing to the title of the page in that language)
+  o"pages" (same as s"page", but with the pages for different languages; if not specified, default is same as s"page" except with ".lang.html" appended instead, where "lang" is the language value)
+
+{% endcomment %}<!DOCTYPE html>
 <!-- Modernist theme by Steve Smith - https://github.com/orderedlist -->
 <html>
 <head>
@@ -33,9 +51,9 @@
     <div class="wrapper">
         <header>{% capture indexurl %}{% if page.indexurl %}{{ page.indexurl | escape }}{% else %}{% if page.index %}/{{ page.index | downcase | replace:' ','' | escape }}/{% endif %}{% endif %}{% endcapture %}
             <p class="view"><a href="/">jhartz.github.io</a></p>
-            <h1>{% if page.index %}<a href="{{ indexurl }}">{{ page.index | escape }}</a>{% else %}{% if page.title %}{{ page.title | escape }}{% else %}jhartz.github.io{% endif %}{% endif %}</h1>{% if page.nav %}
+            <h1>{% if page.index %}<a href="{{ indexurl }}{% if page.lang and page.indexlangs %}{% for lang in page.indexlangs %}{% if page.lang == lang %}index.{{ lang | escape }}.html{% endif %}{% endfor %}{% endif %}">{{ page.index | escape }}</a>{% else %}{% if page.title %}{{ page.title | escape }}{% else %}jhartz.github.io{% endif %}{% endif %}</h1>{% if page.nav %}
             <ul>{% for nav in page.nav %}
-                <li><a href="{% if nav.url %}{{ nav.url | escape }}{% else %}{{ indexurl }}{% if nav.page %}{{ nav.page | escape }}{% else %}{{ nav.name | downcase | replace:' ','' | escape }}.html{% endif %}{% endif %}">{{ nav.name | escape }}</a></li>{% endfor %}
+                <li><a href="{% if nav.url %}{{ nav.url | escape }}{% else %}{{ indexurl }}{% assign done = false %}{% if page.lang and nav.pages %}{% for lang in nav.pages %}{% if page.lang == lang[0] %}{{ lang[1] | escape }}{% assign done = true %}{% endif %}{% endfor %}{% endif %}{% if done == false %}{% if nav.page %}{{ nav.page | escape }}{% else %}{{ nav.name | downcase | replace:' ','' | escape }}{% if page.lang and nav.langs %}{% for lang in nav.langs %}{% if page.lang == lang[0] %}.{{ lang[0] }}{% endif %}{% endfor %}{% endif %}.html{% endif %}{% endif %}{% endif %}">{% assign done = false %}{% if page.lang and nav.langs %}{% for lang in nav.langs %}{% if page.lang == lang[0] %}{{ lang[1] | escape }}{% assign done = true %}{% endif %}{% endfor %}{% endif %}{% if done == false %}{{ nav.name | escape }}{% endif %}</a></li>{% endfor %}
             </ul>{% endif %}
             <p class="noview"><a href="/">jhartz.github.io</a></p>
         </header>
