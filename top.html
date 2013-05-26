@@ -5,7 +5,8 @@
 <!-- Modernist theme by Steve Smith - https://github.com/orderedlist -->
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta charset="utf-8">{% if page.redirect %}
+    <noscript><meta http-equiv="refresh" content="0; url={{ page.redirect | escape }}"></noscript>{% endif %}
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
@@ -18,7 +19,10 @@
     
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->{% if page.shadowbox %}
+    <![endif]-->{% if page.redirect %}
+    <script type="text/javascript">
+    location.replace("{{ page.redirect | xml_escape }}");
+    </script>{% endif %}{% if page.shadowbox %}
     <script type="text/javascript" src="/shadowbox/shadowbox.js"></script>{% endif %}
 </head>
 
@@ -35,9 +39,10 @@
             </ul>{% endif %}
             <p class="noview"><a href="/">jhartz.github.io</a></p>
         </header>
-        <section>
+        <section>{% if page.redirect %}
+            <p>Redirecting to: <a href="{{ page.redirect | escape }}">{% if page.title %}{{ page.title | escape }}{% else %}{{ page.redirect | escape }}{% endif %}</a></p>{% else %}
 
-{{ content }}
+{{ content }}{% endif %}
         </section>
     </div>
     
