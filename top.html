@@ -64,16 +64,17 @@ Navigation is specified in a"nav", where each child is an object with...
         </section>
     </div>
     
-    {% if page.christmas %}<footer class="noprint">
+    {% if page.christmas or page.langs %}<footer class="noprint">{% if page.langs %}
+        <p>{% case page.lang %}{% when 'es' %}Ver esta página en:{% else %}View this page in:{% endcase %}{% for lang in page.langs %} <a href="{{ lang[1] | escape }}">{{ lang[0] | escape }}</a>{% endfor %}</p>{% endif %}{% if page.christmas %}
         <!--[if gte IE 8]><!--><ul class="inline" style="text-align: center;">
             <li id="christmas_snow_stop" style="display: none;"><span class="fakelink" onclick="christmas.snow.stop(); return false;">Stop Snowstorm</span></li>
             <li id="christmas_snow_start" style="display: none;"><span class="fakelink" onclick="christmas.snow.start(); return false;">Start Snowstorm</span></li>
             <li id="christmas_lights_stop" style="display: none;"><span class="fakelink" onclick="christmas.lights.stop(); return false;">Hide Christmas Lights</span></li>
             <li id="christmas_lights_start" style="display: none;"><span class="fakelink" onclick="christmas.lights.start(); return false;">Show Christmas Lights</span></li>
             <li id="christmas_lights_sizes" style="display: none;">Size: <span id="christmas_lights_sizes_list"></span></li>
-        </ul><!--<![endif]-->
+        </ul><!--<![endif]-->{% endif %}
         <!--[if lt IE 8]><p><a href="http://www.mozilla.com/firefox/features/">A Better Browser</a></p><![endif]-->
-    </footer>{% else %}<!--[if IE]>
+    </footer>{% else %}<!--[if lte IE 8]>
     <footer class="noprint"><p><a href="http://www.mozilla.com/firefox/features/">A Better Browser</a></p></footer>
     <![endif]-->{% endif %}
 {% if page.email %}<script type="text/javascript" src="/email.js"></script>
