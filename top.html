@@ -19,7 +19,7 @@ Navigation is specified in a"nav", where each child is an object with...
   o"langs" (the languages that the page is in, with each language pointing to the title of the page in that language)
   o"pages" (same as s"page", but with the pages for different languages; if not specified, default is same as s"page" except with ".lang.html" appended instead, where "lang" is the language value)
 
-{% endcomment %}{% capture indexsep %}{% if page.indexsep %}{{ page.indexsep }}{% else %} {% endif %}{% endcapture %}<!DOCTYPE html>
+{% endcomment %}<!DOCTYPE html>
 <!-- Modernist theme by Steve Smith - https://github.com/orderedlist -->
 <html>
 <head>
@@ -49,7 +49,7 @@ Navigation is specified in a"nav", where each child is an object with...
     <div id="christmas_lights_preload" style="display: none;"></div>
     {% endif %}
     <div class="wrapper">
-        <header>{% capture indexurl %}{% if page.indexurl %}{{ page.indexurl | escape }}{% else %}{% if page.index %}/{{ page.index | downcase | replace:' ',indexsep | escape }}/{% endif %}{% endif %}{% endcapture %}
+        <header>{% capture indexurl %}{% if page.indexurl %}{{ page.indexurl | escape }}{% else %}{% if page.index %}/{{ page.index | downcase | replace:' ','' | escape }}/{% endif %}{% endif %}{% endcapture %}
             <p class="view"><a href="/">jhartz.github.io</a></p>
             <h1>{% if page.index %}<a href="{{ indexurl }}{% if page.lang and page.indexlangs %}{% for lang in page.indexlangs %}{% if page.lang == lang %}index.{{ lang | escape }}.html{% endif %}{% endfor %}{% endif %}">{{ page.index | escape }}</a>{% else %}{% if page.title %}{{ page.title | escape }}{% else %}jhartz.github.io{% endif %}{% endif %}</h1>{% if page.nav %}
             <ul>{% for nav in page.nav %}
