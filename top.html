@@ -100,8 +100,10 @@ Navigation is specified in a"nav", where each child is an object with...
             }
         }
     };
-    if (window.addEventListener) window.addEventListener("hashchange", hashfunc, false);
-    hashfunc();
+    if (window.addEventListener) {
+        window.addEventListener("hashchange", hashfunc, false);
+        window.addEventListener("load", hashfunc, false);
+    }
 })();
 </script>
 {% endif %}{% if page.christmas %}<!--[if gte IE 8]><!--><script type="text/javascript" src="/christmas/christmas.js"></script><!--<![endif]-->
