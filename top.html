@@ -82,9 +82,25 @@ Navigation is specified in a"nav", where each child is an object with...
     <![endif]-->{% endif %}
 {% if page.email %}<script type="text/javascript" src="/email.js"></script>
 {% endif %}{% if page.shadowbox %}<script type="text/javascript">
-Shadowbox.init({
-    continuous: true
-});
+(function () {
+    Shadowbox.init({
+        continuous: true
+    });
+    
+    // Auto-open a shadowbox object if it matches the page's hash
+    var hashfunc = function () {
+        if (location.hash) {
+            var id = location.hash.substring(1);
+            if (id && document.getElementById(id) && typeof document.getElementById(id).parentNode.click == "function" && document.getElementById(id).parentNode.getAttribute("rel") && document.getElementById(id).parentNode.getAttribute("rel").substring(0, 9) == "shadowbox") {
+                setTimeout(function () {
+                    document.getElementById(id).parentNode.click();
+                }, 100);
+            }
+        }
+    };
+    if (window.addEventListener) window.addEventListener("hashchange", hashfunc, false);
+    hashfunc();
+})();
 </script>
 {% endif %}{% if page.christmas %}<!--[if gte IE 8]><!--><script type="text/javascript" src="/christmas/christmas.js"></script><!--<![endif]-->
 {% endif %}{% unless page.noanalytics %}<script type="text/javascript">
