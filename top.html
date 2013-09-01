@@ -84,12 +84,13 @@ Navigation is specified in a"nav", where each child is an object with...
 {% endif %}{% if page.shadowbox %}<script type="text/javascript">
 (function () {
     // Auto-open a shadowbox object if it matches the page's hash
-    var hashfunc = function () {
+    var checkhash = function () {
         if (location.hash) {
             var id = location.hash.substring(1);
             if (id && document.getElementById(id) && document.getElementById(id).parentNode.getAttribute("rel") && document.getElementById(id).parentNode.getAttribute("rel").substring(0, 9) == "shadowbox") {
                 if (Shadowbox.isOpen()) {
                     try {
+                        // So we don't end up in an endless loop
                         if (Shadowbox.getCurrent().link.getElementsByTagName("img")[0].id == id) return;
                     } catch (err) {}
                     Shadowbox.close();
@@ -101,17 +102,23 @@ Navigation is specified in a"nav", where each child is an object with...
         }
     };
     
+    // Change the hash to match the current element
+    var changehash = function (current) {
+        if (current && current.link && current.link.getElementsByTagName("img").length > 0 && current.link.getElementsByTagName("img")[0].id) {
+            window.location.hash = "#" + current.link.getElementsByTagName("img")[0].id;
+        }
+    };
+    
     Shadowbox.init({
         continuous: true,
         animateFade: false,
-        onChange: function (current) {
-            if (current && current.link && current.link.getElementsByTagName("img").length > 0 && current.link.getElementsByTagName("img")[0].id) {
-                window.location.hash = "#" + current.link.getElementsByTagName("img")[0].id;
-            }
-        }
+        // covering all our bases
+        onOpen: changehash,
+        onChange: changehash,
+        onFinish: changehash
     }, function () {
-        if (window.addEventListener) window.addEventListener("hashchange", hashfunc, false);
-        hashfunc();
+        if (window.addEventListener) window.addEventListener("hashchange", checkhash, false);
+        checkhash();
     });
 })();
 </script>
