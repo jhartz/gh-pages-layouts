@@ -83,27 +83,36 @@ Navigation is specified in a"nav", where each child is an object with...
 {% if page.email %}<script type="text/javascript" src="/email.js"></script>
 {% endif %}{% if page.shadowbox %}<script type="text/javascript">
 (function () {
-    Shadowbox.init({
-        continuous: true,
-        animateFade: false
-    });
-    
     // Auto-open a shadowbox object if it matches the page's hash
     var hashfunc = function () {
         if (location.hash) {
             var id = location.hash.substring(1);
-            if (id && document.getElementById(id) && typeof document.getElementById(id).parentNode.click == "function" && document.getElementById(id).parentNode.getAttribute("rel") && document.getElementById(id).parentNode.getAttribute("rel").substring(0, 9) == "shadowbox") {
-                if (Shadowbox.isOpen()) Shadowbox.close();
+            if (id && document.getElementById(id) && document.getElementById(id).parentNode.getAttribute("rel") && document.getElementById(id).parentNode.getAttribute("rel").substring(0, 9) == "shadowbox") {
+                if (Shadowbox.isOpen()) {
+                    try {
+                        if (Shadowbox.getCurrent().link.getElementsByTagName("img")[0].id == id) return;
+                    } catch (err) {}
+                    Shadowbox.close();
+                }
                 setTimeout(function () {
                     Shadowbox.open(document.getElementById(id).parentNode);
                 }, 10);
             }
         }
     };
-    if (window.addEventListener) {
-        window.addEventListener("hashchange", hashfunc, false);
-        window.addEventListener("load", hashfunc, false);
-    }
+    
+    Shadowbox.init({
+        continuous: true,
+        animateFade: false,
+        onChange: function (current) {
+            if (current && current.link && current.link.getElementsByTagName("img").length > 0 && current.link.getElementsByTagName("img")[0].id) {
+                window.location.hash = "#" + current.link.getElementsByTagName("img")[0].id;
+            }
+        }
+    }, function () {
+        if (window.addEventListener) window.addEventListener("hashchange", hashfunc, false);
+        hashfunc();
+    });
 })();
 </script>
 {% endif %}{% if page.christmas %}<!--[if gte IE 8]><!--><script type="text/javascript" src="/christmas/christmas.js"></script><!--<![endif]-->
