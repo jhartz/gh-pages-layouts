@@ -14,9 +14,8 @@ Each page using this layout can define s"index" (and optional s"indexurl") that 
 
 Navigation is specified in a"nav", where each child is an object with...
   s"name"  (required; the display name)
-  s"url"   (the URL of the item; overrides s"dir" and s"page")
-  s"base"  (the base name of the HTML files; if not specified, defaults to lowercase s"name" with spaces removed, or "index" if s"dir" is defined. Either ".html" or ".lang.html" are appended to this)
-  s"dir"   (the directory, if the pages are in a subdirectory. MAKE SURE TO INCLUDE TRAILING "/")
+  s"url"   (the URL of the item; overrides s"base")
+  s"base"  (the base name of the HTML files; if not specified, defaults to lowercase s"name" with spaces removed. Either ".html" or ".lang.html" are appended to this. When referring to an index of a directory, specify just the directory with a trailing "/")
   o"langs" (the languages that the page is in, with each language pointing to the title of the page in that language)
 
 When working with languages and translations in an individual page...
@@ -58,7 +57,7 @@ When working with languages and translations in an individual page...
             <p class="view"><a href="/">jhartz.github.io</a></p>
             <h1>{% if page.index %}<a href="{{ indexurl }}{% if page.lang and page.indexlangs %}{% for lang in page.indexlangs %}{% if page.lang == lang %}index.{{ lang | escape }}.html{% endif %}{% endfor %}{% endif %}">{{ page.index | escape }}</a>{% else %}{% if page.title %}{{ page.title | escape }}{% else %}jhartz.github.io{% endif %}{% endif %}</h1>{% if page.nav %}
             <ul>{% for nav in page.nav %}
-                <li><a href="{% if nav.url %}{{ nav.url | escape }}{% else %}{{ indexurl }}{% if nav.dir %}{{ nav.dir | escape }}{% endif %}{% assign addindex = false %}{% if nav.base %}{{ nav.base | escape }}{% else %}{% if nav.dir %}{% assign addindex = true %}{% else %}{{ nav.name | downcase | replace:' ','' | escape }}{% endif %}{% endif %}{% assign indexadded = false %}{% if page.lang and nav.langs %}{% for lang in nav.langs %}{% if page.lang == lang[0] %}{% if addindex %}index{% assign indexadded = true %}{% endif %}.{{ lang[0] }}{% endif %}{% endfor %}{% endif %}{% if addindex == false or indexadded == true %}.html{% endif %}{% endif %}">{% assign done = false %}{% if page.lang and nav.langs %}{% for lang in nav.langs %}{% if page.lang == lang[0] %}{{ lang[1] | escape }}{% assign done = true %}{% endif %}{% endfor %}{% endif %}{% if done == false %}{{ nav.name | escape }}{% endif %}</a></li>{% endfor %}
+                <li><a href="{% if nav.url %}{{ nav.url | escape }}{% else %}{{ indexurl }}{% assign addindex = false %}{% if nav.base %}{{ nav.base | escape }}{% capture lastchar %}{{ nav.base | split:'' | last }}{% endcapture %}{% if lastchar == '/' %}{% assign addindex = true %}{% endif %}{% else %}{{ nav.name | downcase | replace:' ','' | escape }}{% endif %}{% assign indexadded = false %}{% if page.lang and nav.langs %}{% for lang in nav.langs %}{% if page.lang == lang[0] %}{% if addindex %}index{% assign indexadded = true %}{% endif %}.{{ lang[0] }}{% endif %}{% endfor %}{% endif %}{% if addindex == false or indexadded == true %}.html{% endif %}{% endif %}">{% assign done = false %}{% if page.lang and nav.langs %}{% for lang in nav.langs %}{% if page.lang == lang[0] %}{{ lang[1] | escape }}{% assign done = true %}{% endif %}{% endfor %}{% endif %}{% if done == false %}{{ nav.name | escape }}{% endif %}</a></li>{% endfor %}
             </ul>{% endif %}{% if page.prettynav %}
             <ul class="pretty">{% for nav in page.prettynav %}
                 <li><a href="{{ nav.url | escape }}">{{ nav.pre | escape }} <strong>{{ nav.text | escape }}</strong></a></li>{% endfor %}
