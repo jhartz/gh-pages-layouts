@@ -64,7 +64,7 @@ When working with languages and translations in an individual page...
 {% endcomment %}<!DOCTYPE html>
 <!-- Modernist theme by Steve Smith - https://github.com/orderedlist -->
 <!--
-{{ page.localizations.startsnowstorm["es"] }}
+{{ page.localizations.startsnowstorm[""] }}
 {% raw %}
 {% assign string = "" %}{% if page.lang %}{% for lang in page.localizations.startsnowstorm %}{% if lang[0] == page.lang %}{% assign string = lang[1] %}{% endif %}{% endfor %}{% endif %}{% if string == "" %}{% assign string = page.localizations.startsnowstorm[""] %}{{ string }}
 
