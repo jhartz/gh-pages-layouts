@@ -29,16 +29,6 @@ When working with languages and translations in an individual page...
 
 {% endcomment %}<!DOCTYPE html>
 <!-- Modernist theme by Steve Smith - https://github.com/orderedlist -->
-<!--
-{{ page.christmas }}
--
-{{ page.christmas.enabled }}
--
-{{ page.christmas.defaults }}
--
-{{ page.christmas.defaults.snow }}
-
--->
 <html>
 <head>
     <meta charset="utf-8">{% if page.redirect %}
@@ -142,8 +132,8 @@ When working with languages and translations in an individual page...
 <div id="christmas_lights_preload" style="display: none;"></div>
 <script type="text/javascript">
 var christmas_defaults = {
-    snow: {{ page.christmas.defaults.snow }},
-    lights: {{ page.christmas.defaults.lights }}
+    snow: {% if page.christmas.defaults.snow %}true{% else %}false{% endif %},
+    lights: {% if page.christmas.defaults.lights %}true{% else %}false{% endif %}
 };
 </script>
 <script type="text/javascript" src="/christmas/snowstorm-min.js"></script>
