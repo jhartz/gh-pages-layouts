@@ -7,7 +7,10 @@ christmas:
 
 
 # These localizations are just for this page; see below for details
-localizations:
+l10n:
+  abetterbrowser:
+    "": "A Better Browser"
+    es: "Un mejor navegador"
   startsnowstorm:
     "": "Start Snowstorm"
     es: "Empezar nevada"
@@ -16,28 +19,28 @@ localizations:
     es: "Dejar de nevada"
   showchristmaslights:
     "": "Show Christmas Lights"
-    es: ""
+    es: "Mostrar luces de navidad"
   hidechristmaslights:
     "": "Hide Christmas Lights"
-    es: ""
+    es: "Ocultar luces de navidad"
   size:
     "": "Size"
-    es: ""
+    es: "Tamaño"
   tiny:
     "": "Tiny"
-    es: ""
+    es: "Diminuto"
   small:
     "": "Small"
-    es: ""
+    es: "Pequeño"
   medium:
     "": "Medium"
-    es: ""
+    es: "Mediano"
   large:
     "": "Large"
-    es: ""
+    es: "Grande"
   huge:
     "": "Huge"
-    es: ""
+    es: "Enorme"
 ---
 {% comment %}
 
@@ -64,7 +67,7 @@ When working with languages and translations in an individual page...
 
 For localizations IN THIS PAGE: Define it above in the YAML Front Matter, then copy/paste this below, replacing the 2 instances of "VAR_NAME_HERE" with the variable from above:
 
-{% assign string = "" %}{% if page.lang %}{% for lang in page.localizations.VAR_NAME_HERE %}{% if lang[0] == page.lang %}{% assign string = lang[1] %}{% endif %}{% endfor %}{% endif %}{% if string == "" %}{% assign string = page.localizations.VAR_NAME_HERE[""] %}{% endif %}{{ string }}
+{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.VAR_NAME_HERE %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.VAR_NAME_HERE[""] %}{% endif %}{{ s | escape }}
 
 
 {% endcomment %}<!DOCTYPE html>
@@ -118,14 +121,14 @@ For localizations IN THIS PAGE: Define it above in the YAML Front Matter, then c
     {% if page.christmas.enabled or page.langs %}<footer class="noprint">{% if page.langs %}
         <p>{% case page.lang %}{% when 'es' %}Ver esta página en:{% else %}View this page in:{% endcase %} {% for lang in page.langs %}<a href="{% assign splitbase = page.base | split:'' %}{% capture front %}{{ splitbase[0] }}{{ splitbase[1] }}{{ splitbase[2] }}{% endcapture %}{% if front != "../" %}{{ page.base | escape }}{% endif %}{% if lang[0] != "" %}{% if front == "../" %}index{% endif %}.{{ lang[0] | escape }}.html{% else %}{% if front != "../" %}.html{% else %}{{ page.base | escape }}{% endif %}{% endif %}">{{ lang[1] | escape }}</a>{% unless forloop.last %}, {% endunless %}{% endfor %}</p>{% endif %}{% if page.christmas.enabled %}
         <!--[if gte IE 8]><!--><ul>
-            <li><span id="christmas_snow_toggle" class="fakelink" onclick="christmas.snow(); return false;"><span id="christmas_snow_toggle_start" style="display: none;">Start Snowstorm</span><span id="christmas_snow_toggle_stop" style="display: none;">Stop Snowstorm</span></span></li>
-            <li id="christmas_lights_stop" style="display: none;"><span class="fakelink" onclick="christmas.lights.stop(); return false;">Hide Christmas Lights</span></li>
-            <li id="christmas_lights_start" style="display: none;"><span class="fakelink" onclick="christmas.lights.start(); return false;">Show Christmas Lights</span></li>
-            <li id="christmas_lights_sizes" style="display: none;">Size: <span id="christmas_lights_sizes_list"></span></li>
+            <li><span id="christmas_snow_toggle" class="fakelink" onclick="christmas.snow(); return false;"><span id="christmas_snow_toggle_start" style="display: none;">{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.startsnowstorm %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.startsnowstorm[""] %}{% endif %}{{ s | escape }}</span><span id="christmas_snow_toggle_stop" style="display: none;">{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.stopsnowstorm %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.stopsnowstorm[""] %}{% endif %}{{ s | escape }}</span></span></li>
+            <li id="christmas_lights_stop" style="display: none;"><span class="fakelink" onclick="christmas.lights.stop(); return false;">{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.hidechristmaslights %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.hidechristmaslights[""] %}{% endif %}{{ s | escape }}</span></li>
+            <li id="christmas_lights_start" style="display: none;"><span class="fakelink" onclick="christmas.lights.start(); return false;">{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.showchristmaslights %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.showchristmaslights[""] %}{% endif %}{{ s | escape }}</span></li>
+            <li id="christmas_lights_sizes" style="display: none;">{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.size %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.size[""] %}{% endif %}{{ s | escape }}: <span id="christmas_lights_sizes_list"></span></li>
         </ul><!--<![endif]-->{% endif %}
-        <!--[if lt IE 8]><p><a href="http://www.mozilla.com/firefox/features/">A Better Browser</a></p><![endif]-->
+        <!--[if lt IE 8]><p><a href="http://www.mozilla.com/firefox/features/">{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.abetterbrowser %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.abetterbrowser[""] %}{% endif %}{{ s | escape }}</a></p><![endif]-->
     </footer>{% else %}<!--[if lte IE 8]>
-    <footer class="noprint"><p><a href="http://www.mozilla.com/firefox/features/">A Better Browser</a></p></footer>
+    <footer class="noprint"><p><a href="http://www.mozilla.com/firefox/features/">{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.abetterbrowser %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.abetterbrowser[""] %}{% endif %}{{ s | escape }}</a></p></footer>
     <![endif]-->{% endif %}
 {% if page.email %}<script type="text/javascript" src="/email.js"></script>
 {% endif %}{% if page.shadowbox %}<script type="text/javascript">
@@ -176,7 +179,13 @@ var christmas_defaults = {
     snow: {% if page.christmas.defaults.snow %}true{% else %}false{% endif %},
     lights: {% if page.christmas.defaults.lights %}true{% else %}false{% endif %}
 };
-var sizeTable = {pico: "tiny", tiny: "small", small: "medium", medium: "large", large: "huge"};
+var sizeTable = {
+    pico: "{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.tiny %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.tiny[""] %}{% endif %}{{ s | escape }}", // "tiny"
+    tiny: "{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.small %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.small[""] %}{% endif %}{{ s | escape }}", // "small"
+    small: "{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.medium %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.medium[""] %}{% endif %}{{ s | escape }}", // "medium"
+    medium: "{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.large %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.large[""] %}{% endif %}{{ s | escape }}", // "large"
+    large: "{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.huge %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.huge[""] %}{% endif %}{{ s | escape }}" // "huge"
+};
 </script>
 <script type="text/javascript" src="/christmas/snowstorm-min.js"></script>
 <script type="text/javascript" src="/christmas/christmas.js"></script>
