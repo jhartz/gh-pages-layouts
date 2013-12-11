@@ -6,21 +6,37 @@ christmas:
     lights: true
 
 
-lang: es # FOR TESTING
-
 # These localizations are just for this page
-# Within the page, use `localizations["Var Name"]` and it will give you the best version it can
-# (NOTE: NOT `page.localizations` ... see stuff right before DOCTYPE)
 localizations:
-  "Start Snowstorm":
+  startsnowstorm:
+    "": "Start Snowstorm"
     es: "Empezar nevada"
-  "Stop Snowstorm":
+  stopsnowstorm:
+    "": "Stop Snowstorm"
     es: "Dejar de nevada"
-  "Show Christmas Lights":
+  showchristmaslights:
+    "": "Show Christmas Lights"
     es: ""
-  "Hide Christmas Lights":
+  hidechristmaslights:
+    "": "Hide Christmas Lights"
     es: ""
-  "Size":
+  size:
+    "": "Size"
+    es: ""
+  tiny:
+    "": "Tiny"
+    es: ""
+  small:
+    "": "Small"
+    es: ""
+  medium:
+    "": "Medium"
+    es: ""
+  large:
+    "": "Large"
+    es: ""
+  huge:
+    "": "Huge"
     es: ""
 ---
 {% comment %}
@@ -48,26 +64,12 @@ When working with languages and translations in an individual page...
 {% endcomment %}<!DOCTYPE html>
 <!-- Modernist theme by Steve Smith - https://github.com/orderedlist -->
 <!--
-{% assign localizations = {} %}
-{% for string in page.localizations %}
-    STARTING: {{ string }}
-    {% if page.lang and string[1][page.lang] %}
-        1
-        {{ string[1][page.lang] }}
-        {% assign localizations[string[0]] = string[1][page.lang] %}
-    {% else %}
-        2
-        {{ string[1][page.lang] }}
-        {% assign localizations[string[0]] = string[0] %}
-    {% endif %}
-{% endfor %}
--->
-<!--
-{{ page.localizations }}
 
-.....
+{% assign string = "" %}{% if page.lang %}{% for lang in localizations.startsnowstorm %}{% if lang[0] == page.lang %}{% assign string = lang[1] %}{% endif %}{% endfor %}{% endif %}{% if string == "" %}{% assign string = localizations.startsnowstorm[""] %}{{ string }}
 
-{{ localizations }}
+
+
+{% assign string = "" %}{% if page.lang %}{% for lang in localizations.stopsnowstorm %}{% if lang[0] == page.lang %}{% assign string = lang[1] %}{% endif %}{% endfor %}{% endif %}{% if string == "" %}{% assign string = localizations.stopsnowstorm[""] %}{{ string }}
 -->
 <html>
 <head>
@@ -176,6 +178,7 @@ var christmas_defaults = {
     snow: {% if page.christmas.defaults.snow %}true{% else %}false{% endif %},
     lights: {% if page.christmas.defaults.lights %}true{% else %}false{% endif %}
 };
+var sizeTable = {pico: "tiny", tiny: "small", small: "medium", medium: "large", large: "huge"};
 </script>
 <script type="text/javascript" src="/christmas/snowstorm-min.js"></script>
 <script type="text/javascript" src="/christmas/christmas.js"></script>
