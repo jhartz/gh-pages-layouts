@@ -3,7 +3,7 @@ christmas:
   enabled: true
   defaults:
     snow: false
-    lights: false
+    lights: true
 ---
 {% comment %}
 
@@ -68,7 +68,8 @@ When working with languages and translations in an individual page...
             <p class="noview"><a href="/">jhartz.github.io</a></p>
         </header>
         <section>{% if page.redirect %}
-            <p>Redirecting to: <a href="{{ page.redirect | escape }}">{% if page.title %}{{ page.title | escape }}{% else %}{{ page.redirect | escape }}{% endif %}</a></p>{% else %}
+            <p>Redirecting to: <a href="{{ page.redirect | escape }}">{% if page.title %}{{ page.title | escape }}{% else %}{{ page.redirect | escape }}{% endif %}</a></p>{% else %}{% if page.christmas.enabled %}
+            <div id="christmas_festive_mood" class="section-msg" style="display: none;">In a festive mood? Try turning on the snowstorm by clicking "Start Snowstorm" at the very bottom of the page!</div>{% endif %}
 
 {{ content }}{% endif %}
         </section>
