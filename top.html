@@ -42,8 +42,23 @@ When working with languages and translations in an individual page...
   s"base"  (the base name of the page (without ".html"). If the base is the current directory (used for the index file in a directory), use the directory name, and indicate that it's a directory by STARTING with a "../" and ENDING with a "/")
   o"langs" (other languages that the page is in, with each language pointing to the title of the page in that language)
 
-{% endcomment %}{% assign localizations = [] %}{% for string in page.localizations %}{% if page.lang and string[1][page.lang] %}{% assign localizations[string[0]] = string[1][page.lang] %}{% else %}{% assign localizations[string[0]] = string[0] %}{% endif %}{% endfor %}<!DOCTYPE html>
+{% endcomment %}<!DOCTYPE html>
 <!-- Modernist theme by Steve Smith - https://github.com/orderedlist -->
+<!--
+{% assign localizations = {} %}
+{% for string in page.localizations %}
+    STARTING: {{ string }}
+    {% if page.lang and string[1][page.lang] %}
+        1
+        {{ string[1][page.lang] }}
+        {% assign localizations[string[0]] = string[1][page.lang] %}
+    {% else %}
+        2
+        {{ string[1][page.lang] }}
+        {% assign localizations[string[0]] = string[0] %}
+    {% endif %}
+{% endfor %}
+-->
 <!--
 {{ page.localizations }}
 
