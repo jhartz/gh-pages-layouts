@@ -4,6 +4,21 @@ christmas:
   defaults:
     snow: false
     lights: true
+
+# These localizations are just for this page
+# Within the page, use `localizations["Var Name"]` and it will give you the best version it can
+# (NOTE: NOT `page.localizations` ... see stuff right before DOCTYPE)
+localizations:
+  "Start Snowstorm":
+    es: "Empezar nevada"
+  "Stop Snowstorm":
+    es: "Dejar de nevada"
+  "Show Christmas Lights":
+    es: ""
+  "Hide Christmas Lights":
+    es: ""
+  "Size":
+    es: ""
 ---
 {% comment %}
 
@@ -27,8 +42,15 @@ When working with languages and translations in an individual page...
   s"base"  (the base name of the page (without ".html"). If the base is the current directory (used for the index file in a directory), use the directory name, and indicate that it's a directory by STARTING with a "../" and ENDING with a "/")
   o"langs" (other languages that the page is in, with each language pointing to the title of the page in that language)
 
-{% endcomment %}<!DOCTYPE html>
+{% endcomment %}{% assign localizations = [] %}{% for string in page.localizations %}{% if page.lang and string[1][page.lang] %}{% assign localizations[string[0]] = string[1][page.lang] %}{% else %}{% assign localizations[string[0]] = string[0] %}{% endif %}{% endfor %}<!DOCTYPE html>
 <!-- Modernist theme by Steve Smith - https://github.com/orderedlist -->
+<!--
+{{ page.localizations }}
+
+.....
+
+{{ localizations }}
+-->
 <html>
 <head>
     <meta charset="utf-8">{% if page.redirect %}
