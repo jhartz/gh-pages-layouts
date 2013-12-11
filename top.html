@@ -65,11 +65,10 @@ When working with languages and translations in an individual page...
 <!-- Modernist theme by Steve Smith - https://github.com/orderedlist -->
 <!--
 
-{% assign string = "" %}{% raw %}{% if page.lang %}{% for lang in localizations.startsnowstorm %}{% if lang[0] == page.lang %}{% assign string = lang[1] %}{% endif %}{% endfor %}{% endif %}{% if string == "" %}{% assign string = localizations.startsnowstorm[""] %}{{ string }}
+{% assign string = "" %}{% if page.lang %}{% for lang in page.localizations.startsnowstorm %}{% if lang[0] == page.lang %}{% assign string = lang[1] %}{% endif %}{% endfor %}{% endif %}{% if string == "" %}{% assign string = localizations.startsnowstorm[""] %}{{ string }}
 
 
-
-{% assign string = "" %}{% if page.lang %}{% for lang in localizations.stopsnowstorm %}{% if lang[0] == page.lang %}{% assign string = lang[1] %}{% endif %}{% endfor %}{% endif %}{% if string == "" %}{% assign string = localizations.stopsnowstorm[""] %}{{ string }}{% endraw %}
+{% assign string = "" %}{% if page.lang %}{% for lang in page.localizations.stopsnowstorm %}{% if lang[0] == page.lang %}{% assign string = lang[1] %}{% endif %}{% endfor %}{% endif %}{% if string == "" %}{% assign string = localizations.stopsnowstorm[""] %}{{ string }}
 -->
 <html>
 <head>
