@@ -68,11 +68,11 @@ When working with languages and translations in an individual page...
 
 {% assign string = "" %}{% if page.lang %}{% for lang in page.localizations.startsnowstorm %}{% if lang[0] == page.lang %}{% assign string = lang[1] %}{% endif %}{% endfor %}{% endif %}{% if string == "" %}{% assign string = page.localizations.startsnowstorm[""] %}{% endif %}{{ string }}
 
-{% assign jim = {"a"=>2} %}
+{% assign jim = ["a"=>2] %}
 {{ jim }}
 
 
-56
+567
 -->
 <html>
 <head>
