@@ -23,7 +23,10 @@ When working with languages and translations in an individual page...
   s"base"  (the base name of the page (without ".html"). If the base is the current directory (used for the index file in a directory), use the directory name, and indicate that it's a directory by STARTING with a "../" and ENDING with a "/")
   o"langs" (other languages that the page is in, with each language pointing to the title of the page in that language)
 
-{% endcomment %}<!DOCTYPE html>
+{% endcomment %}{% if page.images %}{% capture imagecontent %}{% for image in page.images %}<figure>
+    <p><a rel="shadowbox[PageImages]"{% if image.caption %} title="{{ image.caption | escape }}"{% endif %} href="{{ image.url | escape }}"><img src="{% if image.thumburl %}{{ image.thumburl | escape }}{% else %}{{ image.url | escape }}{% endif %}"{% if image.id %} id="{{ image.id | escape}}"{% endif %}{% if image.caption %} alt="{{ image.caption | escape }}"{% endif %}></a></p>
+    <figcaption>{{ image.caption | escape }}</figcaption>
+</figure>{% endfor %}{% endcapture %}{% endif %}<!DOCTYPE html>
 <!-- Modernist theme by Steve Smith - https://github.com/orderedlist -->
 <html>
 <head>
