@@ -1,9 +1,9 @@
 ---
 christmas:
-    on: 1
-    defaults:
-        snow: true
-        lights: true
+  enabled: true
+  defaults:
+    snow: true
+    lights: true
 ---
 {% comment %}
 
@@ -31,11 +31,11 @@ When working with languages and translations in an individual page...
 <!-- Modernist theme by Steve Smith - https://github.com/orderedlist -->
 <!--
 {{ page.christmas }}
----
-{{ page.christmas.on }}
----
+-
+{{ page.christmas.enabled }}
+-
 {{ page.christmas.defaults }}
----
+-
 {{ page.christmas.defaults.snow }}
 
 -->
@@ -49,7 +49,7 @@ When working with languages and translations in an individual page...
     <title>{% if page.title %}{{ page.title | escape }}{% if page.index %} - {% endif %}{% endif %}{% if page.index %}{{ page.index | escape }}{% endif %}</title>{% if page.atomfeed %}
     <link rel="alternate" type="application/atom+xml" title="Ramblings by Jake &raquo; Feed" href="/blog/atom.xml">{% endif %}
     
-    <link rel="stylesheet" type="text/css" href="/style-new.css">{% if page.christmas.on %}
+    <link rel="stylesheet" type="text/css" href="/style-new.css">{% if page.christmas.enabled %}
     <link rel="stylesheet" type="text/css" href="/christmas/christmas.css">{% endif %}{% if page.shadowbox %}
     <link rel="stylesheet" type="text/css" href="/shadowbox/shadowbox.css">{% endif %}
     
@@ -62,7 +62,7 @@ When working with languages and translations in an individual page...
     <script type="text/javascript" src="/shadowbox/shadowbox.js"></script>{% endif %}
 </head>
 
-<body>{% if page.christmas.on %}
+<body>{% if page.christmas.enabled %}
     <div id="lights" style="display: none;"></div>
     {% endif %}
     <div class="wrapper">
@@ -84,8 +84,8 @@ When working with languages and translations in an individual page...
         </section>
     </div>
     
-    {% if page.christmas.on or page.langs %}<footer class="noprint">{% if page.langs %}
-        <p>{% case page.lang %}{% when 'es' %}Ver esta página en:{% else %}View this page in:{% endcase %} {% for lang in page.langs %}<a href="{% assign splitbase = page.base | split:'' %}{% capture front %}{{ splitbase[0] }}{{ splitbase[1] }}{{ splitbase[2] }}{% endcapture %}{% if front != "../" %}{{ page.base | escape }}{% endif %}{% if lang[0] != "" %}{% if front == "../" %}index{% endif %}.{{ lang[0] | escape }}.html{% else %}{% if front != "../" %}.html{% else %}{{ page.base | escape }}{% endif %}{% endif %}">{{ lang[1] | escape }}</a>{% unless forloop.last %}, {% endunless %}{% endfor %}</p>{% endif %}{% if page.christmas.on %}
+    {% if page.christmas.enabled or page.langs %}<footer class="noprint">{% if page.langs %}
+        <p>{% case page.lang %}{% when 'es' %}Ver esta página en:{% else %}View this page in:{% endcase %} {% for lang in page.langs %}<a href="{% assign splitbase = page.base | split:'' %}{% capture front %}{{ splitbase[0] }}{{ splitbase[1] }}{{ splitbase[2] }}{% endcapture %}{% if front != "../" %}{{ page.base | escape }}{% endif %}{% if lang[0] != "" %}{% if front == "../" %}index{% endif %}.{{ lang[0] | escape }}.html{% else %}{% if front != "../" %}.html{% else %}{{ page.base | escape }}{% endif %}{% endif %}">{{ lang[1] | escape }}</a>{% unless forloop.last %}, {% endunless %}{% endfor %}</p>{% endif %}{% if page.christmas.enabled %}
         <!--[if gte IE 8]><!--><ul>
             <li><span id="christmas_snow_toggle" class="fakelink" onclick="christmas.snow(); return false;"><span id="christmas_snow_toggle_start" style="display: none;">Start Snowstorm</span><span id="christmas_snow_toggle_stop" style="display: none;">Stop Snowstorm</span></span></li>
             <li id="christmas_lights_stop" style="display: none;"><span class="fakelink" onclick="christmas.lights.stop(); return false;">Hide Christmas Lights</span></li>
@@ -138,7 +138,7 @@ When working with languages and translations in an individual page...
     });
 })();
 </script>
-{% endif %}{% if page.christmas.on %}<!--[if gte IE 8]><!-->
+{% endif %}{% if page.christmas.enabled %}<!--[if gte IE 8]><!-->
 <div id="christmas_lights_preload" style="display: none;"></div>
 <script type="text/javascript">
 var christmas_defaults = {
