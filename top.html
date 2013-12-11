@@ -48,10 +48,7 @@ When working with languages and translations in an individual page...
     <script type="text/javascript" src="/shadowbox/shadowbox.js"></script>{% endif %}
 </head>
 
-<body>{% if page.christmas %}
-    <div id="lights" style="display: none;"></div>
-    <div id="christmas_lights_preload" style="display: none;"></div>
-    {% endif %}
+<body>
     <div class="wrapper">
         <header>{% capture indexurl %}{% if page.indexurl %}{{ page.indexurl | escape }}{% else %}{% if page.index %}/{{ page.index | downcase | replace:' ','' | escape }}/{% endif %}{% endif %}{% endcapture %}
             <p class="view"><a href="/">jhartz.github.io</a></p>
@@ -82,7 +79,10 @@ When working with languages and translations in an individual page...
         <!--[if lt IE 8]><p><a href="http://www.mozilla.com/firefox/features/">A Better Browser</a></p><![endif]-->
     </footer>{% else %}<!--[if lte IE 8]>
     <footer class="noprint"><p><a href="http://www.mozilla.com/firefox/features/">A Better Browser</a></p></footer>
-    <![endif]-->{% endif %}
+    <![endif]-->{% endif %}{% if page.christmas %}
+    
+    <div id="lights" style="display: none;"></div>
+    <div id="christmas_lights_preload" style="display: none;"></div>{% endif %}
 {% if page.email %}<script type="text/javascript" src="/email.js"></script>
 {% endif %}{% if page.shadowbox %}<script type="text/javascript">
 (function () {
