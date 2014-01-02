@@ -4,7 +4,7 @@ atomfeed: 1
 index: "Blog: Ramblings by Jake"
 indexurl: /blog/
 ---
-{% unless page.noextra %}            <aside>
+{% unless page.blogindex %}            <aside>
                 <h3>Recent Posts</h3>
                 <ul>{% for post in site.posts limit:3 %}
                     <li><a href="{{ post.url }}" title="{{ post.title | escape }}">{{ post.title | escape | truncatewords:6,' &hellip;' }}</a> <small>({{ post.date | date: '%m/%d/%Y' }})</small></li>{% endfor %}
@@ -16,7 +16,7 @@ indexurl: /blog/
             <article>
 {% endunless %}
 {{ content }}
-{% unless page.noextra %}
+{% unless page.blogindex %}
             </article>
             <div class="bottombar" style="clear: both;">
                 <span>{% if page.previous.url %}«&nbsp;<a href="{{ page.previous.url | escape }}" title="{{ page.previous.title | escape }}">{{ page.previous.title | truncatewords: 15 | escape }}</a>{% else %}&nbsp;{% endif %}</span>{% if page.next.url %}
