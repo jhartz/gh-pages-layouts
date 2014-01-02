@@ -19,8 +19,8 @@ indexurl: /blog/
 {% unless page.blogindex %}
             </article>
             <div class="bottombar" style="clear: both;">
-                <span>{% if page.previous.url %}«&nbsp;<a href="{{ page.previous.url | escape }}" title="{{ page.previous.title | escape }}">{{ page.previous.title | truncatewords: 15 | escape }}</a>{% else %}&nbsp;{% endif %}</span>{% if page.next.url %}
-                <span><a href="{{ page.next.url | escape }}" title="{{ page.next.title | escape }}">{{ page.next.title | truncatewords: 15 | escape }}</a>&nbsp;»</span>{% endif %}
+                <span>{% if page.next.url %}«&nbsp;<a href="{{ page.next.url | escape }}" title="{{ page.next.title | escape }}">{{ page.next.title | truncatewords: 10 | escape }}</a>{% else %}&nbsp;{% endif %}</span>{% if page.previous.url %}
+                <span><a href="{{ page.previous.url | escape }}" title="{{ page.previous.title | escape }}">{{ page.previous.title | truncatewords: 10 | escape }}</a>&nbsp;»</span>{% endif %}
             </div>{% endunless %}
 {% if paginator %}
             <div class="bottombar" style="clear: both; text-align: center;">Page: {% comment %}
