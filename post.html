@@ -27,12 +27,12 @@ indexurl: /blog/
 
 First page, previous page:
 
-{% endcomment %}{% if paginator.previous_page %}<a href="/blog/">1</a>{% if paginator.previous_page > 1 %}&nbsp;&hellip;&nbsp;<a href="/blog/page{{ paginator.previous_page }}">{{ paginator.previous_page }}</a>&nbsp;&nbsp;{% endif %}{% endif %}{% comment %}
+{% endcomment %}{% if paginator.previous_page %}<a title="First page" href="/blog/">1</a>{% if paginator.previous_page > 1 %}&nbsp;&hellip;&nbsp;<a title="Previous page" href="/blog/page{{ paginator.previous_page }}">{{ paginator.previous_page }}</a>&nbsp;&nbsp;{% endif %}{% endif %}{% comment %}
 
 Current page:
 
-{% endcomment %}<span>{{ paginator.page }}</span>{% comment %}
+{% endcomment %}<strong title="Current page">{{ paginator.page }}</strong>{% comment %}
 
 Next page, last page:
 
-{% endcomment %}{% if paginator.next_page %}&nbsp;&nbsp;<a href="/blog/page{{ paginator.next_page }}">{{ paginator.next_page }}</a>{% if paginator.next_page < paginator.total_pages %}&nbsp;&hellip;&nbsp;<a href="/blog/page{{ paginator.total_pages }}">{{ paginator.total_pages }}</a>{% endif %}{% endif %}</div>{% endif %}
+{% endcomment %}{% if paginator.next_page %}&nbsp;&nbsp;<a title="Next page" href="/blog/page{{ paginator.next_page }}">{{ paginator.next_page }}</a>{% if paginator.next_page < paginator.total_pages %}&nbsp;&hellip;&nbsp;<a title="Last page" href="/blog/page{{ paginator.total_pages }}">{{ paginator.total_pages }}</a>{% endif %}{% endif %}</div>{% endif %}
