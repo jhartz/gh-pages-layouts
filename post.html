@@ -22,3 +22,17 @@ indexurl: /blog/
                 <span>{% if page.previous.url %}«&nbsp;<a href="{{ page.previous.url | escape }}" title="{{ page.previous.title | escape }}">{{ page.previous.title | truncatewords: 15 | escape }}</a>{% else %}&nbsp;{% endif %}</span>{% if page.next.url %}
                 <span><a href="{{ page.next.url | escape }}" title="{{ page.next.title | escape }}">{{ page.next.title | truncatewords: 15 | escape }}</a>&nbsp;»</span>{% endif %}
             </div>{% endunless %}
+{% if paginator %}
+            <div class="bottombar" style="clear: both; text-align: center;">{% comment %}
+
+First page, previous page:
+
+{% endcomment %}{% if paginator.previous_page %}<a href="/blog/">1</a>{% if paginator.previous_page > 1 %}&nbsp;&hellip;&nbsp;<a href="/blog/page{{ paginator.previous_page }}">{{ paginator.previous_page }}</a>&nbsp;{% endif %}{% endif %}{% comment %}
+
+Current page:
+
+{% endcomment %}<span>{{ paginator.page }}</span>{% comment %}
+
+Next page, last page:
+
+{% endcomment %}{% if paginator.next_page %}&nbsp;<a href="/blog/page{{ paginator.next_page }}">{{ paginator.next_page }}</a>{% if paginator.next_page < paginator.total_pages %}&nbsp;&hellip;&nbsp;<a href="/blog/page{{ paginator.total_pages }}">{{ paginator.total_pages }}</a>{% endif %}{% endif %}</div>{% endif %}
