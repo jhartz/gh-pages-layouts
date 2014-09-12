@@ -86,7 +86,7 @@ NOTE: The following for loop has VERY SIMILAR CODE BELOW!! (links in footer)
 
 {% endcomment %}
     {% for lang in page.langs %}
-    <link rel="alternative" hreflang="{{ lang[0] | escape }}" href="{% assign splitbase = page.base | split:'' %}{% capture front %}{{ splitbase[0] }}{{ splitbase[1] }}{{ splitbase[2] }}{% endcapture %}{% if front != "../" %}{{ page.base | escape }}{% endif %}{% if lang[0] != "" %}{% if front == "../" %}index{% endif %}.{{ lang[0] | escape }}.html{% else %}{% if front != "../" %}.html{% else %}{{ page.base | escape }}{% endif %}{% endif %}">{% endfor %}{% endif %}
+    <link rel="alternative" hreflang="{% if lang[0] != "" %}{{ lang[0] | escape }}{% else %}en{% endif %}" href="{% assign splitbase = page.base | split:'' %}{% capture front %}{{ splitbase[0] }}{{ splitbase[1] }}{{ splitbase[2] }}{% endcapture %}{% if front != "../" %}{{ page.base | escape }}{% endif %}{% if lang[0] != "" %}{% if front == "../" %}index{% endif %}.{{ lang[0] | escape }}.html{% else %}{% if front != "../" %}.html{% else %}{{ page.base | escape }}{% endif %}{% endif %}">{% endfor %}{% endif %}
     
     <link rel="stylesheet" type="text/css" href="/style-new.css">{% if page.christmas.enabled %}
     <link rel="stylesheet" type="text/css" href="/christmas/christmas.css">{% endif %}{% if page.shadowbox %}
