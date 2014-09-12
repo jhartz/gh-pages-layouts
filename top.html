@@ -80,7 +80,13 @@ For localizations IN THIS PAGE: Define it above in the YAML Front Matter, then c
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
     <title>{% if page.title %}{{ page.title | escape }}{% if page.index %} - {% endif %}{% endif %}{% if page.index %}{{ page.index | escape }}{% endif %}</title>{% if page.atomfeed %}
-    <link rel="alternate" type="application/atom+xml" title="Ramblings by Jake &raquo; Feed" href="/blog/atom.xml">{% endif %}
+    <link rel="alternate" type="application/atom+xml" title="Ramblings by Jake &raquo; Feed" href="/blog/atom.xml">{% endif %}{% if page.langs %}{% comment %}
+
+NOTE: The following for loop has VERY SIMILAR CODE BELOW!! (links in footer)
+
+{% endcomment %}
+    {% for lang in page.langs %}
+    <link rel="alternative" hreflang="{{ lang[0] | escape }}" href="{% assign splitbase = page.base | split:'' %}{% capture front %}{{ splitbase[0] }}{{ splitbase[1] }}{{ splitbase[2] }}{% endcapture %}{% if front != "../" %}{{ page.base | escape }}{% endif %}{% if lang[0] != "" %}{% if front == "../" %}index{% endif %}.{{ lang[0] | escape }}.html{% else %}{% if front != "../" %}.html{% else %}{{ page.base | escape }}{% endif %}{% endif %}">{% endfor %}{% endif %}
     
     <link rel="stylesheet" type="text/css" href="/style-new.css">{% if page.christmas.enabled %}
     <link rel="stylesheet" type="text/css" href="/christmas/christmas.css">{% endif %}{% if page.shadowbox %}
@@ -119,7 +125,11 @@ For localizations IN THIS PAGE: Define it above in the YAML Front Matter, then c
     </div>
     
     {% if page.christmas.enabled or page.langs %}<footer class="noprint">{% if page.langs %}
-        <p>{% case page.lang %}{% when 'es' %}Ver esta página en:{% else %}View this page in:{% endcase %} {% for lang in page.langs %}<a href="{% assign splitbase = page.base | split:'' %}{% capture front %}{{ splitbase[0] }}{{ splitbase[1] }}{{ splitbase[2] }}{% endcapture %}{% if front != "../" %}{{ page.base | escape }}{% endif %}{% if lang[0] != "" %}{% if front == "../" %}index{% endif %}.{{ lang[0] | escape }}.html{% else %}{% if front != "../" %}.html{% else %}{{ page.base | escape }}{% endif %}{% endif %}">{{ lang[1] | escape }}</a>{% unless forloop.last %}, {% endunless %}{% endfor %}</p>{% endif %}{% if page.christmas.enabled %}
+        <p>{% case page.lang %}{% when 'es' %}Ver esta página en:{% else %}View this page in:{% endcase %} {% comment %}
+
+NOTE: The following for loop has VERY SIMILAR CODE ABOVE!! (hreflang links in header)
+
+{% endcomment %}{% for lang in page.langs %}<a href="{% assign splitbase = page.base | split:'' %}{% capture front %}{{ splitbase[0] }}{{ splitbase[1] }}{{ splitbase[2] }}{% endcapture %}{% if front != "../" %}{{ page.base | escape }}{% endif %}{% if lang[0] != "" %}{% if front == "../" %}index{% endif %}.{{ lang[0] | escape }}.html{% else %}{% if front != "../" %}.html{% else %}{{ page.base | escape }}{% endif %}{% endif %}">{{ lang[1] | escape }}</a>{% unless forloop.last %}, {% endunless %}{% endfor %}</p>{% endif %}{% if page.christmas.enabled %}
         <!--[if gte IE 8]><!--><ul>
             <li><span id="christmas_snow_toggle" class="fakelink" onclick="christmas.snow(); return false;"><span id="christmas_snow_toggle_start" style="display: none;">{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.startsnowstorm %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.startsnowstorm[""] %}{% endif %}{{ s | escape }}</span><span id="christmas_snow_toggle_stop" style="display: none;">{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.stopsnowstorm %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.stopsnowstorm[""] %}{% endif %}{{ s | escape }}</span></span></li>
             <li id="christmas_lights_stop" style="display: none;"><span class="fakelink" onclick="christmas.lights.stop(); return false;">{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.hidechristmaslights %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.hidechristmaslights[""] %}{% endif %}{{ s | escape }}</span></li>
