@@ -1,4 +1,7 @@
 ---
+# NOTE: Don't forget to update 404.html when you change the general HTML layout!
+
+
 christmas:
   enabled: false
   defaults:
@@ -139,9 +142,9 @@ NOTE: The following for loop has VERY SIMILAR CODE ABOVE!! (hreflang links in he
             <li id="christmas_lights_start" style="display: none;"><span class="fakelink" onclick="christmas.lights.start(); return false;">{% comment %} START l10n: showchristmaslights {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.showchristmaslights %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.showchristmaslights[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: showchristmaslights {% endcomment %}</span></li>
             <li id="christmas_lights_sizes" style="display: none;">{% comment %} START l10n: size {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.size %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.size[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: size {% endcomment %}: <span id="christmas_lights_sizes_list"></span></li>
         </ul><!--<![endif]-->{% endif %}
-        <!--[if lt IE 8]><p><a href="http://www.mozilla.com/firefox/features/">{% comment %} START l10n: abetterbrowser {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.abetterbrowser %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.abetterbrowser[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: abetterbrowser {% endcomment %}</a></p><![endif]-->
+        <!--[if lt IE 8]><p><a href="https://www.mozilla.org/firefox/desktop/">{% comment %} START l10n: abetterbrowser {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.abetterbrowser %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.abetterbrowser[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: abetterbrowser {% endcomment %}</a></p><![endif]-->
     </footer>{% else %}<!--[if lte IE 8]>
-    <footer class="noprint"><p><a href="http://www.mozilla.com/firefox/features/">{% comment %} START l10n: abetterbrowser {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.abetterbrowser %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.abetterbrowser[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: abetterbrowser {% endcomment %}</a></p></footer>
+    <footer class="noprint"><p><a href="https://www.mozilla.org/firefox/desktop/">{% comment %} START l10n: abetterbrowser {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.abetterbrowser %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.abetterbrowser[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: abetterbrowser {% endcomment %}</a></p></footer>
     <![endif]-->{% endif %}
 {% if page.email %}<script type="text/javascript" src="/email.js"></script>
 {% endif %}{% if page.shadowbox %}<script type="text/javascript">
