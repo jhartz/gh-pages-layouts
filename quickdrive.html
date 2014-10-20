@@ -1,14 +1,34 @@
 ---
 layout: top
 index: QuickDrive
-favicon: /quickdrive/logos/favicon.ico
-icons:
-  - type: image/png
+
+links:
+  - rel: icon
+    type: image/png
     sizes: 16x16
     href: /quickdrive/logos/logo-16square.png
-  - type: image/png
+  - rel: icon
+    type: image/png
+    sizes: 192x192
+    href: /quickdrive/logos/logo-192square.png
+  - rel: icon
+    type: image/png
     sizes: 32x32
     href: /quickdrive/logos/logo-32square.png
+  - rel: apple-touch-icon
+    type: image/png
+    sizes: 192x192
+    href: /quickdrive/logos/logo-192square.png
+  - rel: apple-touch-icon-precomposed
+    type: image/png
+    sizes: 192x192
+    href: /quickdrive/logos/logo-192square.png
+
+ielinks:
+  - rel: shortcut icon
+    type: image/x-icon
+    href: /quickdrive/logos/favicon-16,32.ico
+
 nav:
   - name: About
     base: /    # relative to the index, so ends up being "/quickdrive/"; see top.html for details
