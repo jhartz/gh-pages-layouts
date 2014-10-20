@@ -54,153 +54,169 @@ NOTE: In this explanation...
   s"varname" means a string variable with name varname
   a"varname" means an array with name varname
   o"varname" means an object (or associative array) with name varname
+  b"varname" means a boolean variable with name varname
+
+Some common page variables:
+  s"title" - The page title
+  s"redirect" - A URL to redirect to
+  b"atomfeed" - Whether to include <link> to our atom feed
+  b"shadowbox" - Whether to include the Shadowbox JS code
+  b"noanalytics" - Disable Google Analytics
+  s"favicon" - A favicon (.ico file) for use only with Internet Explorer
+  a"icons" - A list of favicons, where each is an object with 3 properties corresponding to <link> attributes: href, type (optional), sizes (optional)
+    NOTE: <link ... sizes="..."> isn't well supported by browsers; don't declare too many sizes, and make sure a 32x32 PNG is last in the list!
+
+The following other page variables are documented below:
+  s"index"
+  s"indexurl"
+  a"indexlangs"
+  a"nav"
+  a"prettynav"
+  s"lang"
+  s"base"
+  s"langs"
+
 
 Explanation of Indexes and Navigation:
 
-Each page using this layout can define s"index" (and optional s"indexurl") that defines the name of that section of the site and the URL of its home. Also, a"indexlangs" can be used to specify different languages of the index.html file for that section of the site (used depending on value of s"lang" for that page).
+Each page using this layout can define s"index" (and optional s"indexurl" and/or s"base") that defines the name of that section of the site and the URL of its home. Also, a"indexlangs" can be used to specify different languages of the index.html file for that section of the site (used depending on value of s"lang" for that page).
 
 Navigation is specified in a"nav", where each child is an object with...
-  s"name"  (required; the display name)
-  s"url"   (the URL of the item; overrides s"base")
-  s"base"  (the base name of the HTML files; if not specified, defaults to lowercase s"name" with spaces removed. Either ".html" or ".lang.html" are appended to this. When referring to an index of a directory, specify just the directory with a trailing "/")
-  o"langs" (the languages that the page is in, with each language pointing to the title of the page in that language)
+  s"name"  (required) The display name
+  s"url"   The URL of the item; overrides s"base"
+  s"base"  The base name of the HTML files; if not specified, defaults to lowercase s"name" with spaces removed. Either ".html" or ".lang.html" are appended to this. When referring to an index of a directory, specify just the directory with a trailing "/"
+  o"langs" The languages that the page is in, with each language pointing to the title of the page in that language
 
 When working with languages and translations in an individual page...
-  s"lang"  (the language that the page is in)
-  s"base"  (the base name of the page (without ".html"). If the base is the current directory (used for the index file in a directory), use the directory name, and indicate that it's a directory by STARTING with a "../" and ENDING with a "/")
-  o"langs" (other languages that the page is in, with each language pointing to the title of the page in that language)
+  s"lang"  The language that the page is in
+  s"base"  The base name of the page (without ".html"). If the base is the current directory (used for the index file in a directory), use the directory name, and indicate that it's a directory by STARTING with a "../" and ENDING with a "/"
+  o"langs" Other languages that the page is in, with each language pointing to the title of the page in that language
 
 
 For localizations IN THIS PAGE: Define it above in the YAML Front Matter, then copy/paste this below, replacing the 4 instances of "VAR_NAME_HERE" with the variable from above:
 
 {% comment %} START l10n: VAR_NAME_HERE {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.VAR_NAME_HERE %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.VAR_NAME_HERE[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: VAR_NAME_HERE {% endcomment %}
 
-
 {% endcomment %}<!DOCTYPE html>
 <!-- Modernist theme by Steve Smith - https://github.com/orderedlist -->
 <html lang="{% if page.lang %}{{ page.lang | escape }}{% else %}en{% endif %}">
 <head>
-    <meta charset="utf-8">{% if page.redirect %}
-    <noscript><meta http-equiv="refresh" content="0; url={{ page.redirect | escape }}"></noscript>{% endif %}
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    
-    <title>{% if page.title %}{{ page.title | escape }}{% if page.index %} - {% endif %}{% endif %}{% if page.index %}{{ page.index | escape }}{% endif %}</title>{% if page.atomfeed %}
-    <link rel="alternate" type="application/atom+xml" title="Ramblings by Jake &raquo; Feed" href="/blog/atom.xml">{% endif %}{% if page.langs %}{% comment %}
+  <meta charset="utf-8">{% if page.redirect %}
+  <noscript><meta http-equiv="refresh" content="0; url={{ page.redirect | escape }}"></noscript>{% endif %}
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page.title %}{{ page.title | escape }}{% if page.index %} - {% endif %}{% endif %}{% if page.index %}{{ page.index | escape }}{% endif %}</title>{% if page.atomfeed %}
+  <link rel="alternate" type="application/atom+xml" title="Ramblings by Jake &raquo; Feed" href="/blog/atom.xml">{% endif %}{% if page.langs %}{% comment %}
 
 NOTE: The following for loop has VERY SIMILAR CODE BELOW!! (links in footer)
 
 {% endcomment %}
-    {% for lang in page.langs %}
-    <link rel="alternative" hreflang="{% if lang[0] != "" %}{{ lang[0] | escape }}{% else %}en{% endif %}" href="{% assign splitbase = page.base | split:'' %}{% capture front %}{{ splitbase[0] }}{{ splitbase[1] }}{{ splitbase[2] }}{% endcapture %}{% if front != "../" %}{{ page.base | escape }}{% endif %}{% if lang[0] != "" %}{% if front == "../" %}index{% endif %}.{{ lang[0] | escape }}.html{% else %}{% if front != "../" %}.html{% else %}{{ page.base | escape }}{% endif %}{% endif %}">{% endfor %}{% endif %}
-    
-    <link rel="stylesheet" type="text/css" href="/style-new.css">{% if page.christmas.enabled %}
-    <link rel="stylesheet" type="text/css" href="/christmas/christmas.css">{% endif %}{% if page.shadowbox %}
-    <link rel="stylesheet" type="text/css" href="/shadowbox/shadowbox.css">{% endif %}
-    
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->{% if page.redirect %}
-    <script type="text/javascript">
-    location.replace("{{ page.redirect | xml_escape }}");
-    </script>{% endif %}{% if page.shadowbox %}
-    <script type="text/javascript" src="/shadowbox/shadowbox.js"></script>{% endif %}
+  {% for lang in page.langs %}
+  <link rel="alternative" hreflang="{% if lang[0] != "" %}{{ lang[0] | escape }}{% else %}en{% endif %}" href="{% assign splitbase = page.base | split:'' %}{% capture front %}{{ splitbase[0] }}{{ splitbase[1] }}{{ splitbase[2] }}{% endcapture %}{% if front != "../" %}{{ page.base | escape }}{% endif %}{% if lang[0] != "" %}{% if front == "../" %}index{% endif %}.{{ lang[0] | escape }}.html{% else %}{% if front != "../" %}.html{% else %}{{ page.base | escape }}{% endif %}{% endif %}">{% endfor %}{% endif %}
+  {% if page.favicon %}<!--[if IE]><link rel="shortcut icon" type="image/x-icon" href="{{ page.favicon | escape }}"><![endif]-->
+  {% endif %}{% if page.icons %}{% for icon in page.icons %}<link rel="icon"{% if icon.type %} type="{{ icon.type | escape }}"{% endif %}{% if icon.sizes %} sizes="{{ icon.sizes | escape }}"{% endif %} href="{{ icon.href | escape }}">
+  {% endfor %}{% endif %}<link rel="stylesheet" type="text/css" href="/style-new.css">{% if page.christmas.enabled %}
+  <link rel="stylesheet" type="text/css" href="/christmas/christmas.css">{% endif %}{% if page.shadowbox %}
+  <link rel="stylesheet" type="text/css" href="/shadowbox/shadowbox.css">{% endif %}
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->{% if page.redirect %}
+  <script type="text/javascript">location.replace("{{ page.redirect | xml_escape }}");</script>{% endif %}{% if page.shadowbox %}
+  <script type="text/javascript" src="/shadowbox/shadowbox.js"></script>{% endif %}
 </head>
 
 <body>{% if page.christmas.enabled %}
-    <div id="lights" style="display: none;"></div>
-    {% endif %}
-    <div class="wrapper">
-        <header>{% capture indexurl %}{% if page.indexurl %}{{ page.indexurl | escape }}{% else %}{% if page.index %}/{{ page.index | downcase | replace:' ','' | escape }}/{% endif %}{% endif %}{% endcapture %}
-            <p class="view"><a href="/">jhartz.github.io</a></p>
-            <h1>{% if page.index %}<a href="{{ indexurl }}{% if page.lang and page.indexlangs %}{% for lang in page.indexlangs %}{% if page.lang == lang %}index.{{ lang | escape }}.html{% endif %}{% endfor %}{% endif %}">{{ page.index | escape }}</a>{% else %}{% if page.title %}{{ page.title | escape }}{% else %}jhartz.github.io{% endif %}{% endif %}</h1>{% if page.nav %}
-            <ul>{% for nav in page.nav %}
-                <li><a href="{% if nav.url %}{{ nav.url | escape }}{% else %}{{ indexurl }}{% assign addindex = false %}{% if nav.base %}{% if nav.base != '/' %}{{ nav.base | escape }}{% endif %}{% capture lastchar %}{{ nav.base | split:'' | last }}{% endcapture %}{% if lastchar == '/' %}{% assign addindex = true %}{% endif %}{% else %}{{ nav.name | downcase | replace:' ','' | escape }}{% endif %}{% assign indexadded = false %}{% if page.lang and nav.langs %}{% for lang in nav.langs %}{% if page.lang == lang[0] %}{% if addindex %}index{% assign indexadded = true %}{% endif %}.{{ lang[0] }}{% endif %}{% endfor %}{% endif %}{% if addindex == false or indexadded == true %}.html{% endif %}{% endif %}">{% assign done = false %}{% if page.lang and nav.langs %}{% for lang in nav.langs %}{% if page.lang == lang[0] %}{{ lang[1] | escape }}{% assign done = true %}{% endif %}{% endfor %}{% endif %}{% if done == false %}{{ nav.name | escape }}{% endif %}</a></li>{% endfor %}
-            </ul>{% endif %}{% if page.prettynav %}
-            <ul class="pretty">{% for nav in page.prettynav %}
-                <li><a href="{{ nav.url | escape }}">{{ nav.pre | escape }} <strong>{{ nav.text | escape }}</strong></a></li>{% endfor %}
-            </ul>{% endif %}
-            <p class="noview"><a href="/">jhartz.github.io</a></p>
-        </header>
-        <section>{% if page.redirect %}
-            <p>Redirecting to: <a href="{{ page.redirect | escape }}">{% if page.title %}{{ page.title | escape }}{% else %}{{ page.redirect | escape }}{% endif %}</a></p>{% else %}{% if page.christmas.enabled %}
-            <div id="christmas_festive_mood" class="section-msg" style="display: none;">In a festive mood? Try turning on the snowstorm by clicking "Start Snowstorm" at the very bottom of the page!</div>{% endif %}
+<div id="lights" style="display: none;"></div>
+{% endif %}
+<div class="wrapper">
+  <header>{% capture indexurl %}{% if page.indexurl %}{{ page.indexurl | escape }}{% else %}{% if page.index %}/{{ page.index | downcase | replace:' ','' | escape }}/{% endif %}{% endif %}{% endcapture %}
+    <p class="view"><a href="/">jhartz.github.io</a></p>
+    <h1>{% if page.index %}<a href="{{ indexurl }}{% if page.lang and page.indexlangs %}{% for lang in page.indexlangs %}{% if page.lang == lang %}index.{{ lang | escape }}.html{% endif %}{% endfor %}{% endif %}">{{ page.index | escape }}</a>{% else %}{% if page.title %}{{ page.title | escape }}{% else %}jhartz.github.io{% endif %}{% endif %}</h1>{% if page.nav %}
+    <ul>{% for nav in page.nav %}
+      <li><a href="{% if nav.url %}{{ nav.url | escape }}{% else %}{{ indexurl }}{% assign addindex = false %}{% if nav.base %}{% if nav.base != '/' %}{{ nav.base | escape }}{% endif %}{% capture lastchar %}{{ nav.base | split:'' | last }}{% endcapture %}{% if lastchar == '/' %}{% assign addindex = true %}{% endif %}{% else %}{{ nav.name | downcase | replace:' ','' | escape }}{% endif %}{% assign indexadded = false %}{% if page.lang and nav.langs %}{% for lang in nav.langs %}{% if page.lang == lang[0] %}{% if addindex %}index{% assign indexadded = true %}{% endif %}.{{ lang[0] }}{% endif %}{% endfor %}{% endif %}{% if addindex == false or indexadded == true %}.html{% endif %}{% endif %}">{% assign done = false %}{% if page.lang and nav.langs %}{% for lang in nav.langs %}{% if page.lang == lang[0] %}{{ lang[1] | escape }}{% assign done = true %}{% endif %}{% endfor %}{% endif %}{% if done == false %}{{ nav.name | escape }}{% endif %}</a></li>{% endfor %}
+    </ul>{% endif %}{% if page.prettynav %}
+    <ul class="pretty">{% for nav in page.prettynav %}
+      <li><a href="{{ nav.url | escape }}">{{ nav.pre | escape }} <strong>{{ nav.text | escape }}</strong></a></li>{% endfor %}
+    </ul>{% endif %}
+    <p class="noview"><a href="/">jhartz.github.io</a></p>
+  </header>
+  <section>{% if page.redirect %}
+    <p>Redirecting to: <a href="{{ page.redirect | escape }}">{% if page.title %}{{ page.title | escape }}{% else %}{{ page.redirect | escape }}{% endif %}</a></p>{% else %}{% if page.christmas.enabled %}
+    <div id="christmas_festive_mood" class="section-msg" style="display: none;">In a festive mood? Try turning on the snowstorm by clicking "Start Snowstorm" at the very bottom of the page!</div>{% endif %}
 
 {{ content }}{% endif %}
-        </section>
-    </div>
-    
-    {% if page.christmas.enabled or page.langs %}<footer class="noprint">{% if page.langs %}
-        <p>{% comment %} START l10n: viewthispagein {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.viewthispagein %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.viewthispagein[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: viewthispagein {% endcomment %} {% comment %}
+  </section>
+</div>
+
+{% if page.christmas.enabled or page.langs %}<footer class="noprint">{% if page.langs %}
+  <p>{% comment %} START l10n: viewthispagein {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.viewthispagein %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.viewthispagein[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: viewthispagein {% endcomment %} {% comment %}
 
 NOTE: The following for loop has VERY SIMILAR CODE ABOVE!! (hreflang links in header)
 
 {% endcomment %}{% for lang in page.langs %}<a href="{% assign splitbase = page.base | split:'' %}{% capture front %}{{ splitbase[0] }}{{ splitbase[1] }}{{ splitbase[2] }}{% endcapture %}{% if front != "../" %}{{ page.base | escape }}{% endif %}{% if lang[0] != "" %}{% if front == "../" %}index{% endif %}.{{ lang[0] | escape }}.html{% else %}{% if front != "../" %}.html{% else %}{{ page.base | escape }}{% endif %}{% endif %}">{{ lang[1] | escape }}</a>{% unless forloop.last %}, {% endunless %}{% endfor %}</p>{% endif %}{% if page.christmas.enabled %}
-        <!--[if gte IE 8]><!--><ul>
-            <li><span id="christmas_snow_toggle" class="fakelink" onclick="christmas.snow(); return false;"><span id="christmas_snow_toggle_start" style="display: none;">{% comment %} START l10n: startsnowstorm {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.startsnowstorm %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.startsnowstorm[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: startsnowstorm {% endcomment %}</span><span id="christmas_snow_toggle_stop" style="display: none;">{% comment %} START l10n: stopsnowstorm {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.stopsnowstorm %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.stopsnowstorm[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: stopsnowstorm {% endcomment %}</span></span></li>
-            <li id="christmas_lights_stop" style="display: none;"><span class="fakelink" onclick="christmas.lights.stop(); return false;">{% comment %} START l10n: hidechristmaslights {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.hidechristmaslights %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.hidechristmaslights[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: hidechristmaslights {% endcomment %}</span></li>
-            <li id="christmas_lights_start" style="display: none;"><span class="fakelink" onclick="christmas.lights.start(); return false;">{% comment %} START l10n: showchristmaslights {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.showchristmaslights %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.showchristmaslights[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: showchristmaslights {% endcomment %}</span></li>
-            <li id="christmas_lights_sizes" style="display: none;">{% comment %} START l10n: size {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.size %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.size[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: size {% endcomment %}: <span id="christmas_lights_sizes_list"></span></li>
-        </ul><!--<![endif]-->{% endif %}
-        <!--[if lt IE 8]><p><a href="https://www.mozilla.org/firefox/desktop/">{% comment %} START l10n: abetterbrowser {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.abetterbrowser %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.abetterbrowser[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: abetterbrowser {% endcomment %}</a></p><![endif]-->
-    </footer>{% else %}<!--[if lte IE 8]>
-    <footer class="noprint"><p><a href="https://www.mozilla.org/firefox/desktop/">{% comment %} START l10n: abetterbrowser {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.abetterbrowser %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.abetterbrowser[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: abetterbrowser {% endcomment %}</a></p></footer>
-    <![endif]-->{% endif %}
+  <!--[if gte IE 8]><!--><ul>
+    <li><span id="christmas_snow_toggle" class="fakelink" onclick="christmas.snow(); return false;"><span id="christmas_snow_toggle_start" style="display: none;">{% comment %} START l10n: startsnowstorm {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.startsnowstorm %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.startsnowstorm[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: startsnowstorm {% endcomment %}</span><span id="christmas_snow_toggle_stop" style="display: none;">{% comment %} START l10n: stopsnowstorm {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.stopsnowstorm %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.stopsnowstorm[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: stopsnowstorm {% endcomment %}</span></span></li>
+    <li id="christmas_lights_stop" style="display: none;"><span class="fakelink" onclick="christmas.lights.stop(); return false;">{% comment %} START l10n: hidechristmaslights {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.hidechristmaslights %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.hidechristmaslights[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: hidechristmaslights {% endcomment %}</span></li>
+    <li id="christmas_lights_start" style="display: none;"><span class="fakelink" onclick="christmas.lights.start(); return false;">{% comment %} START l10n: showchristmaslights {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.showchristmaslights %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.showchristmaslights[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: showchristmaslights {% endcomment %}</span></li>
+    <li id="christmas_lights_sizes" style="display: none;">{% comment %} START l10n: size {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.size %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.size[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: size {% endcomment %}: <span id="christmas_lights_sizes_list"></span></li>
+  </ul><!--<![endif]-->{% endif %}
+  <!--[if lt IE 8]><p><a href="https://www.mozilla.org/firefox/desktop/">{% comment %} START l10n: abetterbrowser {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.abetterbrowser %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.abetterbrowser[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: abetterbrowser {% endcomment %}</a></p><![endif]-->
+</footer>{% else %}<!--[if lte IE 8]>
+<footer class="noprint"><p><a href="https://www.mozilla.org/firefox/desktop/">{% comment %} START l10n: abetterbrowser {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.abetterbrowser %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.abetterbrowser[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: abetterbrowser {% endcomment %}</a></p></footer>
+  <![endif]-->{% endif %}
 {% if page.email %}<script type="text/javascript" src="/email.js"></script>
 {% endif %}{% if page.shadowbox %}<script type="text/javascript">
 (function () {
-    // Auto-open a shadowbox object if it matches the page's hash
-    var checkhash = function () {
-        if (location.hash) {
-            var id = location.hash.substring(1);
-            if (id && document.getElementById(id) && document.getElementById(id).parentNode.getAttribute("rel") && document.getElementById(id).parentNode.getAttribute("rel").substring(0, 9) == "shadowbox") {
-                if (Shadowbox.isOpen()) {
-                    try {
-                        // So we don't end up in an endless loop
-                        if (Shadowbox.getCurrent().link.getElementsByTagName("img")[0].id == id) return;
-                    } catch (err) {}
-                    Shadowbox.close();
-                }
-                setTimeout(function () {
-                    Shadowbox.open(document.getElementById(id).parentNode);
-                }, 10);
-            }
+  // Auto-open a shadowbox object if it matches the page's hash
+  var checkhash = function () {
+    if (location.hash) {
+      var id = location.hash.substring(1);
+      if (id && document.getElementById(id) && document.getElementById(id).parentNode.getAttribute("rel") && document.getElementById(id).parentNode.getAttribute("rel").substring(0, 9) == "shadowbox") {
+        if (Shadowbox.isOpen()) {
+          try {
+            // So we don't end up in an endless loop
+            if (Shadowbox.getCurrent().link.getElementsByTagName("img")[0].id == id) return;
+          } catch (err) {}
+          Shadowbox.close();
         }
-    };
-    
-    // Change the hash to match the current element
-    var changehash = function (current) {
-        if (current && current.link && current.link.getElementsByTagName("img").length > 0 && current.link.getElementsByTagName("img")[0].id) {
-            window.location.hash = "#" + current.link.getElementsByTagName("img")[0].id;
-        }
-    };
-    
-    Shadowbox.init({
-        continuous: true,
-        animateFade: false,
-        // covering all our bases
-        onOpen: changehash,
-        onChange: changehash,
-        onFinish: changehash
-    }, function () {
-        if (window.addEventListener) window.addEventListener("hashchange", checkhash, false);
-        checkhash();
-    });
+        setTimeout(function () {
+          Shadowbox.open(document.getElementById(id).parentNode);
+        }, 10);
+      }
+    }
+  };
+
+  // Change the hash to match the current element
+  var changehash = function (current) {
+    if (current && current.link && current.link.getElementsByTagName("img").length > 0 && current.link.getElementsByTagName("img")[0].id) {
+      window.location.hash = "#" + current.link.getElementsByTagName("img")[0].id;
+    }
+  };
+
+  Shadowbox.init({
+    continuous: true,
+    animateFade: false,
+    // covering all our bases
+    onOpen: changehash,
+    onChange: changehash,
+    onFinish: changehash
+  }, function () {
+    if (window.addEventListener) window.addEventListener("hashchange", checkhash, false);
+    checkhash();
+  });
 })();
 </script>
 {% endif %}{% if page.christmas.enabled %}<!--[if gte IE 8]><!-->
 <div id="christmas_lights_preload" style="display: none;"></div>
 <script type="text/javascript">
 var christmas_defaults = {
-    snow: {% if page.christmas.defaults.snow %}true{% else %}false{% endif %},
-    lights: {% if page.christmas.defaults.lights %}true{% else %}false{% endif %}
+  snow: {% if page.christmas.defaults.snow %}true{% else %}false{% endif %},
+  lights: {% if page.christmas.defaults.lights %}true{% else %}false{% endif %}
 };
 var sizeTable = {
-    pico: "{% comment %} START l10n: tiny {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.tiny %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.tiny[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: tiny {% endcomment %}", // "tiny"
-    tiny: "{% comment %} START l10n: small {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.small %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.small[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: small {% endcomment %}", // "small"
-    small: "{% comment %} START l10n: medium {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.medium %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.medium[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: medium {% endcomment %}", // "medium"
-    medium: "{% comment %} START l10n: large {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.large %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.large[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: large {% endcomment %}", // "large"
-    large: "{% comment %} START l10n: huge {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.huge %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.huge[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: huge {% endcomment %}" // "huge"
+  pico: "{% comment %} START l10n: tiny {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.tiny %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.tiny[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: tiny {% endcomment %}", // "tiny"
+  tiny: "{% comment %} START l10n: small {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.small %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.small[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: small {% endcomment %}", // "small"
+  small: "{% comment %} START l10n: medium {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.medium %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.medium[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: medium {% endcomment %}", // "medium"
+  medium: "{% comment %} START l10n: large {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.large %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.large[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: large {% endcomment %}", // "large"
+  large: "{% comment %} START l10n: huge {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.huge %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.huge[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: huge {% endcomment %}" // "huge"
 };
 </script>
 <script type="text/javascript" src="/christmas/snowstorm-min.js"></script>
