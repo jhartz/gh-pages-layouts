@@ -8,6 +8,8 @@ christmas:
     snow: false
     lights: true
 
+#bodyClassName: christmas
+
 
 # These localizations are just for this page; see below for details
 l10n:
@@ -129,7 +131,7 @@ NOTE: The following for loop has VERY SIMILAR CODE BELOW!! (links in footer)
   <script type="text/javascript" src="/shadowbox/shadowbox.js"></script>{% endif %}
 </head>
 
-<body>{% if page.christmas.enabled %}
+<body{% if page.bodyClassName %} class="{{ page.bodyClassName | escape }}"{% endif %}>{% if page.christmas.enabled %}
 <div id="lights" style="display: none;"></div>
 {% endif %}
 <div class="wrapper">
