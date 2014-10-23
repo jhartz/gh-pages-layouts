@@ -99,6 +99,12 @@ Navigation is specified in a"nav", where each child is an object with...
   s"base"  The base name of the HTML files; if not specified, defaults to lowercase s"name" with spaces removed. Either ".html" or ".lang.html" are appended to this. When referring to an index of a directory, specify just the directory with a trailing "/"
   o"langs" The languages that the page is in, with each language pointing to the title of the page in that language
 
+Also, a"prettynav" can be used instead. Each item here consists of "text", which is shown in bold. Optionally, "pre-text" can be shown above the text; this is not in bold. Either s"text" or s"html" is required.
+  s"pre"  The pre-text for the label
+  s"text" The text for the label
+  s"html" HTML content (overrides s"pre" and s"text")
+  s"url"  (required) The URL of the item
+
 When working with languages and translations in an individual page...
   s"lang"  The language that the page is in
   s"base"  The base name of the page (without ".html"). If the base is the current directory (used for the index file in a directory), use the directory name, and indicate that it's a directory by STARTING with a "../" and ENDING with a "/"
@@ -148,7 +154,7 @@ NOTE: The following for loop has VERY SIMILAR CODE BELOW!! (links in footer)
       <li><a href="{% if nav.url %}{{ nav.url | escape }}{% else %}{{ indexurl }}{% assign addindex = false %}{% if nav.base %}{% if nav.base != '/' %}{{ nav.base | escape }}{% endif %}{% capture lastchar %}{{ nav.base | split:'' | last }}{% endcapture %}{% if lastchar == '/' %}{% assign addindex = true %}{% endif %}{% else %}{{ nav.name | downcase | replace:' ','' | escape }}{% endif %}{% assign indexadded = false %}{% if page.lang and nav.langs %}{% for lang in nav.langs %}{% if page.lang == lang[0] %}{% if addindex %}index{% assign indexadded = true %}{% endif %}.{{ lang[0] }}{% endif %}{% endfor %}{% endif %}{% if addindex == false or indexadded == true %}.html{% endif %}{% endif %}">{% assign done = false %}{% if page.lang and nav.langs %}{% for lang in nav.langs %}{% if page.lang == lang[0] %}{{ lang[1] | escape }}{% assign done = true %}{% endif %}{% endfor %}{% endif %}{% if done == false %}{{ nav.name | escape }}{% endif %}</a></li>{% endfor %}
     </ul>{% endif %}{% if page.prettynav %}
     <ul class="pretty">{% for nav in page.prettynav %}
-      <li><a href="{{ nav.url | escape }}">{{ nav.pre | escape }} <strong>{{ nav.text | escape }}</strong></a></li>{% endfor %}
+      <li><a href="{{ nav.url | escape }}">{% if nav.html %}{{ nav.html }}{% else %}{{ nav.pre | escape }} <strong>{{ nav.text | escape }}</strong>{% endif %}</a></li>{% endfor %}
     </ul>{% endif %}
     <p class="noview"><a href="/">jhartz.github.io</a></p>
   </header>
