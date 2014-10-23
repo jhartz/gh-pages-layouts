@@ -104,6 +104,7 @@ Also, a"prettynav" can be used instead. Each item here consists of "text", which
   s"text" The text for the label
   s"html" HTML content (overrides s"pre" and s"text")
   s"url"  (required) The URL of the item
+  b"nobr" If true, then no line break is included by default between s"pre" and s"text"
 
 When working with languages and translations in an individual page...
   s"lang"  The language that the page is in
@@ -154,7 +155,7 @@ NOTE: The following for loop has VERY SIMILAR CODE BELOW!! (links in footer)
       <li><a href="{% if nav.url %}{{ nav.url | escape }}{% else %}{{ indexurl }}{% assign addindex = false %}{% if nav.base %}{% if nav.base != '/' %}{{ nav.base | escape }}{% endif %}{% capture lastchar %}{{ nav.base | split:'' | last }}{% endcapture %}{% if lastchar == '/' %}{% assign addindex = true %}{% endif %}{% else %}{{ nav.name | downcase | replace:' ','' | escape }}{% endif %}{% assign indexadded = false %}{% if page.lang and nav.langs %}{% for lang in nav.langs %}{% if page.lang == lang[0] %}{% if addindex %}index{% assign indexadded = true %}{% endif %}.{{ lang[0] }}{% endif %}{% endfor %}{% endif %}{% if addindex == false or indexadded == true %}.html{% endif %}{% endif %}">{% assign done = false %}{% if page.lang and nav.langs %}{% for lang in nav.langs %}{% if page.lang == lang[0] %}{{ lang[1] | escape }}{% assign done = true %}{% endif %}{% endfor %}{% endif %}{% if done == false %}{{ nav.name | escape }}{% endif %}</a></li>{% endfor %}
     </ul>{% endif %}{% if page.prettynav %}
     <ul class="pretty">{% for nav in page.prettynav %}
-      <li><a href="{{ nav.url | escape }}">{% if nav.html %}{{ nav.html }}{% else %}{{ nav.pre | escape }} <strong>{{ nav.text | escape }}</strong>{% endif %}</a></li>{% endfor %}
+      <li><a href="{{ nav.url | escape }}">{% if nav.html %}{{ nav.html }}{% else %}{% if nav.pre %}{{ nav.pre | escape }} {% unless nav.nobr %}<span class="nomobile"><br></span>{% endunless %}{% endif %}<strong>{{ nav.text | escape }}</strong>{% endif %}</a></li>{% endfor %}
     </ul>{% endif %}
     <p class="noview"><a href="/">jhartz.github.io</a></p>
   </header>
