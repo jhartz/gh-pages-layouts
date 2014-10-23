@@ -209,9 +209,11 @@ NOTE: The following for loop has VERY SIMILAR CODE ABOVE!! (hreflang links in he
   var changehash = function (current) {
     if (current && current.link && current.link.getElementsByTagName("img").length > 0 && current.link.getElementsByTagName("img")[0].id) {
       window.location.hash = "#" + current.link.getElementsByTagName("img")[0].id;
-    } else {
-      window.location.hash = "";
     }
+  };
+
+  var restorehash = function () {
+    window.location.hash = "";
   };
 
   Shadowbox.init({
@@ -220,7 +222,8 @@ NOTE: The following for loop has VERY SIMILAR CODE ABOVE!! (hreflang links in he
     // covering all our bases
     onOpen: changehash,
     onChange: changehash,
-    onFinish: changehash
+    onFinish: changehash,
+    onClose: restorehash
   }, function () {
     if (window.addEventListener) window.addEventListener("hashchange", checkhash, false);
     checkhash();
