@@ -68,7 +68,7 @@ Some common page variables:
   s"title" - The page title.
   s"redirect" - A URL to redirect to.
   b"shadowbox" - Whether to include the Shadowbox JS code.
-  b"shadowbox_nohash" - Tells shadowbox not to mess with the page hash.
+  b"shadowbox_usehash" - Whether to have Shadowbox write the current item to the hash.
   b"noanalytics" - Disable Google Analytics.
   a"links" - A list of items to make into <link> tags in the header. Each item in the list should be an object, where the names correspond to attribute names of the <link> tag and the values correspond to attribute values.
   a"ielinks" - Same as a"links", but for links that are only for Internet Explorer.
@@ -205,21 +205,21 @@ NOTE: The following for loop has VERY SIMILAR CODE ABOVE!! (hreflang links in he
       }
     }
   };
-{% unless page.shadowbox_nohash %}
+{% if page.shadowbox_usehash %}
   // Change the hash to match the current element
   var changehash = function (current) {
     if (current && current.link && current.link.getElementsByTagName("img").length > 0 && current.link.getElementsByTagName("img")[0].id) {
       window.location.hash = "#" + current.link.getElementsByTagName("img")[0].id;
     }
   };
-{% endunless %}
+{% endif %}
   Shadowbox.init({
     continuous: true,
-    animateFade: false{% unless page.shadowbox_nohash %},
+    animateFade: false{% if page.shadowbox_usehash %},
     // covering all our bases
     onOpen: changehash,
     onChange: changehash,
-    onFinish: changehash{% endunless %}
+    onFinish: changehash{% endif %}
   }, function () {
     if (window.addEventListener) window.addEventListener("hashchange", checkhash, false);
     checkhash();
