@@ -180,8 +180,9 @@ FOOTER NOTES:
     Then christmas stuff, then bitcoin.
   If there is no language stuff:
     Bitcoin, then christmas stuff.
-
   NOTE: This causes the bitcoin code to be in there below twice.
+
+  Also, if Bitcoin is the only thing, then it doesn't include a line break (<br>).
 
 
 {% endcomment %}
@@ -192,7 +193,7 @@ NOTE: The following for loop has VERY SIMILAR CODE ABOVE!! (hreflang links in he
 
 {% endcomment %}{% for lang in page.langs %}<a href="{% assign splitbase = page.base | split:'' %}{% capture front %}{{ splitbase[0] }}{{ splitbase[1] }}{{ splitbase[2] }}{% endcapture %}{% if front != "../" %}{{ page.base | escape }}{% endif %}{% if lang[0] != "" %}{% if front == "../" %}index{% endif %}.{{ lang[0] | escape }}.html{% else %}{% if front != "../" %}.html{% else %}{{ page.base | escape }}{% endif %}{% endif %}">{{ lang[1] | escape }}</a>{% unless forloop.last %}, {% endunless %}{% endfor %}</p>
 {% elsif page.donate %}
-  <p>{% comment %} START l10n: donatebitcoin {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.donatebitcoin %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.donatebitcoin[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: donatebitcoin {% endcomment %}<br><code>12WbgxE6ApK51adGdtYZr51ciaTmBQxBxD</code></p>
+  <p>{% comment %} START l10n: donatebitcoin {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.donatebitcoin %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.donatebitcoin[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: donatebitcoin {% endcomment %} {% if page.christmas or page.langs %}<br>{% endif %}<code>12WbgxE6ApK51adGdtYZr51ciaTmBQxBxD</code></p>
 {% endif %}{% if page.christmas %}
   <!--[if gt IE 8]><!--><ul>
     <li><span id="christmas_snow_toggle" class="fakelink" onclick="christmas.snow(); return false;"><span id="christmas_snow_toggle_start" style="display: none;">{% comment %} START l10n: startsnowstorm {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.startsnowstorm %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.startsnowstorm[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: startsnowstorm {% endcomment %}</span><span id="christmas_snow_toggle_stop" style="display: none;">{% comment %} START l10n: stopsnowstorm {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.stopsnowstorm %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.stopsnowstorm[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: stopsnowstorm {% endcomment %}</span></span></li>
@@ -202,7 +203,7 @@ NOTE: The following for loop has VERY SIMILAR CODE ABOVE!! (hreflang links in he
   </ul><!--<![endif]-->
   <!--[if lte IE 8]><p><a href="https://www.mozilla.org/firefox/desktop/">{% comment %} START l10n: abetterbrowser {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.abetterbrowser %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.abetterbrowser[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: abetterbrowser {% endcomment %}</a></p><![endif]-->
 {% endif %}{% if page.donate and page.langs %}
-  <p>{% comment %} START l10n: donatebitcoin {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.donatebitcoin %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.donatebitcoin[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: donatebitcoin {% endcomment %}<br><code>12WbgxE6ApK51adGdtYZr51ciaTmBQxBxD</code></p>
+  <p>{% comment %} START l10n: donatebitcoin {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.donatebitcoin %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.donatebitcoin[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: donatebitcoin {% endcomment %} {% if page.christmas or page.langs %}<br>{% endif %}<code>12WbgxE6ApK51adGdtYZr51ciaTmBQxBxD</code></p>
 {% endif %}
 </footer>{% endif %}
 
