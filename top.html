@@ -71,6 +71,7 @@ Some common page variables:
   s"title" - The page title.
   s"redirect" - A URL to redirect to.
   b"donate" - Whether to show the Bitcoin donation plea in the footer.
+  b"ads" - Whether to show ads.
   b"shadowbox" - Whether to include the Shadowbox JS code.
   b"shadowbox_usehash" - Whether to have Shadowbox write the current item to the hash.
   b"noanalytics" - Disable Google Analytics.
@@ -165,7 +166,11 @@ NOTE: The following for loop has VERY SIMILAR CODE BELOW!! (links in footer)
     <p class="noview"><a href="/">jhartz.github.io</a></p>
   </header>
   <section>{% if page.redirect %}
-    <p>Redirecting to: <a href="{{ page.redirect | escape }}">{% if page.title %}{{ page.title | escape }}{% else %}{{ page.redirect | escape }}{% endif %}</a></p>{% else %}{% if page.christmas %}
+    <p>Redirecting to: <a href="{{ page.redirect | escape }}">{% if page.title %}{{ page.title | escape }}{% else %}{{ page.redirect | escape }}{% endif %}</a></p>{% else %}{% if page.ads %}
+    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!-- GH-Pages Top Ad -->
+    <ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-3871520819272731" data-ad-slot="8532045208"></ins>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>{% endif %}{% if page.christmas %}
     <div id="christmas_festive_mood" class="section-msg" style="display: none;">In a festive mood? Try turning on the snowstorm by clicking "Start Snowstorm" at the very bottom of the page!</div>{% endif %}
 
 {{ content }}{% endif %}
