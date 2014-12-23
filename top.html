@@ -144,12 +144,7 @@ NOTE: The following for loop has VERY SIMILAR CODE BELOW!! (links in footer)
   {% endif %}<![endif]-->{% endif %}{% endfor %}{% endif %}
   <link rel="stylesheet" type="text/css" href="/style-new.css">{% if page.christmas %}
   <link rel="stylesheet" type="text/css" href="/christmas/christmas.css">{% endif %}{% if page.shadowbox %}
-  <link rel="stylesheet" type="text/css" href="/shadowbox/shadowbox.css">{% endif %}{% if page.ads %}
-  <style>
-  .gh-pages-top-ad-responsive { width: 320px; height: 50px; }
-  @media(min-width: 500px) { .gh-pages-top-ad-responsive { width: 468px; height: 60px; } }
-  @media(min-width: 800px) { .gh-pages-top-ad-responsive { width: 728px; height: 90px; } }
-  </style>{% endif %}
+  <link rel="stylesheet" type="text/css" href="/shadowbox/shadowbox.css">{% endif %}
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->{% if page.redirect %}
   <script type="text/javascript">location.replace("{{ page.redirect | xml_escape }}");</script>{% endif %}{% if page.shadowbox %}
   <script type="text/javascript" src="/shadowbox/shadowbox.js"></script>{% endif %}
@@ -174,7 +169,7 @@ NOTE: The following for loop has VERY SIMILAR CODE BELOW!! (links in footer)
     <p>Redirecting to: <a href="{{ page.redirect | escape }}">{% if page.title %}{{ page.title | escape }}{% else %}{{ page.redirect | escape }}{% endif %}</a></p>{% else %}{% if page.ads %}
     <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <!-- GH-Pages Top Ad - responsive -->
-    <div id="gh-pages-top-ad-responsive-container" class="section-msg"><ins class="adsbygoogle gh-pages-top-ad-responsive" style="display:inline-block" data-ad-client="ca-pub-3871520819272731" data-ad-slot="6723908007"></ins></div>
+    <div class="section-msg ads-container"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3871520819272731" data-ad-slot="6723908007" data-ad-format="auto"></ins></div>
     <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>{% endif %}{% if page.christmas %}
     <div id="christmas_festive_mood" class="section-msg" style="display: none;">In a festive mood? Try turning on the snowstorm by clicking "Start Snowstorm" at the very bottom of the page!</div>{% endif %}
 
