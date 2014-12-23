@@ -70,8 +70,8 @@ NOTE: In this explanation...
 Some common page variables:
   s"title" - The page title.
   s"redirect" - A URL to redirect to.
+  o"ads" - Where to show ads (if anywhere). Properties: b"top" (show ads at top of page), b"bottom" (show ads at bottom of page).
   b"donate" - Whether to show the Bitcoin donation plea in the footer.
-  b"ads" - Whether to show ads.
   b"shadowbox" - Whether to include the Shadowbox JS code.
   b"shadowbox_usehash" - Whether to have Shadowbox write the current item to the hash.
   b"noanalytics" - Disable Google Analytics.
@@ -147,7 +147,8 @@ NOTE: The following for loop has VERY SIMILAR CODE BELOW!! (links in footer)
   <link rel="stylesheet" type="text/css" href="/shadowbox/shadowbox.css">{% endif %}
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->{% if page.redirect %}
   <script type="text/javascript">location.replace("{{ page.redirect | xml_escape }}");</script>{% endif %}{% if page.shadowbox %}
-  <script type="text/javascript" src="/shadowbox/shadowbox.js"></script>{% endif %}
+  <script type="text/javascript" src="/shadowbox/shadowbox.js"></script>{% endif %}{% if page.ads %}
+  <script type="text/javascript" async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>{% endif %}
 </head>
 
 <body{% if page.bodyClassName %} class="{{ page.bodyClassName | escape }}"{% endif %}>{% if page.christmas %}
@@ -166,14 +167,16 @@ NOTE: The following for loop has VERY SIMILAR CODE BELOW!! (links in footer)
     <p class="noview"><a href="/">jhartz.github.io</a></p>
   </header>
   <section>{% if page.redirect %}
-    <p>Redirecting to: <a href="{{ page.redirect | escape }}">{% if page.title %}{{ page.title | escape }}{% else %}{{ page.redirect | escape }}{% endif %}</a></p>{% else %}{% if page.ads %}
-    <script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <p>Redirecting to: <a href="{{ page.redirect | escape }}">{% if page.title %}{{ page.title | escape }}{% else %}{{ page.redirect | escape }}{% endif %}</a></p>{% else %}{% if page.ads and page.ads.top %}
     <!-- GH-Pages Top Ad - responsive -->
     <div class="section-msg ads-container"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3871520819272731" data-ad-slot="6723908007" data-ad-format="auto"></ins></div>
     <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>{% endif %}{% if page.christmas %}
     <div id="christmas_festive_mood" class="section-msg" style="display: none;">In a festive mood? Try turning on the snowstorm by clicking "Start Snowstorm" at the very bottom of the page!</div>{% endif %}
 
-{{ content }}{% endif %}
+{{ content }}{% if page.ads and page.ads.bottom %}
+    <!-- GH-Pages Top Ad - responsive -->
+    <div class="section-msg ads-container"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3871520819272731" data-ad-slot="6723908007" data-ad-format="auto"></ins></div>
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>{% endif %}{% endif %}
   </section>
 </div>
 
