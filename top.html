@@ -28,9 +28,6 @@ l10n:
   viewthispagein:
     "": "View this page in:"
     es: "Ver esta página en:"
-  abetterbrowser:
-    "": "A Better Browser"
-    es: "Un mejor navegador"
   startsnowstorm:
     "": "Start Snowstorm"
     es: "Empezar nevada"
@@ -208,13 +205,12 @@ NOTE: The following for loop has VERY SIMILAR CODE ABOVE!! (hreflang links in he
 {% elsif page.donate %}
   <p>{% comment %} START l10n: donatebitcoin {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.donatebitcoin %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.donatebitcoin[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: donatebitcoin {% endcomment %} {% if page.christmas or page.langs %}<br>{% endif %}<code>12WbgxE6ApK51adGdtYZr51ciaTmBQxBxD</code></p>
 {% endif %}{% if page.christmas %}
-  <!--[if gt IE 8]><!--><ul>
+  <ul>
     <li><span id="christmas_snow_toggle" class="fakelink" onclick="christmas.snow(); return false;"><span id="christmas_snow_toggle_start" style="display: none;">{% comment %} START l10n: startsnowstorm {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.startsnowstorm %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.startsnowstorm[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: startsnowstorm {% endcomment %}</span><span id="christmas_snow_toggle_stop" style="display: none;">{% comment %} START l10n: stopsnowstorm {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.stopsnowstorm %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.stopsnowstorm[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: stopsnowstorm {% endcomment %}</span></span></li>
     <li id="christmas_lights_stop" style="display: none;"><span class="fakelink" onclick="christmas.lights.stop(); return false;">{% comment %} START l10n: hidechristmaslights {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.hidechristmaslights %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.hidechristmaslights[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: hidechristmaslights {% endcomment %}</span></li>
     <li id="christmas_lights_start" style="display: none;"><span class="fakelink" onclick="christmas.lights.start(); return false;">{% comment %} START l10n: showchristmaslights {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.showchristmaslights %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.showchristmaslights[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: showchristmaslights {% endcomment %}</span></li>
     <li id="christmas_lights_sizes" style="display: none;">{% comment %} START l10n: size {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.size %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.size[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: size {% endcomment %}: <span id="christmas_lights_sizes_list"></span></li>
-  </ul><!--<![endif]-->
-  <!--[if lte IE 8]><p><a href="https://www.mozilla.org/firefox/desktop/">{% comment %} START l10n: abetterbrowser {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.abetterbrowser %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.abetterbrowser[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: abetterbrowser {% endcomment %}</a></p><![endif]-->
+  </ul>
 {% endif %}{% if page.donate and page.langs %}
   <p>{% comment %} START l10n: donatebitcoin {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.donatebitcoin %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.donatebitcoin[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: donatebitcoin {% endcomment %} {% if page.christmas or page.langs %}<br>{% endif %}<code>12WbgxE6ApK51adGdtYZr51ciaTmBQxBxD</code></p>
 {% endif %}
@@ -263,7 +259,7 @@ NOTE: The following for loop has VERY SIMILAR CODE ABOVE!! (hreflang links in he
   });
 })();
 </script>
-{% endif %}{% if page.christmas %}<!--[if gt IE 8]><!-->
+{% endif %}{% if page.christmas %}
 <div id="christmas_lights_preload" style="display: none;"></div>
 <script type="text/javascript">
 var christmas_defaults = {
@@ -280,7 +276,6 @@ var sizeTable = {
 </script>
 <script type="text/javascript" src="/christmas/snowstorm-min.js"></script>
 <script type="text/javascript" src="/christmas/christmas.js"></script>
-<!--<![endif]-->
 {% endif %}{% unless page.noanalytics %}<script type="text/javascript">
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
