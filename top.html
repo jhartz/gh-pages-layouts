@@ -218,7 +218,7 @@ NOTE: The following for loop has VERY SIMILAR CODE ABOVE!! (hreflang links in he
 {% endif %}{% if page.donate and page.langs %}
   <p>{% comment %} START l10n: donatebitcoin {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.donatebitcoin %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.donatebitcoin[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: donatebitcoin {% endcomment %} {% if page.christmas or page.langs %}<br>{% endif %}<code>12WbgxE6ApK51adGdtYZr51ciaTmBQxBxD</code></p>
 {% endif %}
-  <p><a href="/privacy.html">{% comment %} START l10n: privacypolicy {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.privacypolicy %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.privacypolicy[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: privacypolicy {% endcomment %}</a></p>
+  <p class="right"><a href="/privacy.html">{% comment %} START l10n: privacypolicy {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.privacypolicy %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.privacypolicy[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: privacypolicy {% endcomment %}</a></p>
 </footer>
 
 {% if page.email %}<script type="text/javascript" src="/email.js"></script>
