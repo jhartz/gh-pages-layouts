@@ -19,6 +19,9 @@ bodyClassName: christmas
 
 # These localizations are just for this page; see below for details
 l10n:
+  privacypolicy:
+    "": "Privacy Policy"
+    es: "Política de Privacidad"
   donatebitcoin:
     "": "Support this project by donating through Bitcoin:"
     es: "Apoya este proyecto con una donación a través de Bitcoin:"
@@ -188,13 +191,15 @@ FOOTER NOTES:
     Then christmas stuff, then bitcoin.
   If there is no language stuff:
     Bitcoin, then christmas stuff.
+  Then, privacy policy.
+
   NOTE: This causes the bitcoin code to be in there below twice.
 
-  Also, if Bitcoin is the only thing, then it doesn't include a line break (<br>).
+  Also, if Bitcoin is the only thing (besides privacy policy), then it doesn't include a line break (<br>).
 
 
 {% endcomment %}
-{% if page.christmas or page.langs or page.donate %}<footer class="noprint">{% if page.langs %}
+<footer class="noprint">{% if page.langs %}
   <p>{% comment %} START l10n: viewthispagein {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.viewthispagein %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.viewthispagein[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: viewthispagein {% endcomment %} {% comment %}
 
 NOTE: The following for loop has VERY SIMILAR CODE ABOVE!! (hreflang links in header)
@@ -213,7 +218,8 @@ NOTE: The following for loop has VERY SIMILAR CODE ABOVE!! (hreflang links in he
 {% endif %}{% if page.donate and page.langs %}
   <p>{% comment %} START l10n: donatebitcoin {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.donatebitcoin %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.donatebitcoin[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: donatebitcoin {% endcomment %} {% if page.christmas or page.langs %}<br>{% endif %}<code>12WbgxE6ApK51adGdtYZr51ciaTmBQxBxD</code></p>
 {% endif %}
-</footer>{% endif %}
+  <p><a href="/privacy.html">{% comment %} START l10n: privacypolicy {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.privacypolicy %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.privacypolicy[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: privacypolicy {% endcomment %}</a></p>
+</footer>
 
 {% if page.email %}<script type="text/javascript" src="/email.js"></script>
 {% endif %}{% if page.shadowbox %}<script type="text/javascript">
