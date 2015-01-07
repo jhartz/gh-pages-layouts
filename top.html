@@ -282,9 +282,44 @@ NOTE: The following for loop has VERY SIMILAR CODE ABOVE!! (hreflang links in he
 {% endif %}{% if page.decorations_lights or page.decorations_snow %}<!--[if gt IE 8]><!-->{% if page.decorations_lights %}
 <div id="decorations_lights_preload" style="display: none;"></div>{% endif %}
 <script type="text/javascript">
-var decorations_defaults = {
-{% if page.decorations_snow %}  snow: {{ page.decorations_snow }},{% endif %}
-{% if page.decorations_lights %}  lights: {{ page.decorations_lights }},{% endif %}
+if (typeof String.prototype.trim != "function") {
+  String.prototype.trim = function () {
+    var str = this.replace(/^\s+/, "");
+    for (var i = str.length - 1; i >= 0; i -= 1) {
+      if (/\S/.test(str.charAt(i))) {
+        str = str.substring(0, i + 1);
+        break;
+      }
+    }
+    return str;
+  };
+}
+
+var decorations = {
+  defaults: {
+{% if page.decorations_snow %}    snow: {{ page.decorations_snow }},{% endif %}
+{% if page.decorations_lights %}    lights: {{ page.decorations_lights }},{% endif %}
+  },
+
+  cookie: function (name, value, dontSendEvent) {
+    name = "decorations_" + name;
+    if (value) {
+      if (!dontSendEvent && typeof ga == "function") {
+        ga("send", "event", "decorations", name, value);
+      }
+      var max_age = (60*60*24*365) / 2; // 1/2 year (in seconds)
+      var expires = (new Date()).getTime() + max_age * 1000; // 1/2 year later (in milliseconds)
+      expires = new Date(expires);
+      document.cookie = name + "=" + value + ";path=/;max-age=" + max_age + ";expires=" + (expires.toGMTString ? expires.toGMTString() : expires.toUTCString());
+    } else {
+      var cookies = document.cookie.split(";");
+      for (var i = 0; i < cookies.length; i++) {
+        if (cookies[i].substring(0, cookies[i].indexOf("=")).trim() == name) {
+          return cookies[i].substring(cookies[i].indexOf("=") + 1).trim();
+        }
+      }
+    }
+  }
 };
 
 {% if page.decorations_lights %}
@@ -297,8 +332,9 @@ var sizeTable = {
 };
 {% endif %}
 </script>{% if page.decorations_snow %}
-<script type="text/javascript" src="/decorations/snowstorm-min.js"></script>{% endif %}
-<script type="text/javascript" src="/decorations/decorations.js"></script>
+<script type="text/javascript" src="/decorations/snow/snowstorm-min.js"></script>
+<script type="text/javascript" src="/decorations/snow.js"></script>{% endif %}{% if page.decorations_lights %}
+<script type="text/javascript" src="/decorations/lights.js"></script>{% endif %}
 <!--<![endif]-->
 {% endif %}{% unless page.noanalytics %}<script type="text/javascript">
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
