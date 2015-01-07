@@ -2,15 +2,11 @@
 # NOTE: Don't forget to update 404.html when you change the general HTML layout!
 
 
-# These variables are to enable seasonal things.
+###############################################################################
+### These variables are to enable seasonal themes.
+
 # Most of them have a test file (in the jhartz.github.com repo) where the values are enabled to test them.
 # (NOTE: If a bodyClassName is enabled here, the test can't overwrite it with something else.)
-
-# If the "christmas" variable exists, then it's enabled.
-#christmas:
-#  defaults:
-#    snow: false
-#    lights: true
 
 # These class names refer to specific CSS styling.
 #bodyClassName: christmas
@@ -18,7 +14,22 @@
 bodyClassName: winter
 
 
-# These localizations are just for this page; see below for details
+###############################################################################
+### These variables are for seasonal decorations.
+
+# If one of these variables exists and is truthy, then the decoration is enabled.
+# The value of the variable should be a string (in quotes) with a JS value inside (usually "true" or "false").
+
+# WITH CHRISTMAS THEME:
+#decorations_lights: "true"
+#decorations_snow: "false"
+
+# WITH WINTER THEME:
+decorations_snow: "true"
+
+
+###############################################################################
+### These localizations are just for this page; see below for details
 l10n:
   privacypolicy:
     "": "Privacy Policy"
@@ -147,8 +158,8 @@ NOTE: The following for loop has VERY SIMILAR CODE BELOW!! (links in footer)
   <!--[if IE]>{% for link in page.ielinks %}{% if forloop.length != 1 %}
     {% endif %}<link{% for attr in link %} {{ attr[0] | escape }}="{{ attr[1] | escape}}"{% endfor %}>{% if forloop.last %}{% if forloop.length != 1 %}
   {% endif %}<![endif]-->{% endif %}{% endfor %}{% endif %}
-  <link rel="stylesheet" type="text/css" href="/style-new.css">{% if page.christmas %}
-  <link rel="stylesheet" type="text/css" href="/christmas/christmas.css">{% endif %}{% if page.shadowbox %}
+  <link rel="stylesheet" type="text/css" href="/style-new.css">{% if page.decorations_lights %}
+  <link rel="stylesheet" type="text/css" href="/decorations/lights.css">{% endif %}{% if page.shadowbox %}
   <link rel="stylesheet" type="text/css" href="/shadowbox/shadowbox.css">{% endif %}
   <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->{% if page.redirect %}
   <script type="text/javascript">location.replace("{{ page.redirect | xml_escape }}");</script>{% endif %}{% if page.shadowbox %}
@@ -156,7 +167,7 @@ NOTE: The following for loop has VERY SIMILAR CODE BELOW!! (links in footer)
   <script type="text/javascript" async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>{% endif %}{% endunless %}
 </head>
 
-<body{% if page.bodyClassName %} class="{{ page.bodyClassName | escape }}"{% endif %}>{% if page.christmas %}
+<body{% if page.bodyClassName %} class="{{ page.bodyClassName | escape }}"{% endif %}>{% if page.decorations_lights %}
 <div id="lights" style="display: none;"></div>
 {% endif %}
 <div class="wrapper">
@@ -175,8 +186,8 @@ NOTE: The following for loop has VERY SIMILAR CODE BELOW!! (links in footer)
       <p>Redirecting to: <a href="{{ page.redirect | escape }}">{% if page.title %}{{ page.title | escape }}{% else %}{{ page.redirect | escape }}{% endif %}</a></p>{% else %}{% unless page.noads %}{% if page.ads and page.ads.top %}
     <!-- GH-Pages Top Ad - responsive -->
     <div class="section-msg ads-container"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3871520819272731" data-ad-slot="6723908007" data-ad-format="auto"></ins></div>
-    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>{% endif %}{% endunless %}{% if page.christmas %}
-    <div id="christmas_festive_mood" class="section-msg" style="display: none;">In a festive mood? Try turning on the snowstorm by clicking "Start Snowstorm" at the very bottom of the page!</div>{% endif %}
+    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>{% endif %}{% endunless %}{% if page.decorations_snow %}
+    <div id="decorations_snow_festive_mood" class="section-msg" style="display: none;">In a festive mood? Try turning on the snowstorm by clicking "Start Snowstorm" at the very bottom of the page!</div>{% endif %}
 
     {{ content }}{% unless page.noads %}{% if page.ads and page.ads.bottom %}
     <!-- GH-Pages Bottom Ad - responsive -->
@@ -190,9 +201,9 @@ NOTE: The following for loop has VERY SIMILAR CODE BELOW!! (links in footer)
 
 FOOTER NOTES:
   If there is language stuff (i.e. "View this page in..."), it always comes first.
-    Then christmas stuff, then bitcoin.
+    Then decorations stuff (snow/lights), then bitcoin.
   If there is no language stuff:
-    Bitcoin, then christmas stuff.
+    Bitcoin, then decorations stuff (snow/lights).
   Then, privacy policy.
 
   NOTE: This causes the bitcoin code to be in there below twice.
@@ -208,17 +219,20 @@ NOTE: The following for loop has VERY SIMILAR CODE ABOVE!! (hreflang links in he
 
 {% endcomment %}{% for lang in page.langs %}<a href="{% assign splitbase = page.base | split:'' %}{% capture front %}{{ splitbase[0] }}{{ splitbase[1] }}{{ splitbase[2] }}{% endcapture %}{% if front != "../" %}{{ page.base | escape }}{% endif %}{% if lang[0] != "" %}{% if front == "../" %}index{% endif %}.{{ lang[0] | escape }}.html{% else %}{% if front != "../" %}.html{% else %}{{ page.base | escape }}{% endif %}{% endif %}">{{ lang[1] | escape }}</a>{% unless forloop.last %}, {% endunless %}{% endfor %}</p>
 {% elsif page.donate %}
-  <p>{% comment %} START l10n: donatebitcoin {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.donatebitcoin %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.donatebitcoin[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: donatebitcoin {% endcomment %} {% if page.christmas or page.langs %}<br>{% endif %}<code>12WbgxE6ApK51adGdtYZr51ciaTmBQxBxD</code></p>
-{% endif %}{% if page.christmas %}
+  <p>{% comment %} START l10n: donatebitcoin {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.donatebitcoin %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.donatebitcoin[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: donatebitcoin {% endcomment %} {% if page.decorations_lights or page.decorations_snow or page.langs %}<br>{% endif %}<code>12WbgxE6ApK51adGdtYZr51ciaTmBQxBxD</code></p>
+{% endif %}{% if page.decorations_lights or page.decorations_snow %}
   <!--[if gt IE 8]><!--><ul>
-    <li><span id="christmas_snow_toggle" class="fakelink" onclick="christmas.snow(); return false;"><span id="christmas_snow_toggle_start" style="display: none;">{% comment %} START l10n: startsnowstorm {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.startsnowstorm %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.startsnowstorm[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: startsnowstorm {% endcomment %}</span><span id="christmas_snow_toggle_stop" style="display: none;">{% comment %} START l10n: stopsnowstorm {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.stopsnowstorm %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.stopsnowstorm[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: stopsnowstorm {% endcomment %}</span></span></li>
-    <li id="christmas_lights_stop" style="display: none;"><span class="fakelink" onclick="christmas.lights.stop(); return false;">{% comment %} START l10n: hidechristmaslights {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.hidechristmaslights %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.hidechristmaslights[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: hidechristmaslights {% endcomment %}</span></li>
-    <li id="christmas_lights_start" style="display: none;"><span class="fakelink" onclick="christmas.lights.start(); return false;">{% comment %} START l10n: showchristmaslights {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.showchristmaslights %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.showchristmaslights[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: showchristmaslights {% endcomment %}</span></li>
-    <li id="christmas_lights_sizes" style="display: none;">{% comment %} START l10n: size {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.size %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.size[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: size {% endcomment %}: <span id="christmas_lights_sizes_list"></span></li>
+{% if page.decorations_snow %}
+    <li><span id="decorations_snow_toggle" class="fakelink" onclick="decorations.snow(); return false;"><span id="decorations_snow_toggle_start" style="display: none;">{% comment %} START l10n: startsnowstorm {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.startsnowstorm %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.startsnowstorm[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: startsnowstorm {% endcomment %}</span><span id="decorations_snow_toggle_stop" style="display: none;">{% comment %} START l10n: stopsnowstorm {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.stopsnowstorm %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.stopsnowstorm[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: stopsnowstorm {% endcomment %}</span></span></li>
+{% endif %}{% if page.decorations_lights %}
+    <li id="decorations_lights_stop" style="display: none;"><span class="fakelink" onclick="decorations.lights.stop(); return false;">{% comment %} START l10n: hidechristmaslights {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.hidechristmaslights %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.hidechristmaslights[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: hidechristmaslights {% endcomment %}</span></li>
+    <li id="decorations_lights_start" style="display: none;"><span class="fakelink" onclick="decorations.lights.start(); return false;">{% comment %} START l10n: showchristmaslights {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.showchristmaslights %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.showchristmaslights[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: showchristmaslights {% endcomment %}</span></li>
+    <li id="decorations_lights_sizes" style="display: none;">{% comment %} START l10n: size {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.size %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.size[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: size {% endcomment %}: <span id="decorations_lights_sizes_list"></span></li>
+{% endif %}
   </ul><!--<![endif]-->
   <!--[if lte IE 8]><p><a href="https://www.mozilla.org/firefox/desktop/">{% comment %} START l10n: abetterbrowser {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.abetterbrowser %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.abetterbrowser[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: abetterbrowser {% endcomment %}</a></p><![endif]-->
 {% endif %}{% if page.donate and page.langs %}
-  <p>{% comment %} START l10n: donatebitcoin {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.donatebitcoin %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.donatebitcoin[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: donatebitcoin {% endcomment %} {% if page.christmas or page.langs %}<br>{% endif %}<code>12WbgxE6ApK51adGdtYZr51ciaTmBQxBxD</code></p>
+  <p>{% comment %} START l10n: donatebitcoin {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.donatebitcoin %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.donatebitcoin[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: donatebitcoin {% endcomment %} {% if page.decorations_lights or page.decorations_snow or page.langs %}<br>{% endif %}<code>12WbgxE6ApK51adGdtYZr51ciaTmBQxBxD</code></p>
 {% endif %}
   <p class="right"><a href="/privacy.html">{% comment %} START l10n: privacypolicy {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.privacypolicy %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.privacypolicy[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: privacypolicy {% endcomment %}</a></p>
 </footer>
@@ -265,13 +279,15 @@ NOTE: The following for loop has VERY SIMILAR CODE ABOVE!! (hreflang links in he
   });
 })();
 </script>
-{% endif %}{% if page.christmas %}<!--[if gt IE 8]><!-->
-<div id="christmas_lights_preload" style="display: none;"></div>
+{% endif %}{% if page.decorations_lights or page.decorations_snow %}<!--[if gt IE 8]><!-->{% if page.decorations_lights %}
+<div id="decorations_lights_preload" style="display: none;"></div>{% endif %}
 <script type="text/javascript">
-var christmas_defaults = {
-  snow: {% if page.christmas.defaults.snow %}true{% else %}false{% endif %},
-  lights: {% if page.christmas.defaults.lights %}true{% else %}false{% endif %}
+var decorations_defaults = {
+{% if page.decorations_snow %}  snow: {{ page.decorations_snow }},{% endif %}
+{% if page.decorations_lights %}  lights: {{ page.decorations_lights }},{% endif %}
 };
+
+{% if page.decorations_lights %}
 var sizeTable = {
   pico: "{% comment %} START l10n: tiny {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.tiny %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.tiny[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: tiny {% endcomment %}", // "tiny"
   tiny: "{% comment %} START l10n: small {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.small %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.small[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: small {% endcomment %}", // "small"
@@ -279,9 +295,10 @@ var sizeTable = {
   medium: "{% comment %} START l10n: large {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.large %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.large[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: large {% endcomment %}", // "large"
   large: "{% comment %} START l10n: huge {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.huge %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.huge[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: huge {% endcomment %}" // "huge"
 };
-</script>
-<script type="text/javascript" src="/christmas/snowstorm-min.js"></script>
-<script type="text/javascript" src="/christmas/christmas.js"></script>
+{% endif %}
+</script>{% if page.decorations_snow %}
+<script type="text/javascript" src="/decorations/snowstorm-min.js"></script>{% endif %}
+<script type="text/javascript" src="/decorations/decorations.js"></script>
 <!--<![endif]-->
 {% endif %}{% unless page.noanalytics %}<script type="text/javascript">
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
