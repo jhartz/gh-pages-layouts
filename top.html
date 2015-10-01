@@ -258,7 +258,7 @@ bottom of the YAML Front Matter above.)
 
 # Next, we have to capture the "unsplit" values string
 
-{% capture l10n_values)unsplit %}{% for lang in page.l10n %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n[lang] %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n[lang][""] %}{% endif %}{{ s | escape }}{{ DIVIDOR }}{% endfor %}{% endcapture %}
+{% capture l10n_values_unsplit %}{% for lang in page.l10n %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n[lang] %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n[lang][""] %}{% endif %}{{ s | escape }}{{ DIVIDOR }}{% endfor %}{% endcapture %}
 
 # Finally, we can split it into its parts
 
