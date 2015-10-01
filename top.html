@@ -38,100 +38,112 @@ bodyClassName: fall
 ###############################################################################
 ### PAGE LOCALIZATIONS
 
-# These localizations are just for this page; see below for details
+# These localizations are just for this page.
+# For usage details, see "PAGE LOCALIZATION USAGE" below.
+
+# NOTE: Due to Jekyll/Liquid restrictions, each name must also be present below
+# in "PAGE LOCALIZATION USAGE". WHENEVER YOU UPDATE THIS, MAKE SURE TO UPDATE
+# THAT TOO!
+
 
 l10n:
-  # 0
   home:
     "": "Home"
     es: "Hogar"
-
-  # 1
   ongithub:
     "": "jhartz on GitHub"
     en: "jhartz en GitHub"
 
-  # 2
   privacypolicy:
     "": "Privacy Policy"
     es: "Política de Privacidad"
-
-  # 3
   donatebitcoin:
     "": "Support this project by donating through Bitcoin:"
     es: "Apoya este proyecto con una donación a través de Bitcoin:"
-
-  # 4
   viewthispagein:
     "": "View this page in:"
     es: "Ver esta página en:"
-
-  # 5
   abetterbrowser:
     "": "A Better Browser"
     es: "Un mejor navegador"
-
-  # 6
   startsnowstorm:
     "": "Start Snowstorm"
     es: "Empezar nevada"
-
-  # 7
   stopsnowstorm:
     "": "Stop Snowstorm"
     es: "Dejar de nevada"
-
-  # 8
-  showchristmaslights:
+  showxmaslights:
     "": "Show Christmas Lights"
     es: "Mostrar luces de navidad"
-
-  # 9
-  hidechristmaslights:
+  hidexmaslights:
     "": "Hide Christmas Lights"
     es: "Ocultar luces de navidad"
 
-  # 10
   size:
     "": "Size"
     es: "Tamaño"
-
-  # 11
   tiny:
     "": "tiny"
     es: "diminuto"
-
-  # 12
   small:
     "": "small"
     es: "pequeño"
-
-  # 13
   medium:
     "": "medium"
     es: "mediano"
-
-  # 14
   large:
     "": "large"
     es: "grande"
-
-  # 15
   huge:
     "": "huge"
     es: "enorme"
 
-
-### HOW TO USE LOCALIZATIONS DEFINED ABOVE
-
-# Make note of the INDEX of each of the variables. Then, anywhere in the page,
-# use the following statement to insert the value that corresponds to the
-# current page's localization:
-#     {% comment %} l10n: NAME {% endcomment %}l10n_values[index]
-
-
 ---
-{% comment %}
+{% capture localization_setup %}
+
+
+###############################################################################
+### PAGE LOCALIZATION USAGE
+
+{% for localization in page.l10n %}
+  {% assign name = localization[0] %}{% assign langs_dict = localization[1] %}
+  {% assign s = "" %}
+  {% if page.lang %}
+    {% for lang in langs_dict %}
+      {% if lang[0] == page.lang %}{% assign s = lang[1] %}{% endif %}
+    {% endfor %}
+  {% endif %}
+  {% if s == "" %}{% assign s = langs_dict[""] %}{% endif %}
+  {% capture s %}{{ s | escape }}{% endcapture %}
+
+
+  # ALRIGHTY... HERE, WE MUST ASSIGN IT TO WHATEVER IT IS... CASE-BY-CASE
+  # The name of the localization is in "name", and the localized value in "s"
+
+  {% if name == "home"     %}{% assign l10n_home     = s %}{% endif %}
+  {% if name == "ongithub" %}{% assign l10n_ongithub = s %}{% endif %}
+
+  {% if name == "privacypolicy"  %}{% assign l10n_privacypolicy  = s %}{% endif %}
+  {% if name == "donatebitcoin"  %}{% assign l10n_donatebitcoin  = s %}{% endif %}
+  {% if name == "viewthispagein" %}{% assign l10n_viewthispagein = s %}{% endif %}
+  {% if name == "abetterbrowser" %}{% assign l10n_abetterbrowser = s %}{% endif %}
+  {% if name == "startsnowstorm" %}{% assign l10n_startsnowstorm = s %}{% endif %}
+  {% if name == "stopsnowstorm"  %}{% assign l10n_stopsnowstorm  = s %}{% endif %}
+  {% if name == "showxmaslights" %}{% assign l10n_showxmaslights = s %}{% endif %}
+  {% if name == "hidexmaslights" %}{% assign l10n_hidexmaslights = s %}{% endif %}
+
+  {% if name == "size"   %}{% assign l10n_size   = s %}{% endif %}
+  {% if name == "tiny"   %}{% assign l10n_tiny   = s %}{% endif %}
+  {% if name == "small"  %}{% assign l10n_small  = s %}{% endif %}
+  {% if name == "medium" %}{% assign l10n_medium = s %}{% endif %}
+  {% if name == "large"  %}{% assign l10n_large  = s %}{% endif %}
+  {% if name == "huge"   %}{% assign l10n_huge   = s %}{% endif %}
+
+{% endfor %}
+
+
+# Woohoo... I bet you're glad that's over with!
+# {% endcapture %}{% comment %}
 
 
 ###############################################################################
@@ -244,43 +256,44 @@ When working with languages and translations in an individual page...
 
 
 
-The weird shit below is for the localization system ON THIS PAGE. (See the
-bottom of the YAML Front Matter above.)
 
 
-{% endcomment %}{% capture uselessshit %}
+{% endcomment %}{% capture useless_shit %}
+
+# INTERNAL STUFF TO MAKE URLS TO THIS PAGE IN OTHER LANGUAGES
+
+{% assign DIVIDER = "\\LANG@URL*DIVIDOOOR//" %}
+
+# Assign all the lang URLs to lang_urls_unsplit, separated by DIVIDER
+
+{% capture lang_urls_unsplit %}{% for lang in page.langs %}{% assign splitbase = page.base | split:'' %}{% capture front %}{{ splitbase[0] }}{{ splitbase[1] }}{{ splitbase[2] }}{% endcapture %}{% if front != "../" %}{{ page.base | escape }}{% endif %}{% if lang[0] != "" %}{% if front == "../" %}index{% endif %}.{{ lang[0] | escape }}.html{% else %}{% if front != "../" %}.html{% else %}{{ page.base | escape }}{% endif %}{% endif %}{{ DIVIDER }}{% endfor %}{% endcapture %}
+
+# Split it based on DIVIDER, so lang_urls contains the URLs to this page in the
+# other languages, in the same order as page.langs
+
+{% assign lang_urls = lang_urls_unsplit | split: DIVIDER %}
 
 
-# This divider is used as something to split on. Hopefully this exact string
-# won't ever appear in a localization ;)
-
-{% assign DIVIDOR = "\\DIVIDER%IN*DA#CENTERE^//" %}
-
-# Next, we have to capture the "unsplit" values string
-
-{% capture l10n_values_unsplit %}{% for localization in page.l10n %}>>>START>>>{% assign s = "" %}{% if page.lang %}{% for l in localization[1] %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = localization[1][""] %}>>>ASSIGNING>>>{{ localization[1][""] }}<<<ASSIGNING<<<{% endif %}{{ s | escape }}{{ DIVIDOR }}{% endfor %}{% endcapture %}
-
-# Finally, we can split it into its parts
-
-{% assign l10n_values = l10n_values_unsplit | split: DIVIDOR %}
 
 
-# All done!
 
-# Finally, let's do some HTML.
+
+           _      _       _     _         
+     /\   | |    (_)     | |   | |        
+    /  \  | |_ __ _  __ _| |__ | |_ _   _ 
+   / /\ \ | | '__| |/ _` | '_ \| __| | | |
+  / ____ \| | |  | | (_| | | | | |_| |_| |
+ /_/    \_\_|_|  |_|\__, |_| |_|\__|\__, |
+                     __/ |           __/ |
+                    |___/           |___/ 
+
+
+          Let's make some HTML!
+
 
 
 {% endcapture %}<!DOCTYPE html>
 <!-- Modernist theme by Steve Smith - https://github.com/orderedlist -->
-<!--
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-{{ DIVIDOR }}
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-{{ l10n_values_unsplit }}
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-{{ l10n_values }}
-+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
--->
 <html lang="{% if page.lang %}{{ page.lang | escape }}{% else %}en{% endif %}">
 <head>
   <meta charset="utf-8">{% if page.redirect %}
@@ -288,25 +301,17 @@ bottom of the YAML Front Matter above.)
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% if page.title %}{{ page.title | escape }}{% if page.index %} - {% endif %}{% endif %}{% if page.index %}{{ page.index | escape }}{% endif %}</title>
-
-{% comment %}
-
-*** NOTE: The following for loop has VERY SIMILAR CODE BELOW IN FOOTER!!
-
-{% endcomment %}
 {% if page.langs %}{% for lang in page.langs %}
-  <link rel="alternate" hreflang="{% if lang[0] != "" %}{{ lang[0] | escape }}{% else %}en{% endif %}" href="{% assign splitbase = page.base | split:'' %}{% capture front %}{{ splitbase[0] }}{{ splitbase[1] }}{{ splitbase[2] }}{% endcapture %}{% if front != "../" %}{{ page.base | escape }}{% endif %}{% if lang[0] != "" %}{% if front == "../" %}index{% endif %}.{{ lang[0] | escape }}.html{% else %}{% if front != "../" %}.html{% else %}{{ page.base | escape }}{% endif %}{% endif %}">{% endfor %}
+  <link rel="alternate" hreflang="{% if lang[0] != "" %}{{ lang[0] | escape }}{% else %}en{% endif %}" href="{{ lang_urls[forloop.index0] }}">{% endfor %}
 {% endif %}
 {% if page.links %}{% for link in page.links %}
   <link{% for attr in link %} {{ attr[0] | escape }}="{{ attr[1] | escape }}"{% endfor %}>{% endfor %}
 {% endif %}
-
 {% if page.ielinks %}
   <!--[if IE]>{% for link in page.ielinks %}{% if forloop.length != 1 %}
     {% endif %}<link{% for attr in link %} {{ attr[0] | escape }}="{{ attr[1] | escape}}"{% endfor %}>{% if forloop.last %}{% if forloop.length != 1 %}
   {% endif %}<![endif]-->{% endif %}{% endfor %}
 {% endif %}
-
   <link rel="stylesheet" type="text/css" href="/style-new.css">
   {% if page.decorations_lights %}<link rel="stylesheet" type="text/css" href="/decorations/lights.css">{% endif %}
   {% if page.shadowbox %}<link rel="stylesheet" type="text/css" href="/shadowbox/shadowbox.css">{% endif %}
@@ -392,26 +397,22 @@ NOTES:
 {% endcomment %}
 
 <footer class="noprint">{% if page.langs %}
-  <p>{% comment %} START l10n: viewthispagein {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.viewthispagein %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.viewthispagein[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: viewthispagein {% endcomment %} {% comment %}
-
-*** NOTE: The following for loop has VERY SIMILAR CODE ABOVE!! (hreflang links in header)
-
-{% endcomment %}{% for lang in page.langs %}<a href="{% assign splitbase = page.base | split:'' %}{% capture front %}{{ splitbase[0] }}{{ splitbase[1] }}{{ splitbase[2] }}{% endcapture %}{% if front != "../" %}{{ page.base | escape }}{% endif %}{% if lang[0] != "" %}{% if front == "../" %}index{% endif %}.{{ lang[0] | escape }}.html{% else %}{% if front != "../" %}.html{% else %}{{ page.base | escape }}{% endif %}{% endif %}">{{ lang[1] | escape }}</a>{% unless forloop.last %}, {% endunless %}{% endfor %}</p>
+  <p>{{ l10n_viewthispagein }} {% for lang in page.langs %}<a href="{{ lang_urls[forloop.index0] }}">{{ lang[1] | escape }}</a>{% unless forloop.last %}, {% endunless %}{% endfor %}</p>
 {% elsif page.donate %}
-  <p>{% comment %} START l10n: donatebitcoin {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.donatebitcoin %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.donatebitcoin[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: donatebitcoin {% endcomment %} {% if page.decorations_lights or page.decorations_snow or page.langs %}<br>{% endif %}<code>12WbgxE6ApK51adGdtYZr51ciaTmBQxBxD</code></p>
+  <p>{{ l10n_donatebitcoin }} {% if page.decorations_lights or page.decorations_snow or page.langs %}<br>{% endif %}<code>12WbgxE6ApK51adGdtYZr51ciaTmBQxBxD</code></p>
 {% endif %}{% if page.decorations_lights or page.decorations_snow %}
   <!--[if gt IE 8]><!--><ul>
 {% if page.decorations_snow %}
-    <li><span id="decorations_snow_toggle" class="fakelink" onclick="decorations.snow(); return false;"><span id="decorations_snow_toggle_start" style="display: none;">{% comment %} START l10n: startsnowstorm {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.startsnowstorm %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.startsnowstorm[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: startsnowstorm {% endcomment %}</span><span id="decorations_snow_toggle_stop" style="display: none;">{% comment %} START l10n: stopsnowstorm {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.stopsnowstorm %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.stopsnowstorm[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: stopsnowstorm {% endcomment %}</span></span></li>
+    <li><span id="decorations_snow_toggle" class="fakelink" onclick="decorations.snow(); return false;"><span id="decorations_snow_toggle_start" style="display: none;">{{ l10n_startsnowstorm }}</span><span id="decorations_snow_toggle_stop" style="display: none;">{{ l10n_stopsnowstorm }}</span></span></li>
 {% endif %}{% if page.decorations_lights %}
-    <li id="decorations_lights_stop" style="display: none;"><span class="fakelink" onclick="decorations.lights.stop(); return false;">{% comment %} START l10n: hidechristmaslights {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.hidechristmaslights %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.hidechristmaslights[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: hidechristmaslights {% endcomment %}</span></li>
-    <li id="decorations_lights_start" style="display: none;"><span class="fakelink" onclick="decorations.lights.start(); return false;">{% comment %} START l10n: showchristmaslights {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.showchristmaslights %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.showchristmaslights[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: showchristmaslights {% endcomment %}</span></li>
-    <li id="decorations_lights_sizes" style="display: none;">{% comment %} START l10n: size {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.size %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.size[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: size {% endcomment %}: <span id="decorations_lights_sizes_list"></span></li>
+    <li id="decorations_lights_stop" style="display: none;"><span class="fakelink" onclick="decorations.lights.stop(); return false;">{{ l10n_hidexmaslights }}</span></li>
+    <li id="decorations_lights_start" style="display: none;"><span class="fakelink" onclick="decorations.lights.start(); return false;">{{ l10n_showxmaslights }}</span></li>
+    <li id="decorations_lights_sizes" style="display: none;">{{ l10n_size }}: <span id="decorations_lights_sizes_list"></span></li>
 {% endif %}
   </ul><!--<![endif]-->
-  <!--[if lte IE 8]><p><a href="https://www.mozilla.org/firefox/desktop/">{% comment %} START l10n: abetterbrowser {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.abetterbrowser %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.abetterbrowser[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: abetterbrowser {% endcomment %}</a></p><![endif]-->
+  <!--[if lte IE 8]><p><a href="https://www.mozilla.org/firefox/desktop/">{{ l10n_abetterbrowser }}</a></p><![endif]-->
 {% endif %}{% if page.donate and page.langs %}
-  <p>{% comment %} START l10n: donatebitcoin {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.donatebitcoin %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.donatebitcoin[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: donatebitcoin {% endcomment %} {% if page.decorations_lights or page.decorations_snow or page.langs %}<br>{% endif %}<code>12WbgxE6ApK51adGdtYZr51ciaTmBQxBxD</code></p>
+  <p>{{ l10n_donatebitcoin }} {% if page.decorations_lights or page.decorations_snow or page.langs %}<br>{% endif %}<code>12WbgxE6ApK51adGdtYZr51ciaTmBQxBxD</code></p>
 {% endif %}
 
   <hr>
@@ -421,7 +422,7 @@ NOTES:
     <li><a href="https://github.com/jhartz">{% comment %} l10n: ongithub {% endcomment %}{{ l10n_values[1] }}</a></li>
   </ul>
 
-  <p class="right"><a href="/privacy.html">{% comment %} START l10n: privacypolicy {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.privacypolicy %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.privacypolicy[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: privacypolicy {% endcomment %}</a></p>
+  <p class="right"><a href="/privacy.html">{{ l10n_privacypolicy }}</a></p>
 </footer>
 
 {% if page.email %}<script type="text/javascript" src="/email.js"></script>{% endif %}
@@ -432,7 +433,9 @@ NOTES:
   var checkhash = function () {
     if (location.hash) {
       var id = location.hash.substring(1);
-      if (id && document.getElementById(id) && document.getElementById(id).parentNode.getAttribute("rel") && document.getElementById(id).parentNode.getAttribute("rel").substring(0, 9) == "shadowbox") {
+      if (id && document.getElementById(id) &&
+                document.getElementById(id).parentNode.getAttribute("rel") &&
+                document.getElementById(id).parentNode.getAttribute("rel").substring(0, 9) == "shadowbox") {
         if (Shadowbox.isOpen()) {
           try {
             // So we don't end up in an endless loop
@@ -449,7 +452,9 @@ NOTES:
 {% if page.shadowbox_usehash %}
   // Change the hash to match the current element
   var changehash = function (current) {
-    if (current && current.link && current.link.getElementsByTagName("img").length > 0 && current.link.getElementsByTagName("img")[0].id) {
+    if (current && current.link &&
+        current.link.getElementsByTagName("img").length > 0 &&
+        current.link.getElementsByTagName("img")[0].id) {
       window.location.hash = "#" + current.link.getElementsByTagName("img")[0].id;
     }
   };
@@ -503,7 +508,8 @@ var decorations = {
       var max_age = (60*60*24*365) / 2; // 1/2 year (in seconds)
       var expires = (new Date()).getTime() + max_age * 1000; // 1/2 year later (in milliseconds)
       expires = new Date(expires);
-      document.cookie = name + "=" + value + ";path=/;max-age=" + max_age + ";expires=" + (expires.toGMTString ? expires.toGMTString() : expires.toUTCString());
+      document.cookie = name + "=" + value + ";path=/;max-age=" + max_age + 
+          ";expires=" + (expires.toGMTString ? expires.toGMTString() : expires.toUTCString());
     } else {
       var cookies = document.cookie.split(";");
       for (var i = 0; i < cookies.length; i++) {
@@ -517,11 +523,11 @@ var decorations = {
 
 {% if page.decorations_lights %}
 var sizeTable = {
-  pico: "{% comment %} START l10n: tiny {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.tiny %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.tiny[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: tiny {% endcomment %}", // "tiny"
-  tiny: "{% comment %} START l10n: small {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.small %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.small[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: small {% endcomment %}", // "small"
-  small: "{% comment %} START l10n: medium {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.medium %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.medium[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: medium {% endcomment %}", // "medium"
-  medium: "{% comment %} START l10n: large {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.large %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.large[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: large {% endcomment %}", // "large"
-  large: "{% comment %} START l10n: huge {% endcomment %}{% assign s = "" %}{% if page.lang %}{% for l in page.l10n.huge %}{% if l[0] == page.lang %}{% assign s = l[1] %}{% endif %}{% endfor %}{% endif %}{% if s == "" %}{% assign s = page.l10n.huge[""] %}{% endif %}{{ s | escape }}{% comment %} END l10n: huge {% endcomment %}" // "huge"
+  pico: "{{ l10n_tiny }}", // "tiny"
+  tiny: "{{ l10n_small }}", // "small"
+  small: "{{ l10n_medium }}", // "medium"
+  medium: "{{ l10n_large }}", // "large"
+  large: "{{ l10n_huge }}" // "huge"
 };
 {% endif %}
 </script>
