@@ -272,6 +272,15 @@ bottom of the YAML Front Matter above.)
 
 {% endcapture %}<!DOCTYPE html>
 <!-- Modernist theme by Steve Smith - https://github.com/orderedlist -->
+<!-- 
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+{{ DIVIDOR }}
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+{{ l10n_values_unsplit }}
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+{{ l10n_values }}
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+-->
 <html lang="{% if page.lang %}{{ page.lang | escape }}{% else %}en{% endif %}">
 <head>
   <meta charset="utf-8">{% if page.redirect %}
