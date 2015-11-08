@@ -295,30 +295,6 @@ When working with languages and translations in an individual page...
 {% endcapture %}<!DOCTYPE html>
 <!-- Modernist theme by Steve Smith - https://github.com/orderedlist -->
 <html lang="{% if page.lang %}{{ page.lang | escape }}{% else %}en{% endif %}">
-<!--
-          _____                    _____          
-         /\    \                  /\    \         
-        /::\____\                /::\    \        
-       /:::/    /                \:::\    \       
-      /:::/    /                  \:::\    \      
-     /:::/    /                    \:::\    \     
-    /:::/____/                      \:::\    \    
-   /::::\    \                      /::::\    \   
-  /::::::\    \   _____    ____    /::::::\    \  
- /:::/\:::\    \ /\    \  /\   \  /:::/\:::\    \ 
-/:::/  \:::\    /::\____\/::\   \/:::/  \:::\____\
-\::/    \:::\  /:::/    /\:::\  /:::/    \::/    /
- \/____/ \:::\/:::/    /  \:::\/:::/    / \/____/ 
-          \::::::/    /    \::::::/    /          
-           \::::/    /      \::::/____/           
-           /:::/    /        \:::\    \           
-          /:::/    /          \:::\    \          
-         /:::/    /            \:::\    \         
-        /:::/    /              \:::\____\        
-        \::/    /                \::/    /        
-         \/____/                  \/____/         
-                                                  
--->
 <head>
   <meta charset="utf-8">{% if page.redirect %}
   <noscript><meta http-equiv="refresh" content="0; url={{ page.redirect | escape }}"></noscript>{% endif %}
@@ -344,6 +320,31 @@ When working with languages and translations in an individual page...
   {% if page.shadowbox %}<script type="text/javascript" src="/shadowbox/shadowbox.js"></script>{% endif %}
   {% unless page.noads %}{% if page.ads %}<script type="text/javascript" async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>{% endif %}{% endunless %}
 </head>
+
+<!--
+          _____                    _____          
+         /\    \                  /\    \         
+        /::\____\                /::\    \        
+       /:::/    /                \:::\    \       
+      /:::/    /                  \:::\    \      
+     /:::/    /                    \:::\    \     
+    /:::/____/                      \:::\    \    
+   /::::\    \                      /::::\    \   
+  /::::::\    \   _____    ____    /::::::\    \  
+ /:::/\:::\    \ /\    \  /\   \  /:::/\:::\    \ 
+/:::/  \:::\    /::\____\/::\   \/:::/  \:::\____\
+\::/    \:::\  /:::/    /\:::\  /:::/    \::/    /
+ \/____/ \:::\/:::/    /  \:::\/:::/    / \/____/ 
+          \::::::/    /    \::::::/    /          
+           \::::/    /      \::::/____/           
+           /:::/    /        \:::\    \           
+          /:::/    /          \:::\    \          
+         /:::/    /            \:::\    \         
+        /:::/    /              \:::\____\        
+        \::/    /                \::/    /        
+         \/____/                  \/____/         
+                                                  
+-->
 
 <body{% if page.bodyClassName %} class="{{ page.bodyClassName | escape }}"{% endif %}>
 {% if page.decorations_lights %}<div id="lights" style="display: none;"></div>{% endif %}
