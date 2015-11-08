@@ -298,7 +298,7 @@ When working with languages and translations in an individual page...
 <head>
   <meta charset="utf-8">{% if page.redirect %}
   <noscript><meta http-equiv="refresh" content="0; url={{ page.redirect | escape }}"></noscript>{% endif %}
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% if page.title %}{{ page.title | escape }}{% if page.index %} - {% endif %}{% endif %}{% if page.index %}{{ page.index | escape }}{% endif %}</title>
 {% if page.langs %}{% for lang in page.langs %}
