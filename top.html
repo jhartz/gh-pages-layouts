@@ -36,6 +36,12 @@ bodyClassName: fall
 
 
 ###############################################################################
+### GLOBAL VARIABLES
+
+donationAddress: 1JHwwwjiBMGEHuq9TAnpjPb9YnhE2tWtU2
+
+
+###############################################################################
 ### PAGE LOCALIZATIONS
 
 # These localizations are just for this page.
@@ -424,7 +430,7 @@ NOTES:
 <footer class="noprint">{% if page.langs %}
   <p>{{ l10n_viewthispagein }} {% for lang in page.langs %}<a href="{{ lang_urls[forloop.index0] }}">{{ lang[1] | escape }}</a>{% unless forloop.last %}, {% endunless %}{% endfor %}</p>
 {% elsif page.donate %}
-  <p>{{ l10n_donatebitcoin }} {% if page.decorations_lights or page.decorations_snow or page.langs %}<br>{% endif %}<code>12WbgxE6ApK51adGdtYZr51ciaTmBQxBxD</code></p>
+<p>{{ l10n_donatebitcoin }} {% if page.decorations_lights or page.decorations_snow or page.langs %}<br>{% endif %}<code>{{ page.donationAddress }}</code></p>
 {% endif %}{% if page.decorations_lights or page.decorations_snow %}
   <!--[if gt IE 8]><!--><ul>
 {% if page.decorations_snow %}
@@ -437,7 +443,7 @@ NOTES:
   </ul><!--<![endif]-->
   <!--[if lte IE 8]><p><a href="https://www.mozilla.org/firefox/desktop/">{{ l10n_abetterbrowser }}</a></p><![endif]-->
 {% endif %}{% if page.donate and page.langs %}
-  <p>{{ l10n_donatebitcoin }} {% if page.decorations_lights or page.decorations_snow or page.langs %}<br>{% endif %}<code>12WbgxE6ApK51adGdtYZr51ciaTmBQxBxD</code></p>
+<p>{{ l10n_donatebitcoin }} {% if page.decorations_lights or page.decorations_snow or page.langs %}<br>{% endif %}<code>{{ page.donationAddress }}</code></p>
 {% endif %}
 
   <hr>
