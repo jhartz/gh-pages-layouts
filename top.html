@@ -12,9 +12,9 @@
 # the test can't overwrite it with something else.)
 
 # These class names refer to specific CSS styling.
-bodyClassName: christmas
+#bodyClassName: christmas
 #bodyClassName: fall
-#bodyClassName: winter
+bodyClassName: winter
 
 
 ###############################################################################
@@ -28,11 +28,11 @@ bodyClassName: christmas
 # JS script block (and thus whatever is in the quotes must be valid JS).
 
 # WITH CHRISTMAS THEME:
-decorations_lights: "true"
-decorations_snow: "false"
+#decorations_lights: "true"
+#decorations_snow: "false"
 
 # WITH WINTER THEME:
-#decorations_snow: "true"
+decorations_snow: "true"
 
 
 ###############################################################################
@@ -328,28 +328,28 @@ When working with languages and translations in an individual page...
 </head>
 
 <!--
-          _____                    _____          
-         /\    \                  /\    \         
-        /::\____\                /::\    \        
-       /:::/    /                \:::\    \       
-      /:::/    /                  \:::\    \      
-     /:::/    /                    \:::\    \     
-    /:::/____/                      \:::\    \    
-   /::::\    \                      /::::\    \   
-  /::::::\    \   _____    ____    /::::::\    \  
- /:::/\:::\    \ /\    \  /\   \  /:::/\:::\    \ 
-/:::/  \:::\    /::\____\/::\   \/:::/  \:::\____\
-\::/    \:::\  /:::/    /\:::\  /:::/    \::/    /
- \/____/ \:::\/:::/    /  \:::\/:::/    / \/____/ 
-          \::::::/    /    \::::::/    /          
-           \::::/    /      \::::/____/           
-           /:::/    /        \:::\    \           
-          /:::/    /          \:::\    \          
-         /:::/    /            \:::\    \         
-        /:::/    /              \:::\____\        
-        \::/    /                \::/    /        
-         \/____/                  \/____/         
-                                                  
+          _____                   _____          
+         /\    \                 /\    \         
+        /::\____\               /::\    \        
+       /:::/    /               \:::\    \       
+      /:::/    /                 \:::\    \      
+     /:::/    /                   \:::\    \     
+    /:::/____/                     \:::\    \    
+   /::::\    \                     /::::\    \   
+  /::::::\    \   _____   ____    /::::::\    \  
+ /:::/\:::\    \ /\    \ /\   \  /:::/\:::\    \ 
+/:::/  \:::\    /::\____\::\   \/:::/  \:::\____\
+\::/    \:::\  /:::/    /:::\  /:::/    \::/    /
+ \/____/ \:::\/:::/    / \:::\/:::/    / \/____/ 
+          \::::::/    /   \::::::/    /          
+           \::::/    /     \::::/____/           
+           /:::/    /       \:::\    \           
+          /:::/    /         \:::\    \          
+         /:::/    /           \:::\    \         
+        /:::/    /             \:::\____\        
+        \::/    /               \::/    /        
+         \/____/                 \/____/         
+
 -->
 
 <body{% if page.bodyClassName %} class="{{ page.bodyClassName | escape }}"{% endif %}>
