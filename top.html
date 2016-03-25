@@ -59,6 +59,9 @@ l10n:
   ongithub:
     "": "jhartz on GitHub"
     es: "jhartz en GitHub"
+  advertisement:
+    "": "Advertisement"
+    es: "Anuncio"
 
   privacypolicy:
     "": "Privacy Policy"
@@ -128,6 +131,7 @@ l10n:
 
   {% if name == "home"     %}{% assign l10n_home     = s %}{% endif %}
   {% if name == "ongithub" %}{% assign l10n_ongithub = s %}{% endif %}
+  {% if name == "advertisement" %}{% assign l10n_advertisement = s %}{% endif %}
 
   {% if name == "privacypolicy"  %}{% assign l10n_privacypolicy  = s %}{% endif %}
   {% if name == "donatebitcoin"  %}{% assign l10n_donatebitcoin  = s %}{% endif %}
@@ -386,7 +390,7 @@ When working with languages and translations in an individual page...
 
 {% unless page.noads %}{% if page.ads and page.ads.bottom %}
     <!-- GH-Pages Bottom Ad - responsive -->
-    <div class="section-msg-bottom ads-container"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3871520819272731" data-ad-slot="7601552005" data-ad-format="auto"></ins></div>
+    <div class="section-msg-bottom ads-container">{{ l10n_advertisement }}<br><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3871520819272731" data-ad-slot="7601552005" data-ad-format="auto"></ins></div>
     <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 {% endif %}{% endunless %}
 
