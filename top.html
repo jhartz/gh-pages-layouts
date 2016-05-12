@@ -320,8 +320,8 @@ When working with languages and translations in an individual page...
   {% endif %}<![endif]-->{% endif %}{% endfor %}
 {% endif %}
   <link rel="stylesheet" type="text/css" href="/style-new.css">
-  {% if page.theme %}<link rel="stylesheet" type="text/css" href="/style/{{ theme | escape }}">{% endif %}
-  {% if page.themeOverride %}<link rel="stylesheet" type="text/css" href="/style/{{ themeOverride | escape }">{% endif %}
+  {% if page.theme %}<link rel="stylesheet" type="text/css" href="/style/{{ page.theme | escape }}">{% endif %}
+  {% if page.themeOverride %}<link rel="stylesheet" type="text/css" href="/style/{{ page.themeOverride | escape }">{% endif %}
   {% if page.decorations_lights %}<link rel="stylesheet" type="text/css" href="/decorations/lights.css">{% endif %}
   {% if page.shadowbox %}<link rel="stylesheet" type="text/css" href="/shadowbox/shadowbox.css">{% endif %}
   {% if page.redirect %}<script type="text/javascript">location.replace("{{ page.redirect | xml_escape }}");</script>{% endif %}
