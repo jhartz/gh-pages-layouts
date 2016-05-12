@@ -8,14 +8,14 @@
 # These variables are to enable seasonal themes.
 
 # Most of them have a test file (in the jhartz.github.com repo) where the
-# values are enabled to test them. (NOTE: If a bodyClassName is enabled here,
-# the test can't overwrite it with something else.)
+# values are enabled to test them.
+# Each has a CSS stylesheet in style/[theme name].css, and the body will have
+# its class name also be the theme name.
 
-# These class names refer to specific CSS styling.
-#bodyClassName: christmas
-#bodyClassName: fall
-#bodyClassName: winter
-bodyClassName: summer
+#theme: christmas
+#theme: fall
+#theme: winter
+theme: summer
 
 
 ###############################################################################
@@ -73,9 +73,6 @@ l10n:
   viewthispagein:
     "": "View this page in:"
     es: "Ver esta página en:"
-  abetterbrowser:
-    "": "A Better Browser"
-    es: "Un mejor navegador"
   startsnowstorm:
     "": "Start Snowstorm"
     es: "Empezar nevada"
@@ -137,7 +134,6 @@ l10n:
   {% if name == "privacypolicy"  %}{% assign l10n_privacypolicy  = s %}{% endif %}
   {% if name == "donatebitcoin"  %}{% assign l10n_donatebitcoin  = s %}{% endif %}
   {% if name == "viewthispagein" %}{% assign l10n_viewthispagein = s %}{% endif %}
-  {% if name == "abetterbrowser" %}{% assign l10n_abetterbrowser = s %}{% endif %}
   {% if name == "startsnowstorm" %}{% assign l10n_startsnowstorm = s %}{% endif %}
   {% if name == "stopsnowstorm"  %}{% assign l10n_stopsnowstorm  = s %}{% endif %}
   {% if name == "showxmaslights" %}{% assign l10n_showxmaslights = s %}{% endif %}
@@ -324,9 +320,10 @@ When working with languages and translations in an individual page...
   {% endif %}<![endif]-->{% endif %}{% endfor %}
 {% endif %}
   <link rel="stylesheet" type="text/css" href="/style-new.css">
+  {% if page.theme %}<link rel="stylesheet" type="text/css" href="/style/{{ theme | escape }}">{% endif %}
+  {% if page.themeOverride %}<link rel="stylesheet" type="text/css" href="/style/{{ themeOverride | escape }">{% endif %}
   {% if page.decorations_lights %}<link rel="stylesheet" type="text/css" href="/decorations/lights.css">{% endif %}
   {% if page.shadowbox %}<link rel="stylesheet" type="text/css" href="/shadowbox/shadowbox.css">{% endif %}
-  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
   {% if page.redirect %}<script type="text/javascript">location.replace("{{ page.redirect | xml_escape }}");</script>{% endif %}
   {% if page.shadowbox %}<script type="text/javascript" src="/shadowbox/shadowbox.js"></script>{% endif %}
   {% unless page.noads %}{% if page.ads %}<script type="text/javascript" async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>{% endif %}{% endunless %}
@@ -357,7 +354,7 @@ When working with languages and translations in an individual page...
 
 -->
 
-<body{% if page.bodyClassName %} class="{{ page.bodyClassName | escape }}"{% endif %}>
+<body class="{% if page.themeOverride %}theme {{ page.themeOverride | escape}}{% elsif page.theme %}theme {{ page.theme | escape }}{% endif %}">
 {% if page.decorations_lights %}<div id="lights" style="display: none;"></div>{% endif %}
 
 <div class="wrapper">
@@ -446,7 +443,6 @@ NOTES:
     <li id="decorations_lights_sizes" style="display: none;">{{ l10n_size }}: <span id="decorations_lights_sizes_list"></span></li>
 {% endif %}
   </ul><!--<![endif]-->
-  <!--[if lte IE 8]><p><a href="https://www.mozilla.org/firefox/desktop/">{{ l10n_abetterbrowser }}</a></p><![endif]-->
 {% endif %}{% if page.donate and page.langs %}
 <p>{{ l10n_donatebitcoin }} {% if page.decorations_lights or page.decorations_snow or page.langs %}<br>{% endif %}<code>{{ page.donationAddress }}</code></p>
 {% endif %}
