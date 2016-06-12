@@ -321,7 +321,6 @@ When working with languages and translations in an individual page...
 {% endif %}
   <link rel="stylesheet" type="text/css" href="/style-new.css">
   {% if layout.theme %}<link rel="stylesheet" type="text/css" href="/style/{{ layout.theme | escape }}.css">{% endif %}
-  {% if layout.themeOverride %}<link rel="stylesheet" type="text/css" href="/style/{{ layout.themeOverride | escape }}.css">{% endif %}
   {% if layout.decorations_lights %}<link rel="stylesheet" type="text/css" href="/decorations/lights.css">{% endif %}
   {% if layout.shadowbox %}<link rel="stylesheet" type="text/css" href="/shadowbox/shadowbox.css">{% endif %}
   {% if layout.redirect %}<script type="text/javascript">location.replace("{{ layout.redirect | xml_escape }}");</script>{% endif %}
@@ -354,7 +353,7 @@ When working with languages and translations in an individual page...
 
 -->
 
-<body class="{% if layout.themeOverride %}theme {{ layout.themeOverride | escape}}{% elsif layout.theme %}theme {{ layout.theme | escape }}{% endif %}">
+<body class="{% if layout.theme %}theme {{ layout.theme | escape }}{% endif %}">
 {% if layout.decorations_lights %}<div id="lights" style="display: none;"></div>{% endif %}
 
 <div class="wrapper">
