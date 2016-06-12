@@ -8,7 +8,7 @@ links:
     title: "Ramblings by Jake - Feed"
     href: /blog/atom.xml
 ---
-{% unless layout.blogindex %}    <aside>
+{% unless page.blogindex %}    <aside>
       <h3>Recent Posts</h3>
       <ul>{% for post in site.posts limit:3 %}
         <li><a href="{{ post.url }}" title="{{ post.title | escape }}">{{ post.title | escape | truncatewords:6,' &hellip;' }}</a> <small>({{ post.date | date: '%m/%d/%Y' }})</small></li>{% endfor %}
@@ -20,7 +20,7 @@ links:
     <article>
 {% endunless %}
 {{ content }}
-{% unless layout.blogindex %}
+{% unless page.blogindex %}
     </article>
     <div class="bottombar" style="clear: both;">
       <span>{% if page.next.url %}«&nbsp;<a href="{{ page.next.url | escape }}" title="{{ page.next.title | escape }}">{{ page.next.title | truncatewords: 10 | escape }}</a>{% else %}&nbsp;{% endif %}</span>{% if page.previous.url %}
