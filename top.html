@@ -112,12 +112,12 @@ l10n:
 ###############################################################################
 ### PAGE LOCALIZATION USAGE
 
-{% for localization in page.l10n %}
+{% for localization in layout.l10n %}
   {% assign name = localization[0] %}{% assign langs_dict = localization[1] %}
   {% assign s = "" %}
-  {% if page.lang %}
+  {% if layout.lang %}
     {% for lang in langs_dict %}
-      {% if lang[0] == page.lang %}{% assign s = lang[1] %}{% endif %}
+      {% if lang[0] == layout.lang %}{% assign s = lang[1] %}{% endif %}
     {% endfor %}
   {% endif %}
   {% if s == "" %}{% assign s = langs_dict[""] %}{% endif %}
@@ -273,10 +273,10 @@ When working with languages and translations in an individual page...
 
 # Assign all the lang URLs to lang_urls_unsplit, separated by DIVIDER
 
-{% capture lang_urls_unsplit %}{% for lang in page.langs %}{% assign splitbase = page.base | split:'' %}{% capture front %}{{ splitbase[0] }}{{ splitbase[1] }}{{ splitbase[2] }}{% endcapture %}{% if front != "../" %}{{ page.base | escape }}{% endif %}{% if lang[0] != "" %}{% if front == "../" %}index{% endif %}.{{ lang[0] | escape }}.html{% else %}{% if front != "../" %}.html{% else %}{{ page.base | escape }}{% endif %}{% endif %}{{ DIVIDER }}{% endfor %}{% endcapture %}
+{% capture lang_urls_unsplit %}{% for lang in layout.langs %}{% assign splitbase = layout.base | split:'' %}{% capture front %}{{ splitbase[0] }}{{ splitbase[1] }}{{ splitbase[2] }}{% endcapture %}{% if front != "../" %}{{ layout.base | escape }}{% endif %}{% if lang[0] != "" %}{% if front == "../" %}index{% endif %}.{{ lang[0] | escape }}.html{% else %}{% if front != "../" %}.html{% else %}{{ layout.base | escape }}{% endif %}{% endif %}{{ DIVIDER }}{% endfor %}{% endcapture %}
 
 # Split it based on DIVIDER, so lang_urls contains the URLs to this page in the
-# other languages, in the same order as page.langs
+# other languages, in the same order as layout.langs
 
 {% assign lang_urls = lang_urls_unsplit | split: DIVIDER %}
 
@@ -301,32 +301,32 @@ When working with languages and translations in an individual page...
 
 {% endcapture %}<!DOCTYPE html>
 <!-- Modernist theme by Steve Smith - https://github.com/orderedlist -->
-<html lang="{% if page.lang %}{{ page.lang | escape }}{% else %}en{% endif %}">
+<html lang="{% if layout.lang %}{{ layout.lang | escape }}{% else %}en{% endif %}">
 <head>
-  <meta charset="utf-8">{% if page.redirect %}
-  <noscript><meta http-equiv="refresh" content="0; url={{ page.redirect | escape }}"></noscript>{% endif %}
+  <meta charset="utf-8">{% if layout.redirect %}
+  <noscript><meta http-equiv="refresh" content="0; url={{ layout.redirect | escape }}"></noscript>{% endif %}
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{% if page.title %}{{ page.title | escape }}{% if page.index %} - {% endif %}{% endif %}{% if page.index %}{{ page.index | escape }}{% endif %}</title>
-{% if page.langs %}{% for lang in page.langs %}
+  <title>{% if page.title %}{{ page.title | escape }}{% if layout.index %} - {% endif %}{% endif %}{% if layout.index %}{{ layout.index | escape }}{% endif %}</title>
+{% if layout.langs %}{% for lang in layout.langs %}
   <link rel="alternate" hreflang="{% if lang[0] != "" %}{{ lang[0] | escape }}{% else %}en{% endif %}" href="{{ lang_urls[forloop.index0] }}">{% endfor %}
 {% endif %}
-{% if page.links %}{% for link in page.links %}
+{% if layout.links %}{% for link in layout.links %}
   <link{% for attr in link %} {{ attr[0] | escape }}="{{ attr[1] | escape }}"{% endfor %}>{% endfor %}
 {% endif %}
-{% if page.ielinks %}
-  <!--[if IE]>{% for link in page.ielinks %}{% if forloop.length != 1 %}
+{% if layout.ielinks %}
+  <!--[if IE]>{% for link in layout.ielinks %}{% if forloop.length != 1 %}
     {% endif %}<link{% for attr in link %} {{ attr[0] | escape }}="{{ attr[1] | escape}}"{% endfor %}>{% if forloop.last %}{% if forloop.length != 1 %}
   {% endif %}<![endif]-->{% endif %}{% endfor %}
 {% endif %}
   <link rel="stylesheet" type="text/css" href="/style-new.css">
-  {% if page.theme %}<link rel="stylesheet" type="text/css" href="/style/{{ page.theme | escape }}.css">{% endif %}
-  {% if page.themeOverride %}<link rel="stylesheet" type="text/css" href="/style/{{ page.themeOverride | escape }}.css">{% endif %}
-  {% if page.decorations_lights %}<link rel="stylesheet" type="text/css" href="/decorations/lights.css">{% endif %}
-  {% if page.shadowbox %}<link rel="stylesheet" type="text/css" href="/shadowbox/shadowbox.css">{% endif %}
-  {% if page.redirect %}<script type="text/javascript">location.replace("{{ page.redirect | xml_escape }}");</script>{% endif %}
-  {% if page.shadowbox %}<script type="text/javascript" src="/shadowbox/shadowbox.js"></script>{% endif %}
-  {% unless page.noads %}{% if page.ads %}<script type="text/javascript" async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>{% endif %}{% endunless %}
+  {% if layout.theme %}<link rel="stylesheet" type="text/css" href="/style/{{ layout.theme | escape }}.css">{% endif %}
+  {% if layout.themeOverride %}<link rel="stylesheet" type="text/css" href="/style/{{ layout.themeOverride | escape }}.css">{% endif %}
+  {% if layout.decorations_lights %}<link rel="stylesheet" type="text/css" href="/decorations/lights.css">{% endif %}
+  {% if layout.shadowbox %}<link rel="stylesheet" type="text/css" href="/shadowbox/shadowbox.css">{% endif %}
+  {% if layout.redirect %}<script type="text/javascript">location.replace("{{ layout.redirect | xml_escape }}");</script>{% endif %}
+  {% if layout.shadowbox %}<script type="text/javascript" src="/shadowbox/shadowbox.js"></script>{% endif %}
+  {% unless layout.noads %}{% if layout.ads %}<script type="text/javascript" async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>{% endif %}{% endunless %}
 </head>
 
 <!--
@@ -354,39 +354,39 @@ When working with languages and translations in an individual page...
 
 -->
 
-<body class="{% if page.themeOverride %}theme {{ page.themeOverride | escape}}{% elsif page.theme %}theme {{ page.theme | escape }}{% endif %}">
-{% if page.decorations_lights %}<div id="lights" style="display: none;"></div>{% endif %}
+<body class="{% if layout.themeOverride %}theme {{ layout.themeOverride | escape}}{% elsif layout.theme %}theme {{ layout.theme | escape }}{% endif %}">
+{% if layout.decorations_lights %}<div id="lights" style="display: none;"></div>{% endif %}
 
 <div class="wrapper">
-  <header>{% capture indexurl %}{% if page.indexurl %}{{ page.indexurl | escape }}{% else %}{% if page.index %}/{{ page.index | downcase | replace:' ','' | escape }}/{% endif %}{% endif %}{% endcapture %}
+  <header>{% capture indexurl %}{% if layout.indexurl %}{{ layout.indexurl | escape }}{% else %}{% if layout.index %}/{{ layout.index | downcase | replace:' ','' | escape }}/{% endif %}{% endif %}{% endcapture %}
     <p class="view"><a href="/">jhartz.github.io</a></p>
-    <h1>{% if page.index %}<a href="{{ indexurl }}{% if page.lang and page.indexlangs %}{% for lang in page.indexlangs %}{% if page.lang == lang %}index.{{ lang | escape }}.html{% endif %}{% endfor %}{% endif %}">{{ page.index | escape }}</a>{% else %}{% if page.title %}{{ page.title | escape }}{% else %}jhartz.github.io{% endif %}{% endif %}</h1>{% if page.nav %}
-    <ul>{% for nav in page.nav %}
-      <li><a href="{% if nav.url %}{{ nav.url | escape }}{% else %}{{ indexurl }}{% assign addindex = false %}{% if nav.base %}{% if nav.base != '/' %}{{ nav.base | escape }}{% endif %}{% capture lastchar %}{{ nav.base | split:'' | last }}{% endcapture %}{% if lastchar == '/' %}{% assign addindex = true %}{% endif %}{% else %}{{ nav.name | downcase | replace:' ','' | escape }}{% endif %}{% assign indexadded = false %}{% if page.lang and nav.langs %}{% for lang in nav.langs %}{% if page.lang == lang[0] %}{% if addindex %}index{% assign indexadded = true %}{% endif %}.{{ lang[0] }}{% endif %}{% endfor %}{% endif %}{% if addindex == false or indexadded == true %}.html{% endif %}{% endif %}">{% assign done = false %}{% if page.lang and nav.langs %}{% for lang in nav.langs %}{% if page.lang == lang[0] %}{{ lang[1] | escape }}{% assign done = true %}{% endif %}{% endfor %}{% endif %}{% if done == false %}{{ nav.name | escape }}{% endif %}</a></li>{% endfor %}
-    </ul>{% endif %}{% if page.prettynav %}
-    <ul class="pretty">{% for nav in page.prettynav %}
+    <h1>{% if layout.index %}<a href="{{ indexurl }}{% if layout.lang and layout.indexlangs %}{% for lang in layout.indexlangs %}{% if layout.lang == lang %}index.{{ lang | escape }}.html{% endif %}{% endfor %}{% endif %}">{{ layout.index | escape }}</a>{% else %}{% if page.title %}{{ page.title | escape }}{% else %}jhartz.github.io{% endif %}{% endif %}</h1>{% if layout.nav %}
+    <ul>{% for nav in layout.nav %}
+      <li><a href="{% if nav.url %}{{ nav.url | escape }}{% else %}{{ indexurl }}{% assign addindex = false %}{% if nav.base %}{% if nav.base != '/' %}{{ nav.base | escape }}{% endif %}{% capture lastchar %}{{ nav.base | split:'' | last }}{% endcapture %}{% if lastchar == '/' %}{% assign addindex = true %}{% endif %}{% else %}{{ nav.name | downcase | replace:' ','' | escape }}{% endif %}{% assign indexadded = false %}{% if layout.lang and nav.langs %}{% for lang in nav.langs %}{% if layout.lang == lang[0] %}{% if addindex %}index{% assign indexadded = true %}{% endif %}.{{ lang[0] }}{% endif %}{% endfor %}{% endif %}{% if addindex == false or indexadded == true %}.html{% endif %}{% endif %}">{% assign done = false %}{% if layout.lang and nav.langs %}{% for lang in nav.langs %}{% if layout.lang == lang[0] %}{{ lang[1] | escape }}{% assign done = true %}{% endif %}{% endfor %}{% endif %}{% if done == false %}{{ nav.name | escape }}{% endif %}</a></li>{% endfor %}
+    </ul>{% endif %}{% if layout.prettynav %}
+    <ul class="pretty">{% for nav in layout.prettynav %}
       <li><a href="{{ nav.url | escape }}">{% if nav.html %}{{ nav.html }}{% else %}{% if nav.pre %}{{ nav.pre | escape }} {% unless nav.nobr %}<span class="nomobile"><br></span>{% endunless %}{% endif %}<strong>{{ nav.text | escape }}</strong>{% endif %}</a></li>{% endfor %}
     </ul>{% endif %}
     <p class="noview"><a href="/">jhartz.github.io</a></p>
   </header>
   <section>
-{% if page.redirect %}
-      <p>Redirecting to: <a href="{{ page.redirect | escape }}">{% if page.title %}{{ page.title | escape }}{% else %}{{ page.redirect | escape }}{% endif %}</a></p>
+{% if layout.redirect %}
+      <p>Redirecting to: <a href="{{ layout.redirect | escape }}">{% if page.title %}{{ page.title | escape }}{% else %}{{ layout.redirect | escape }}{% endif %}</a></p>
 {% else %}
 
-{% unless page.noads %}{% if page.ads and page.ads.top %}
+{% unless layout.noads %}{% if layout.ads and layout.ads.top %}
     <!-- GH-Pages Top Ad - responsive -->
     <div class="section-msg ads-container"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3871520819272731" data-ad-slot="6723908007" data-ad-format="auto"></ins></div>
     <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 {% endif %}{% endunless %}
 
-{% if page.decorations_snow %}
+{% if layout.decorations_snow %}
     <div id="decorations_snow_festive_mood" class="section-msg" style="display: none;">In a festive mood? Try turning on the snowstorm by clicking "Start Snowstorm" at the very bottom of the page!</div>
 {% endif %}
 
 {{ content }}
 
-{% unless page.noads %}{% if page.ads and page.ads.bottom %}
+{% unless layout.noads %}{% if layout.ads and layout.ads.bottom %}
     <!-- GH-Pages Bottom Ad - responsive -->
     <div class="section-msg-bottom ads-container">{{ l10n_advertisement }}<br><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3871520819272731" data-ad-slot="7601552005" data-ad-format="auto"></ins></div>
     <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
@@ -412,9 +412,9 @@ The "BOTTOM" FOOTER contains permanent items that are on every page.
 
 
 "TOP" FOOTER ITEMS:
- - Language stuff (page.langs), i.e. "View this page in..."
- - Decorations (page.decorations_lights, page.decorations_snow)
- - Donate (page.donate), i.e. the Bitcoin message
+ - Language stuff (layout.langs), i.e. "View this page in..."
+ - Decorations (layout.decorations_lights, layout.decorations_snow)
+ - Donate (layout.donate), i.e. the Bitcoin message
 
 NOTES:
   If there is language stuff (i.e. "View this page in..."), it always comes first.
@@ -429,22 +429,22 @@ NOTES:
 
 {% endcomment %}
 
-<footer class="noprint">{% if page.langs %}
-  <p>{{ l10n_viewthispagein }} {% for lang in page.langs %}<a href="{{ lang_urls[forloop.index0] }}">{{ lang[1] | escape }}</a>{% unless forloop.last %}, {% endunless %}{% endfor %}</p>
-{% elsif page.donate %}
-<p>{{ l10n_donatebitcoin }} {% if page.decorations_lights or page.decorations_snow or page.langs %}<br>{% endif %}<code>{{ page.donationAddress }}</code></p>
-{% endif %}{% if page.decorations_lights or page.decorations_snow %}
+<footer class="noprint">{% if layout.langs %}
+  <p>{{ l10n_viewthispagein }} {% for lang in layout.langs %}<a href="{{ lang_urls[forloop.index0] }}">{{ lang[1] | escape }}</a>{% unless forloop.last %}, {% endunless %}{% endfor %}</p>
+{% elsif layout.donate %}
+<p>{{ l10n_donatebitcoin }} {% if layout.decorations_lights or layout.decorations_snow or layout.langs %}<br>{% endif %}<code>{{ layout.donationAddress }}</code></p>
+{% endif %}{% if layout.decorations_lights or layout.decorations_snow %}
   <!--[if gt IE 8]><!--><ul>
-{% if page.decorations_snow %}
+{% if layout.decorations_snow %}
     <li><span id="decorations_snow_toggle" class="fakelink" onclick="decorations.snow(); return false;"><span id="decorations_snow_toggle_start" style="display: none;">{{ l10n_startsnowstorm }}</span><span id="decorations_snow_toggle_stop" style="display: none;">{{ l10n_stopsnowstorm }}</span></span></li>
-{% endif %}{% if page.decorations_lights %}
+{% endif %}{% if layout.decorations_lights %}
     <li id="decorations_lights_stop" style="display: none;"><span class="fakelink" onclick="decorations.lights.stop(); return false;">{{ l10n_hidexmaslights }}</span></li>
     <li id="decorations_lights_start" style="display: none;"><span class="fakelink" onclick="decorations.lights.start(); return false;">{{ l10n_showxmaslights }}</span></li>
     <li id="decorations_lights_sizes" style="display: none;">{{ l10n_size }}: <span id="decorations_lights_sizes_list"></span></li>
 {% endif %}
   </ul><!--<![endif]-->
-{% endif %}{% if page.donate and page.langs %}
-<p>{{ l10n_donatebitcoin }} {% if page.decorations_lights or page.decorations_snow or page.langs %}<br>{% endif %}<code>{{ page.donationAddress }}</code></p>
+{% endif %}{% if layout.donate and layout.langs %}
+<p>{{ l10n_donatebitcoin }} {% if layout.decorations_lights or layout.decorations_snow or layout.langs %}<br>{% endif %}<code>{{ layout.donationAddress }}</code></p>
 {% endif %}
 
   <hr>
@@ -456,9 +456,9 @@ NOTES:
   </ul>
 </footer>
 
-{% if page.email %}<script type="text/javascript" src="/email.js"></script>{% endif %}
+{% if layout.email %}<script type="text/javascript" src="/email.js"></script>{% endif %}
 
-{% if page.shadowbox %}<script type="text/javascript">
+{% if layout.shadowbox %}<script type="text/javascript">
 (function () {
   // Auto-open a shadowbox object if it matches the page's hash
   var checkhash = function () {
@@ -480,7 +480,7 @@ NOTES:
       }
     }
   };
-{% if page.shadowbox_usehash %}
+{% if layout.shadowbox_usehash %}
   // Change the hash to match the current element
   var changehash = function (current) {
     if (current && current.link &&
@@ -492,7 +492,7 @@ NOTES:
 {% endif %}
   Shadowbox.init({
     continuous: true,
-    animateFade: false{% if page.shadowbox_usehash %},
+    animateFade: false{% if layout.shadowbox_usehash %},
     // covering all our bases
     onOpen: changehash,
     onChange: changehash,
@@ -505,8 +505,8 @@ NOTES:
 </script>
 {% endif %}
 
-{% if page.decorations_lights or page.decorations_snow %}<!--[if gt IE 8]><!-->
-{% if page.decorations_lights %}
+{% if layout.decorations_lights or layout.decorations_snow %}<!--[if gt IE 8]><!-->
+{% if layout.decorations_lights %}
 <div id="decorations_lights_preload" style="display: none;"></div>
 {% endif %}
 
@@ -526,8 +526,8 @@ if (typeof String.prototype.trim != "function") {
 
 var decorations = {
   defaults: {
-    {% if page.decorations_snow %}snow: {{ page.decorations_snow }},{% endif %}
-    {% if page.decorations_lights %}lights: {{ page.decorations_lights }},{% endif %}
+    {% if layout.decorations_snow %}snow: {{ layout.decorations_snow }},{% endif %}
+    {% if layout.decorations_lights %}lights: {{ layout.decorations_lights }},{% endif %}
   },
 
   cookie: function (name, value, dontSendEvent) {
@@ -552,7 +552,7 @@ var decorations = {
   }
 };
 
-{% if page.decorations_lights %}
+{% if layout.decorations_lights %}
 var sizeTable = {
   pico: "{{ l10n_tiny }}", // "tiny"
   tiny: "{{ l10n_small }}", // "small"
@@ -563,17 +563,17 @@ var sizeTable = {
 {% endif %}
 </script>
 
-{% if page.decorations_snow %}
+{% if layout.decorations_snow %}
 <script type="text/javascript" src="/decorations/snow/snowstorm-min.js"></script>
 <script type="text/javascript" src="/decorations/snow.js"></script>
 {% endif %}
-{% if page.decorations_lights %}
+{% if layout.decorations_lights %}
 <script type="text/javascript" src="/decorations/lights.js"></script>
 {% endif %}
 <!--<![endif]-->
 {% endif %}
 
-{% unless page.noanalytics %}<script type="text/javascript">
+{% unless layout.noanalytics %}<script type="text/javascript">
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
