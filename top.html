@@ -278,7 +278,7 @@ When working with languages and translations in an individual page...
 
 # Assign all the lang URLs to lang_urls_unsplit, separated by DIVIDER
 
-{% capture lang_urls_unsplit %}{% for lang in page.langs %}{% assign splitbase = page.base | split:'' %}{% capture front %}{{ splitbase[0] }}{{ splitbase[1] }}{{ splitbase[2] }}{% endcapture %}{% if front != "../" %}{{ page.base | escape }}{% endif %}{% if lang[0] != "" %}{% if front == "../" %}index{% endif %}.{{ lang[0] | escape }}.html{% else %}{% if front != "../" %}.html{% else %}{{ pafe.base | escape }}{% endif %}{% endif %}{{ DIVIDER }}{% endfor %}{% endcapture %}
+{% capture lang_urls_unsplit %}{% for lang in page.langs %}{% assign splitbase = page.base | split:'' %}{% capture front %}{{ splitbase[0] }}{{ splitbase[1] }}{{ splitbase[2] }}{% endcapture %}{% if front != "../" %}{{ page.base | escape }}{% endif %}{% if lang[0] != "" %}{% if front == "../" %}index{% endif %}.{{ lang[0] | escape }}.html{% else %}{% if front != "../" %}.html{% else %}{{ page.base | escape }}{% endif %}{% endif %}{{ DIVIDER }}{% endfor %}{% endcapture %}
 
 # Split it based on DIVIDER, so lang_urls contains the URLs to this page in the
 # other languages, in the same order as page.langs
