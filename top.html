@@ -173,6 +173,7 @@ Some common PAGE variables:
   b"shadowbox" - Whether to include the Shadowbox JS code.
   b"shadowbox_usehash" - Whether to have Shadowbox write the current item to
         the hash.
+  o"ads" - Supplements layout-level ads settings (see below).
 
 Some common LAYOUT variables:
   o"ads" - Where to show ads (if anywhere).
@@ -330,7 +331,7 @@ When working with languages and translations in an individual page...
   {% if page.shadowbox %}<link rel="stylesheet" type="text/css" href="/shadowbox/shadowbox.css">{% endif %}
   {% if page.redirect %}<script type="text/javascript">location.replace("{{ page.redirect | xml_escape }}");</script>{% endif %}
   {% if page.shadowbox %}<script type="text/javascript" src="/shadowbox/shadowbox.js"></script>{% endif %}
-  {% unless page.noads %}{% if layout.ads %}<script type="text/javascript" async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>{% endif %}{% endunless %}
+  {% unless page.noads %}{% if layout.ads or page.ads %}<script type="text/javascript" async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>{% endif %}{% endunless %}
 </head>
 
 <!--
@@ -378,11 +379,11 @@ When working with languages and translations in an individual page...
       <p>Redirecting to: <a href="{{ page.redirect | escape }}">{% if page.title %}{{ page.title | escape }}{% else %}{{ page.redirect | escape }}{% endif %}</a></p>
 {% else %}
 
-{% unless page.noads %}{% if layout.ads and layout.ads.top %}
+{% unless page.noads %}{% if layout.ads or page.ads %}{% if layout.ads.top or page.ads.top %}
     <!-- GH-Pages Top Ad - responsive -->
     <div class="section-msg ads-container"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3871520819272731" data-ad-slot="6723908007" data-ad-format="auto"></ins></div>
     <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-{% endif %}{% endunless %}
+{% endif %}{% endif %}{% endunless %}
 
 {% if layout.decorations_snow %}
     <div id="decorations_snow_festive_mood" class="section-msg" style="display: none;">In a festive mood? Try turning on the snowstorm by clicking "Start Snowstorm" at the very bottom of the page!</div>
@@ -390,11 +391,11 @@ When working with languages and translations in an individual page...
 
 {{ content }}
 
-{% unless page.noads %}{% if layout.ads and layout.ads.bottom %}
+{% unless page.noads %}{% if layout.ads or page.ads %}{% if layout.ads.bottom or page.ads.bottom %}
     <!-- GH-Pages Bottom Ad - responsive -->
     <div class="section-msg-bottom ads-container">{{ l10n_advertisement }}<br><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3871520819272731" data-ad-slot="7601552005" data-ad-format="auto"></ins></div>
     <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-{% endif %}{% endunless %}
+{% endif %}{% endif %}{% endunless %}
 
 {% endif %}{% comment %} end redirect {% endcomment %}
   </section>
