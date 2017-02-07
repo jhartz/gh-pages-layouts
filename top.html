@@ -11,29 +11,12 @@
 # values are enabled to test them.
 # Each has a CSS stylesheet in style/[theme name].css, and the body will have
 # its class name also be the theme name.
+# These are also used by jake.hartz.io
 
 #theme: fall
 #theme: christmas
 theme: winter
 #theme: summer
-
-
-###############################################################################
-### SEASONAL DECORATIONS
-
-# These variables are for seasonal decorations.
-
-# If one of these variables exists and is truthy, then the decoration is
-# enabled. The value of the variable should be a string (in quotes) with a JS
-# value inside (usually "true" or "false"). This is inserted directly into the
-# JS script block (and thus whatever is in the quotes must be valid JS).
-
-# WITH CHRISTMAS THEME:
-#decorations_lights: "true"
-#decorations_snow: "false"
-
-# WITH WINTER THEME:
-decorations_snow: "false"
 
 
 ###############################################################################
@@ -73,37 +56,6 @@ l10n:
   viewthispagein:
     "": "View this page in:"
     es: "Ver esta página en:"
-  startsnowstorm:
-    "": "Start Snowstorm"
-    es: "Empezar nevada"
-  stopsnowstorm:
-    "": "Stop Snowstorm"
-    es: "Dejar de nevada"
-  showxmaslights:
-    "": "Show Christmas Lights"
-    es: "Mostrar luces de navidad"
-  hidexmaslights:
-    "": "Hide Christmas Lights"
-    es: "Ocultar luces de navidad"
-
-  size:
-    "": "Size"
-    es: "Tamaño"
-  tiny:
-    "": "tiny"
-    es: "diminuto"
-  small:
-    "": "small"
-    es: "pequeño"
-  medium:
-    "": "medium"
-    es: "mediano"
-  large:
-    "": "large"
-    es: "grande"
-  huge:
-    "": "huge"
-    es: "enorme"
 
 ---
 {% capture localization_setup %}
@@ -134,17 +86,6 @@ l10n:
   {% if name == "privacypolicy"  %}{% assign l10n_privacypolicy  = s %}{% endif %}
   {% if name == "donatebitcoin"  %}{% assign l10n_donatebitcoin  = s %}{% endif %}
   {% if name == "viewthispagein" %}{% assign l10n_viewthispagein = s %}{% endif %}
-  {% if name == "startsnowstorm" %}{% assign l10n_startsnowstorm = s %}{% endif %}
-  {% if name == "stopsnowstorm"  %}{% assign l10n_stopsnowstorm  = s %}{% endif %}
-  {% if name == "showxmaslights" %}{% assign l10n_showxmaslights = s %}{% endif %}
-  {% if name == "hidexmaslights" %}{% assign l10n_hidexmaslights = s %}{% endif %}
-
-  {% if name == "size"   %}{% assign l10n_size   = s %}{% endif %}
-  {% if name == "tiny"   %}{% assign l10n_tiny   = s %}{% endif %}
-  {% if name == "small"  %}{% assign l10n_small  = s %}{% endif %}
-  {% if name == "medium" %}{% assign l10n_medium = s %}{% endif %}
-  {% if name == "large"  %}{% assign l10n_large  = s %}{% endif %}
-  {% if name == "huge"   %}{% assign l10n_huge   = s %}{% endif %}
 
 {% endfor %}
 
@@ -327,7 +268,6 @@ When working with languages and translations in an individual page...
 {% endif %}
   <link rel="stylesheet" type="text/css" href="/style-new.css">
   {% if layout.theme %}<link rel="stylesheet" type="text/css" href="/style/{{ layout.theme | escape }}.css">{% endif %}
-  {% if layout.decorations_lights %}<link rel="stylesheet" type="text/css" href="/decorations/lights.css">{% endif %}
   {% if page.shadowbox %}<link rel="stylesheet" type="text/css" href="/shadowbox/shadowbox.css">{% endif %}
   {% if page.redirect %}<script type="text/javascript">location.replace("{{ page.redirect | xml_escape }}");</script>{% endif %}
   {% if page.shadowbox %}<script type="text/javascript" src="/shadowbox/shadowbox.js"></script>{% endif %}
@@ -360,7 +300,6 @@ When working with languages and translations in an individual page...
 -->
 
 <body class="{% if layout.theme %}theme {{ layout.theme | escape }}{% endif %}">
-{% if layout.decorations_lights %}<div id="lights" style="display: none;"></div>{% endif %}
 
 <div class="wrapper">
   <header>{% capture indexurl %}{% if layout.indexurl %}{{ layout.indexurl | escape }}{% else %}{% if layout.index %}/{{ layout.index | downcase | replace:' ','' | escape }}/{% endif %}{% endif %}{% endcapture %}
@@ -384,10 +323,6 @@ When working with languages and translations in an individual page...
     <div class="section-msg ads-container"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3871520819272731" data-ad-slot="6723908007" data-ad-format="auto"></ins></div>
     <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 {% endif %}{% endif %}{% endunless %}
-
-{% if layout.decorations_snow %}
-    <div id="decorations_snow_festive_mood" class="section-msg" style="display: none;">In a festive mood? Try turning on the snowstorm by clicking "Start Snowstorm" at the very bottom of the page!</div>
-{% endif %}
 
 {{ content }}
 
@@ -418,38 +353,19 @@ The "BOTTOM" FOOTER contains permanent items that are on every page.
 
 "TOP" FOOTER ITEMS:
  - Language stuff (page.langs), i.e. "View this page in..."
- - Decorations (layout.decorations_lights, layout.decorations_snow)
  - Donate (layout.donate), i.e. the Bitcoin message
 
-NOTES:
-  If there is language stuff (i.e. "View this page in..."), it always comes first.
-    Then decorations stuff (snow/lights), then bitcoin.
-  If there is no language stuff:
-    Bitcoin, then decorations stuff (snow/lights).
-
-  NOTE: This causes the bitcoin code to be in there below twice.
-
-  Also, if Bitcoin is the only thing (besides privacy policy), then it doesn't include a line break (<br>) - which, also isn't shown in mobile.
+If the Bitcoin donation msg is the only thing, then it doesn't include a line break (<br>) - which, also isn't shown in mobile.
 
 
 {% endcomment %}
 
-<footer class="noprint">{% if page.langs %}
+<footer class="noprint">
+{% if page.langs %}
   <p>{{ l10n_viewthispagein }} {% for lang in page.langs %}<a href="{{ lang_urls[forloop.index0] }}">{{ lang[1] | escape }}</a>{% unless forloop.last %}, {% endunless %}{% endfor %}</p>
-{% elsif layout.donate %}
-<p>{{ l10n_donatebitcoin }} {% if layout.decorations_lights or layout.decorations_snow or page.langs %}<br>{% endif %}<code>{{ layout.donationAddress }}</code></p>
-{% endif %}{% if layout.decorations_lights or layout.decorations_snow %}
-  <!--[if gt IE 8]><!--><ul>
-{% if layout.decorations_snow %}
-    <li><span id="decorations_snow_toggle" class="fakelink" onclick="decorations.snow(); return false;"><span id="decorations_snow_toggle_start" style="display: none;">{{ l10n_startsnowstorm }}</span><span id="decorations_snow_toggle_stop" style="display: none;">{{ l10n_stopsnowstorm }}</span></span></li>
-{% endif %}{% if layout.decorations_lights %}
-    <li id="decorations_lights_stop" style="display: none;"><span class="fakelink" onclick="decorations.lights.stop(); return false;">{{ l10n_hidexmaslights }}</span></li>
-    <li id="decorations_lights_start" style="display: none;"><span class="fakelink" onclick="decorations.lights.start(); return false;">{{ l10n_showxmaslights }}</span></li>
-    <li id="decorations_lights_sizes" style="display: none;">{{ l10n_size }}: <span id="decorations_lights_sizes_list"></span></li>
 {% endif %}
-  </ul><!--<![endif]-->
-{% endif %}{% if layout.donate and page.langs %}
-<p>{{ l10n_donatebitcoin }} {% if layout.decorations_lights or layout.decorations_snow or page.langs %}<br>{% endif %}<code>{{ layout.donationAddress }}</code></p>
+{% if layout.donate %}
+  <p>{{ l10n_donatebitcoin }} {% if page.langs %}<br>{% endif %}<code>{{ layout.donationAddress }}</code></p>
 {% endif %}
 
   <hr>
@@ -508,74 +424,6 @@ NOTES:
   });
 })();
 </script>
-{% endif %}
-
-{% if layout.decorations_lights or layout.decorations_snow %}<!--[if gt IE 8]><!-->
-{% if layout.decorations_lights %}
-<div id="decorations_lights_preload" style="display: none;"></div>
-{% endif %}
-
-<script type="text/javascript">
-if (typeof String.prototype.trim != "function") {
-  String.prototype.trim = function () {
-    var str = this.replace(/^\s+/, "");
-    for (var i = str.length - 1; i >= 0; i -= 1) {
-      if (/\S/.test(str.charAt(i))) {
-        str = str.substring(0, i + 1);
-        break;
-      }
-    }
-    return str;
-  };
-}
-
-var decorations = {
-  defaults: {
-    {% if layout.decorations_snow %}snow: {{ layout.decorations_snow }},{% endif %}
-    {% if layout.decorations_lights %}lights: {{ layout.decorations_lights }},{% endif %}
-  },
-
-  cookie: function (name, value, dontSendEvent) {
-    name = "decorations_" + name;
-    if (value) {
-      if (!dontSendEvent && typeof ga == "function") {
-        ga("send", "event", "decorations", name, value);
-      }
-      var max_age = (60*60*24*365) / 2; // 1/2 year (in seconds)
-      var expires = (new Date()).getTime() + max_age * 1000; // 1/2 year later (in milliseconds)
-      expires = new Date(expires);
-      document.cookie = name + "=" + value + ";path=/;max-age=" + max_age + 
-          ";expires=" + (expires.toGMTString ? expires.toGMTString() : expires.toUTCString());
-    } else {
-      var cookies = document.cookie.split(";");
-      for (var i = 0; i < cookies.length; i++) {
-        if (cookies[i].substring(0, cookies[i].indexOf("=")).trim() == name) {
-          return cookies[i].substring(cookies[i].indexOf("=") + 1).trim();
-        }
-      }
-    }
-  }
-};
-
-{% if layout.decorations_lights %}
-var sizeTable = {
-  pico: "{{ l10n_tiny }}", // "tiny"
-  tiny: "{{ l10n_small }}", // "small"
-  small: "{{ l10n_medium }}", // "medium"
-  medium: "{{ l10n_large }}", // "large"
-  large: "{{ l10n_huge }}" // "huge"
-};
-{% endif %}
-</script>
-
-{% if layout.decorations_snow %}
-<script type="text/javascript" src="/decorations/snow/snowstorm-min.js"></script>
-<script type="text/javascript" src="/decorations/snow.js"></script>
-{% endif %}
-{% if layout.decorations_lights %}
-<script type="text/javascript" src="/decorations/lights.js"></script>
-{% endif %}
-<!--<![endif]-->
 {% endif %}
 
 {% unless page.noanalytics %}<script type="text/javascript">
