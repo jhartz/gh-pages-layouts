@@ -303,15 +303,15 @@ When working with languages and translations in an individual page...
 
 <div class="wrapper">
   <header>{% capture indexurl %}{% if layout.indexurl %}{{ layout.indexurl | escape }}{% else %}{% if layout.index %}/{{ layout.index | downcase | replace:' ','' | escape }}/{% endif %}{% endif %}{% endcapture %}
-    <p class="tagline-mobile"><a href="/">jhartz.github.io</a></p>
-    <h1>{% if layout.index %}<a href="{{ indexurl }}{% if page.lang and layout.indexlangs %}{% for lang in layout.indexlangs %}{% if page.lang == lang %}index.{{ lang | escape }}.html{% endif %}{% endfor %}{% endif %}">{{ layout.index | escape }}</a>{% else %}{% if page.title %}{{ page.title | escape }}{% else %}jhartz.github.io{% endif %}{% endif %}</h1>{% if layout.nav %}
+    <p class="tagline-mobile"><a href="https://jake.hartz.io/">jake.hartz.io</a></p>
+    <h1>{% if layout.index %}<a href="{{ indexurl }}{% if page.lang and layout.indexlangs %}{% for lang in layout.indexlangs %}{% if page.lang == lang %}index.{{ lang | escape }}.html{% endif %}{% endfor %}{% endif %}">{{ layout.index | escape }}</a>{% else %}{% if page.title %}{{ page.title | escape }}{% else %}jake.hartz.io{% endif %}{% endif %}</h1>{% if layout.nav %}
     <ul>{% for nav in layout.nav %}
       <li><a href="{% if nav.url %}{{ nav.url | escape }}{% else %}{{ indexurl }}{% assign addindex = false %}{% if nav.base %}{% if nav.base != '/' %}{{ nav.base | escape }}{% endif %}{% capture lastchar %}{{ nav.base | split:'' | last }}{% endcapture %}{% if lastchar == '/' %}{% assign addindex = true %}{% endif %}{% else %}{{ nav.name | downcase | replace:' ','' | escape }}{% endif %}{% assign indexadded = false %}{% if page.lang and nav.langs %}{% for lang in nav.langs %}{% if page.lang == lang[0] %}{% if addindex %}index{% assign indexadded = true %}{% endif %}.{{ lang[0] }}{% endif %}{% endfor %}{% endif %}{% if addindex == false or indexadded == true %}.html{% endif %}{% endif %}">{% assign done = false %}{% if page.lang and nav.langs %}{% for lang in nav.langs %}{% if page.lang == lang[0] %}{{ lang[1] | escape }}{% assign done = true %}{% endif %}{% endfor %}{% endif %}{% if done == false %}{{ nav.name | escape }}{% endif %}</a></li>{% endfor %}
     </ul>{% endif %}{% if layout.prettynav %}
     <ul class="pretty">{% for nav in layout.prettynav %}
       <li><a href="{{ nav.url | escape }}">{% if nav.html %}{{ nav.html }}{% else %}{% if nav.pre %}{{ nav.pre | escape }} {% unless nav.nobr %}<span class="nomobile"><br></span>{% endunless %}{% endif %}<strong>{{ nav.text | escape }}</strong>{% endif %}</a></li>{% endfor %}
     </ul>{% endif %}
-    <p class="tagline"><a href="/">jhartz.github.io</a></p>
+    <p class="tagline"><a href="https://jake.hartz.io/">jake.hartz.io</a></p>
   </header>
   <section>
 {% if page.redirect %}
