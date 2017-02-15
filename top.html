@@ -266,11 +266,11 @@ When working with languages and translations in an individual page...
     {% endif %}<link{% for attr in link %} {{ attr[0] | escape }}="{{ attr[1] | escape}}"{% endfor %}>{% if forloop.last %}{% if forloop.length != 1 %}
   {% endif %}<![endif]-->{% endif %}{% endfor %}
 {% endif %}
-  <link rel="stylesheet" type="text/css" href="/style-new.css">
-  {% if layout.theme %}<link rel="stylesheet" type="text/css" href="/style/{{ layout.theme | escape }}.css">{% endif %}
-  {% if page.shadowbox %}<link rel="stylesheet" type="text/css" href="/shadowbox/shadowbox.css">{% endif %}
+  <link rel="stylesheet" type="text/css" href="https://static.hartz.io/style/hartz-template.css">
+  {% if layout.theme %}<link rel="stylesheet" type="text/css" href="http://static.hartz.io/style/themes/{{ layout.theme | escape }}.css">{% endif %}
+  {% if page.shadowbox %}<link rel="stylesheet" type="text/css" href="https://static.hartz.io/scripts/shadowbox/shadowbox.css">{% endif %}
   {% if page.redirect %}<script type="text/javascript">location.replace("{{ page.redirect | xml_escape }}");</script>{% endif %}
-  {% if page.shadowbox %}<script type="text/javascript" src="/shadowbox/shadowbox.js"></script>{% endif %}
+  {% if page.shadowbox %}<script type="text/javascript" src="https://static.hartz.io/scripts/shadowbox/shadowbox.js"></script>{% endif %}
   {% unless page.noads %}{% if layout.ads or page.ads %}<script type="text/javascript" async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>{% endif %}{% endunless %}
 </head>
 
@@ -377,53 +377,13 @@ If the Bitcoin donation msg is the only thing, then it doesn't include a line br
   </ul>
 </footer>
 
-{% if page.email %}<script type="text/javascript" src="/email.js"></script>{% endif %}
+{% if page.email %}<script type="text/javascript" src="https://static.hartz.io/scripts/email.js"></script>{% endif %}
 
-{% if page.shadowbox %}<script type="text/javascript">
-(function () {
-  // Auto-open a shadowbox object if it matches the page's hash
-  var checkhash = function () {
-    if (location.hash) {
-      var id = location.hash.substring(1);
-      if (id && document.getElementById(id) &&
-                document.getElementById(id).parentNode.getAttribute("rel") &&
-                document.getElementById(id).parentNode.getAttribute("rel").substring(0, 9) == "shadowbox") {
-        if (Shadowbox.isOpen()) {
-          try {
-            // So we don't end up in an endless loop
-            if (Shadowbox.getCurrent().link.getElementsByTagName("img")[0].id == id) return;
-          } catch (err) {}
-          Shadowbox.close();
-        }
-        setTimeout(function () {
-          Shadowbox.open(document.getElementById(id).parentNode);
-        }, 10);
-      }
-    }
-  };
-{% if page.shadowbox_usehash %}
-  // Change the hash to match the current element
-  var changehash = function (current) {
-    if (current && current.link &&
-        current.link.getElementsByTagName("img").length > 0 &&
-        current.link.getElementsByTagName("img")[0].id) {
-      window.location.hash = "#" + current.link.getElementsByTagName("img")[0].id;
-    }
-  };
-{% endif %}
-  Shadowbox.init({
-    continuous: true,
-    animateFade: false{% if page.shadowbox_usehash %},
-    // covering all our bases
-    onOpen: changehash,
-    onChange: changehash,
-    onFinish: changehash{% endif %}
-  }, function () {
-    if (window.addEventListener) window.addEventListener("hashchange", checkhash, false);
-    checkhash();
-  });
-})();
+{% if page.shadowbox %}
+<script type="text/javascript">
+var SHADOWBOX_USE_HASH = {% if page.shadowbox_usehash %}true{% else %}false{% endif %};
 </script>
+<script type="text/javascript" src="https://static.hartz.io/scripts/shadowbox-init.js"></script>
 {% endif %}
 
 {% unless page.noanalytics %}<script type="text/javascript">
