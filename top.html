@@ -99,20 +99,12 @@ NOTE: In this explanation...
 Some common PAGE variables:
   s"title" - The page title.
   s"redirect" - A URL to redirect to.
-  b"noads" - Whether to disable all ads, no matter what. (Commonly used when a
-        template has ads enabled, but they need to be disabled on a specific
-        page, e.g. a download page.)
   b"email" - Whether to include email.js for email addresses in the page.
   b"shadowbox" - Whether to include the Shadowbox JS code.
   b"shadowbox_usehash" - Whether to have Shadowbox write the current item to
         the hash.
-  o"ads" - Supplements layout-level ads settings (see below).
 
 Some common LAYOUT variables:
-  o"ads" - Where to show ads (if anywhere).
-        Properties:
-            b"top" - Show ads at top of page.
-            b"bottom" - Show ads at bottom of page.
   b"donate" - Whether to show the Bitcoin donation plea in the footer.
   a"links" - A list of items to make into <link> tags in the header. Each item
         in the list is an object, where the names correspond to attribute names
@@ -244,7 +236,6 @@ When working with languages and translations in an individual page...
   {% if page.shadowbox %}<link rel="stylesheet" type="text/css" href="https://static.hartz.io/scripts/shadowbox/shadowbox.css">{% endif %}
   {% if page.redirect %}<script type="text/javascript">location.replace("{{ page.redirect | xml_escape }}");</script>{% endif %}
   {% if page.shadowbox %}<script type="text/javascript" src="https://static.hartz.io/scripts/shadowbox/shadowbox.js"></script>{% endif %}
-  {% unless page.noads %}{% if layout.ads or page.ads %}<script type="text/javascript" async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>{% endif %}{% endunless %}
 </head>
 
 <!--
@@ -300,19 +291,7 @@ When working with languages and translations in an individual page...
       <p>Redirecting to: <a href="{{ page.redirect | escape }}">{% if page.title %}{{ page.title | escape }}{% else %}{{ page.redirect | escape }}{% endif %}</a></p>
 {% else %}
 
-{% unless page.noads %}{% if layout.ads or page.ads %}{% if layout.ads.top or page.ads.top %}
-    <!-- GH-Pages Top Ad - responsive -->
-    <div class="section-msg ads-container"><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3871520819272731" data-ad-slot="6723908007" data-ad-format="auto"></ins></div>
-    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-{% endif %}{% endif %}{% endunless %}
-
 {{ content }}
-
-{% unless page.noads %}{% if layout.ads or page.ads %}{% if layout.ads.bottom or page.ads.bottom %}
-    <!-- GH-Pages Bottom Ad - responsive -->
-    <div class="section-msg-bottom ads-container">{{ l10n_advertisement }}<br><ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3871520819272731" data-ad-slot="7601552005" data-ad-format="auto"></ins></div>
-    <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-{% endif %}{% endif %}{% endunless %}
 
 {% endif %}{% comment %} end redirect {% endcomment %}
   </section>
